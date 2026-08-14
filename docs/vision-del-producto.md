@@ -72,8 +72,8 @@
 | **Control de acceso** | Se deben restringir las funciones del sistema según el rol del usuario (por ejemplo, separar las opciones del dueño de las del cajero). | Los empleados podrían ver información confidencial como los costos de compra a proveedores o alterar registros del sistema. |
 
 **Reglas de negocio que ya identifiqué:**
-1. El precio de compra de un producto no es fijo; varía según el proveedor que ofrezca la mejor tarifa esa semana, afectando el cálculo del inventario y las compras.
-2. Un pedido apartado debe reservar las existencias de inmediato para que no se vendan en mostrador, pero el pago y la entrega se realizan posteriormente en la tienda.
+1. El precio de compra de los productos no es fijo, es decir, varía según el proveedor que ofrezca la mejor tarifa esa semana, afectando el cálculo del inventario y las compras.
+2. En el momento en que un pedido se aparta, se deben reservar las existencias de inmediato para que no se vendan en mostrador, pero el pago y la entrega se realizan posteriormente en la tienda.
 3. Los clientes frecuentes deben estar registrados previamente en el sistema para poder acumular y canjear puntos en sus compras o apartados.
 
 ---
