@@ -2,17 +2,17 @@
 
 ---
 
-**Autor:** Julián Guerrero Martínez  
+**Autor:** [Tu Nombre / Equipo]  
 **Fecha de la última versión:** 13 de agosto de 2026  
-**Repositorio:**  
+**Repositorio:** [Enlace a tu repositorio de GitHub/GitLab]  
 
 ---
 
 ## 1. Descripción del sistema
 
-**Nombre del sistema:** Minimarket Control
+**Nombre del sistema:** MiEsquina Control
 
-**Descripción:** Es un programa para la computadora de la tienda que ayuda al dueño a saber en todo momento qué mercancía hay en los estantes, a cuánto se le compró a cada vendedor y a registrar las ventas diarias. Además, permite guardar los encargos que los clientes hacen por adelantado para que solo pasen a recogerlos y anotar qué empleado atendió cada cobro.
+**Descripción:** Es un programa para la computadora de la tienda que funciona como una libreta digital inteligente. Ayuda al dueño a saber en todo momento qué mercancía hay en los estantes, a cuánto se le compró a cada vendedor y a registrar las ventas diarias. Además, permite anotar a los clientes frecuentes para regalarles puntos por sus compras, guardar los encargos que hacen por adelantado para que solo pasen a recogerlos y anotar qué empleado atendió cada cobro.
 
 ---
 
@@ -20,7 +20,7 @@
 
 **El problema:** El negocio pierde dinero y tiempo porque no sabe exactamente cuánta mercancía tiene guardada ni a cuál proveedor le conviene comprarle cada semana. Además, hay confusión al momento de cobrar los pedidos guardados con anticipación y no hay forma de saber qué tan bien trabaja cada empleado.
 
-**Cómo se resuelve hoy sin el sistema:** El dueño cuenta los productos al final de cada día. Para reabastecer los productos, el dueño busca entre las antiguas facturas para comparar los precios de los proveedores. Los apartados de los clientes se anotan en notas sueltas de papel que a veces se traspapelan, y la puntualidad o ventas de los empleados se juzgan únicamente por lo que recuerde.
+**Cómo se resuelve hoy sin el sistema:** El dueño cuenta los productos a ojo o revisando libreta por libreta al final del día. Para comprar surtido, busca entre facturas viejas de papel para comparar precios de los proveedores. Los apartados de los clientes se anotan en notas sueltas de papel que a veces se traspapelan, y la puntualidad o ventas de los empleados se juzgan únicamente por memoria o impresión general.
 
 **Usuarios del sistema:**
 
@@ -43,11 +43,15 @@
 - Módulo para crear, consultar y marcar como pagados/entregados los pedidos apartados por clientes.
 - Reportes simples de ventas diarias por empleado y reporte de productos con stock mínimo.
 
+---
+
 ### Explícitamente fuera del alcance
 - Pagos en línea mediante tarjetas de crédito/débito o pasarelas de pago externas.
 - Facturación electrónica automática ante el órgano tributario.
 - Servicio de entrega a domicilio (delivery) o aplicación móvil para clientes.
 - Integración con básculas digitales o lectores de códigos de barras industriales por hardware especializado (se usará entrada manual o lector de código USB básico tipo teclado).
+
+---
 
 **Por qué queda fuera:** El servicio de entrega a domicilio y la facturación electrónica quedan fuera debido a que el problema central del negocio es el control interno de inventario, proveedores y caja. Incluir logística de entregas o integraciones legales/fiscales complejas requeriría más tiempo de desarrollo, costos de servidores externos y mantenimiento especializado que no justifican el estado actual del negocio.
 
