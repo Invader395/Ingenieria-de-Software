@@ -115,6 +115,6 @@ Reviso que el documento cumpla lo siguiente:
 - [ ] El documento está en mi repositorio y se puede leer desde el navegador
 - [ ] Borré todas las instrucciones en cursiva de la plantilla
 
-## 9. Huecos Importantes
+## 6. Huecos Importantes
 ¿Cuales son las características de la computadora que se dispone en la tienda y de cuantas se disponen?
 ¿Se registra la venta en el momento o al final del día?
