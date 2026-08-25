@@ -52,7 +52,7 @@
 
 ---
 
-**Por qué queda fuera:** El servicio de entrega a domicilio y la facturación electrónica quedan fuera debido a que el problema central del negocio es el control interno de inventario, proveedores y caja. Incluir la logística de entregas o facturación electrónica requeriría más tiempo de desarrollo, costos de servidores externos y mantenimiento, por motivos ajenos a los que se requieren en el negocio.
+**Por qué queda fuera:** El servicio de entrega a domicilio y la facturación electrónica quedan fuera debido a que el problema central del negocio es el control interno de inventario, proveedores y caja. Incluir la logística de entregas o facturación electrónica requeriría más tiempo de desarrollo, costos de servidores externos y mantenimiento, por motivos ajenos a lo que se requiere en el negocio.
 
 ---
 
