@@ -36,9 +36,10 @@
 ## 3. Alcance
 
 ### Dentro del alcance
-- Registro y actualización en tiempo real de las existencias de productos por categoría.
-- Catálogo de proveedores con registro de precios de compra por producto para comparar quién da el mejor precio.
-- Registro de ventas en mostrador asociadas al empleado en turno.
+- Registro de productos por categoría.
+- Actualización en tiempo real de las existencias disponibles por producto.
+- Catálogo de proveedores con el registro de precios de compra por producto para que el dueño pueda comparar que proveedor da el mejor precio.
+- Registro de ventas realizadas en caja por el empleado en turno.
 - Opción de registro de clientes frecuentes y acumulación/canje de puntos.
 - Opción para crear, consultar y marcar como pagados/entregados los pedidos apartados por clientes.
 - Reportes simples de ventas diarias por empleado y reporte de productos con stock debajo de cierto umbral.
