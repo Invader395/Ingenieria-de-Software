@@ -84,7 +84,7 @@
 **Modelo elegido:** Modelo en Espiral
 
 **Por qué le conviene a este proyecto:**  
-Le conviene porque este modelo avanza mediante vueltas constantes guiadas por una sola pregunta clave: *¿qué es lo que más nos podría hundir?* En el minimarket hay varios riesgos que podrían arruinar el proyecto, como que el sistema sea tan lento que haga filas en la caja, que se confundan los apartados de los clientes o que el dueño no tenga tiempo para revisar avances. Al trabajar en espiral, identificamos estos problemas y limitaciones desde el principio antes de gastar tiempo y dinero en construir algo que después sea difícil de modificar o no sirva en la vida real.
+Le conviene porque este modelo avanza mediante vueltas constantes guiadas por una sola pregunta clave: ¿qué es lo que más nos podría hundir? En el minimarket hay varios riesgos que podrían arruinar el proyecto, como que el sistema sea tan lento que haga filas en la caja, que se confundan los apartados de los clientes o que el dueño no tenga tiempo para revisar avances. Al trabajar en espiral, identificamos estos problemas y limitaciones desde el principio antes de gastar tiempo y dinero en construir algo que después sea difícil de modificar o no sirva en la vida real.
 
 ### Alternativas descartadas
 
