@@ -81,23 +81,18 @@
 
 ## 5. Ciclo de vida elegido
 
-*Instrucción: este apartado se trabaja en la semana 3, después de ver los modelos de desarrollo. La justificación pesa más que la elección: no hay un modelo correcto, hay uno defendible para tu caso.*
+**Modelo elegido:** Modelo en Espiral
 
-**Modelo elegido:**
-
-**Por qué le conviene a este proyecto:**
-
-*Instrucción: argumenta con las características reales de tu caso. Estabilidad de los requisitos, disponibilidad del cliente, nivel de riesgo, tamaño del equipo, frecuencia de entregas esperada.*
+**Por qué le conviene a este proyecto:**  
+Le conviene porque este modelo avanza mediante vueltas constantes guiadas por una sola pregunta clave: *¿qué es lo que más nos podría hundir?* En el minimarket hay varios riesgos que podrían arruinar el proyecto, como que el sistema sea tan lento que haga filas en la caja, que se confundan los apartados de los clientes o que el dueño no tenga tiempo para revisar avances. Al trabajar en espiral, identificamos estos problemas y limitaciones desde el principio antes de gastar tiempo y dinero en construir algo que después sea difícil de modificar o no sirva en la vida real.
 
 ### Alternativas descartadas
 
-**Alternativa 1:**
+**Alternativa 1:** Modelo en Cascada  
+**Por qué la descarté:** Porque obliga a definir todo desde el primer día y avanzar en una sola línea estricta sin volver atrás. Si cometemos un error al entender cómo funciona el negocio o si el dueño necesita cambiar algo a mitad del camino, no nos daríamos cuenta hasta el final y corregirlo sería muy costoso.
 
-*Por qué la descarté:*
-
-**Alternativa 2:**
-
-*Por qué la descarté:*
+**Alternativa 2:** Prototipado rápido  
+**Por qué la descarté:** Aunque sirve para mostrar pantallas provisionales al cliente de forma rápida, corremos el riesgo de que esas versiones incompletas y desechables se terminen usando como la base real del sistema, dejando de lado el análisis profundo de los riesgos principales del negocio.
 
 ---
 
