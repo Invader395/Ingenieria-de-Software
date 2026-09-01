@@ -3,7 +3,7 @@
 ---
 
 **Autor:** Julián Guerrero Martínez  
-**Fecha de la última versión:** 27 de agosto de 2026  
+**Fecha de la última versión:** 28 de agosto de 2026  
 **Repositorio:** https://github.com/Invader395/Ingenieria-de-Software.git
 
 ---
@@ -59,7 +59,7 @@
 
 ## 4. Tipo de sistema y restricciones
 
-**Tipo de sistema:** Sistemas de Información
+**Tipo de sistema:** Sistemas de Información (Software a la medida)
 
 **Por qué es de ese tipo:** Porque es un sistema que registra, consulta y gestiona los datos y procesos de una organización, específicamente el inventario, los precios de proveedores, las ventas en punto de venta y los clientes frecuentes del minimarket.
 
