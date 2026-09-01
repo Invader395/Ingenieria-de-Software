@@ -3,7 +3,7 @@
 ---
 
 **Autor:** Julián Guerrero Martínez  
-**Fecha de la última versión:** 28 de agosto de 2026  
+**Fecha de la última versión:** 01 de septiembre de 2026  
 **Repositorio:** https://github.com/Invader395/Ingenieria-de-Software.git
 
 ---
