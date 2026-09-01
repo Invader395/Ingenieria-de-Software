@@ -3,7 +3,7 @@
 ---
 
 **Autor:** Julián Guerrero Martínez  
-**Fecha de la última versión:** 13 de agosto de 2026  
+**Fecha de la última versión:** 27 de agosto de 2026  
 **Repositorio:** https://github.com/Invader395/Ingenieria-de-Software.git
 
 ---
@@ -12,7 +12,7 @@
 
 **Nombre del sistema:** Minimarket Control
 
-**Descripción:** Programa para la computadora de la tienda que ayuda al dueño a saber en todo momento qué mercancía hay en los estantes, a cuánto se le compró a cada vendedor y a registrar las ventas diarias. Además, permite anotar a los clientes frecuentes para regalarles puntos por sus compras, guardar los encargos que hacen por adelantado para que solo pasen a recogerlos y anotar qué empleado atendió cada cobro.
+**Descripción:** Programa para la computadora de la tienda que ayuda al dueño a saber en todo momento qué mercancía hay en los estantes, a cuánto se le compró cada producto a cada proveedor y a registrar las ventas diarias totales al final del día. Además, permite anotar a los clientes frecuentes para regalarles puntos por sus compras, guardar los encargos que hacen por adelantado para que solo pasen a recogerlos y anotar qué empleado atendió cada venta.
 
 ---
 
