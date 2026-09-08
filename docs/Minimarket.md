@@ -81,10 +81,10 @@
 
 ## 5. Ciclo de vida elegido
 
-**Modelo elegido:** Modelo en Espiral
+**Modelo elegido:** Enfoque Ágil (Scrum)
 
 **Por qué le conviene a este proyecto:**  
-Le conviene porque este modelo avanza mediante vueltas constantes guiadas por una sola pregunta clave: ¿qué es lo que más nos podría hundir? En el minimarket hay varios riesgos que podrían arruinar el proyecto, como que el sistema sea tan lento que haga filas en la caja, que se confundan los apartados de los clientes o que el dueño no tenga tiempo para revisar avances. Al trabajar en espiral, identificamos estos problemas y limitaciones desde el principio antes de gastar tiempo y dinero en construir algo que después sea difícil de modificar o no sirva en la vida real.
+Le conviene porque organiza el desarrollo en ciclos cortos (iteraciones) donde se entregan versiones funcionales del software desde las primeras semanas. En el minimarket, el riesgo principal es construir un punto de venta lento o complejo que entorpezca la atención al cliente. Al usar un enfoque ágil, podemos construir primero el módulo básico de cobro e inventario, ponerlo a prueba en caja para ajustar la usabilidad según la retroalimentación real del empleado y el dueño, e ir agregando de forma gradual los módulos de apartados, clientes frecuentes y comparación de proveedores sin detener la operación del negocio.
 
 ### Alternativas descartadas
 
