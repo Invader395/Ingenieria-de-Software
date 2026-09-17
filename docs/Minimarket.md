@@ -93,3 +93,14 @@ Le conviene porque organiza el desarrollo en ciclos cortos (iteraciones) donde s
 
 **Alternativa 2:** Prototipado rápido  
 **Por qué la descarté:** Aunque sirve para mostrar pantallas provisionales al cliente de forma rápida, corremos el riesgo de que esas versiones incompletas y desechables se terminen usando como la base real del sistema, dejando de lado el análisis profundo de los riesgos principales del negocio.
+
+---
+
+## 6. Requerimientos funcionales
+
+**Cinco Requisitos Funcionales:**
+1. RF1: El sistema registra la venta de mercancía descontando automáticamente del inventario la cantidad de unidades vendidas.
+- RF2: El sistema registra los datos del pedido apartado y reserva de inmediato las existencias de mercancía en la base de datos.
+- RF3: El sistema solicita el número telefónico del cliente frecuente para acumular los puntos correspondientes a su compra.
+- RF4: El sistema muestra una lista comparativa de los precios de compra de un producto registrados por cada proveedor.
+- RF5: El sistema genera un reporte diario consolidado de ventas clasificando las transacciones por el empleado en turno que las procesó.
