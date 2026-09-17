@@ -99,8 +99,26 @@ Le conviene porque organiza el desarrollo en ciclos cortos (iteraciones) donde s
 ## 6. Requerimientos funcionales
 
 **Cinco Requisitos Funcionales:**
-1. RF1: El sistema registra la venta de mercancía descontando automáticamente del inventario la cantidad de unidades vendidas.
-- RF2: El sistema registra los datos del pedido apartado y reserva de inmediato las existencias de mercancía en la base de datos.
-- RF3: El sistema solicita el número telefónico del cliente frecuente para acumular los puntos correspondientes a su compra.
-- RF4: El sistema muestra una lista comparativa de los precios de compra de un producto registrados por cada proveedor.
-- RF5: El sistema genera un reporte diario consolidado de ventas clasificando las transacciones por el empleado en turno que las procesó.
+1. El sistema registra la venta de mercancía descontando automáticamente del inventario la cantidad de unidades vendidas.
+2. El sistema registra los datos del pedido apartado y reserva de inmediato las existencias de mercancía en la base de datos.
+3. El sistema solicita el número telefónico del cliente frecuente para acumular los puntos correspondientes a su compra.
+4. El sistema muestra una lista comparativa de los precios de compra de un producto registrados por cada proveedor.
+5. El sistema genera un reporte diario consolidado de ventas clasificando las transacciones por el empleado en turno que las procesó.
+
+**Tres Requisitos No Funcionales:**
+1. Usabilidad / Rendimiento en Caja: El proceso completo de cobro y registro de una venta en mostrador se realiza en menos de cuatro pasos de navegación en la pantalla.
+2. Control de Acceso / Seguridad: El sistema restringe el acceso al módulo de costos de compra y catálogo de proveedores únicamente a los usuarios con rol de Administrador/Dueño mediante contraseña.
+3. Trazabilidad e Integridad de Datos: Todo movimiento de inventario, registro de apartado o venta almacena automáticamente la fecha, hora exacta y el identificador del empleado en turno sin permitir la edición posterior de dicho registro.
+
+**Revisión y Verificación de los 8 Requisitos:**
+- RF1, RF2 y RF3: Se realizan transacciones simuladas (venta, apartado y acumulación) en la interfaz para verificar en la base de datos la resta de existencias y el saldo de puntos.
+- RF4 y RF5: Se ingresan datos de prueba de proveedores y empleados para verificar la generación de la lista comparativa y del reporte de ventas.
+- RNF1: Se mide con recuento de clics o teclado que el cobro se complete en 4 pasos o menos.
+- RNF2: Se intenta ingresar al módulo de costos desde una cuenta con rol de Cajero/Empleado para comprobar que el acceso sea denegado.
+- RNF3: Se realiza una venta y se consulta el registro de auditoría (log) para confirmar que contenga fecha, hora, ID de empleado y que la edición esté deshabilitada.
+
+**Supuestos y Preguntas para la Entrevista:**
+- Puntos: Se asume que la identificación del cliente frecuente se realiza mediante su número telefónico.
+- Pasos de cobro: Se asume que 4 pasos en pantalla son un límite aceptable para agilizar la fila.
+- Regla de puntos: Se asume un factor de conversión arbitrario (por ejemplo, 1 punto por cada $10 MXN).
+- Cancelación de apartados: Se asume que si un apartado no se recoge a tiempo, las existencias deben liberarse automáticamente al inventario.
