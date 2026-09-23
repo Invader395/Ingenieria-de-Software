@@ -1,8 +1,8 @@
-## Guión de entrevista (Minimarket Control)
+# Guión de entrevista (Minimarket Control)
 
 ---
 
-# Ficha de dominio Minimarket Control (Para el cliente)
+## Ficha de dominio Minimarket Control (Para el cliente)
 
 **¿Quién eres?**
 Eres el dueño de un minimarket pequeño de abarrote. Llevas atendiendo el negocio desde hace ocho años. Te encargas de pedir la mercancía a los proveedores, pagar facturas y supervisar la caja. Tienes a dos empleados que se turnan para cobrar en mostrador.
@@ -27,7 +27,7 @@ Contesta solo lo que te pregunten. Si te preguntan algo que no está en la ficha
 
 ---
 
-# Preguntas y respuestas de la entrevista
+## Preguntas y respuestas de la entrevista
 
 **2 preguntas de contexto**
 - Contexto 1: ¿Cómo es normalmente la jornada de trabajo en la tienda durante el horario de mayor afluencia de clientes?
@@ -58,7 +58,7 @@ Si un producto está en el estante pero no tiene código o precio visible, le pe
 
 ---
 
-# Bitácora de entrevista
+## Bitácora de entrevista
 Identificación de Dolores (Puntos de dolor del cliente)
 - Lentitud y cuellos de botella: Registro manual en libreta durante horas pico, provocando filas largas y lentitud en las tres cajas.
 - Carga administrativa excesiva: Inversión de 2 a 3 días a la semana buscando facturas de papel en carpetas físicas para comparar costos de proveedores.
