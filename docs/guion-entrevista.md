@@ -58,22 +58,25 @@ Si un producto está en el estante pero no tiene código o precio visible, le pe
 
 ---
 
-## Bitácora de entrevista
-**Identificación de Dolores (Puntos de dolor del cliente)**
-- Lentitud y cuellos de botella: Registro manual en libreta durante horas pico, provocando filas largas y lentitud en las tres cajas.
-- Carga administrativa excesiva: Inversión de 2 a 3 días a la semana buscando facturas de papel en carpetas físicas para comparar costos de proveedores.
-- Incertidumbre financiera: Falta de certeza al cierre del día para determinar si el dinero faltante en caja responde a errores de cobro o a merma/robo.
-- Traspapeleo de apartados: Errores de organización por libretas traspapeladas que derivan en conflictos con clientes al vender productos que estaban reservados.
+# Bitácora de entrevista
 
-**Supuestos confirmados:**
-- Privacidad y confidencialidad: Se confirmó la restricción absoluta de visibilidad de costos de compra y márgenes a empleados/cajeros.
-- Límite de apartados: Confirmado en un máximo de 7 días naturales antes de liberar la mercancía.
-- Requisito para puntos: Validación del número de teléfono como dato único capturado previo al cierre del cobro.
-- Variación de costos: Confirmada la fluctuación frecuente de precios dependiendo del proveedor que surta.
+**Identificación de dolores (Puntos de dolor del cliente)**
+- **Lentitud y cuellos de botella:** Registro manual en libreta durante horas pico, lo que genera filas largas y cobros lentos en las tres cajas.
+- **Carga administrativa excesiva:** Inversión de 2 a 3 días por semana en la búsqueda manual de facturas de papel en carpetas físicas para comparar costos entre proveedores.
+- **Incertidumbre financiera y descuadres:** Falta de certeza al cierre del día para determinar si el dinero faltante en caja responde a errores de cobro o a merma/robo de mercancía.
+- **Traspapeleo de apartados:** Desorganización y pérdida de libretas físicas, lo que deriva en discusiones en mostrador al vender por error mercancía que debía estar reservada.
 
-**Supuestos que resultaron falsos:**
-- Manejo de claves por el cajero: Se suponía que el cajero consultaría un catálogo de códigos manualmente en pantalla; sin embargo, en la práctica el cliente debe traer un producto duplicado con código legible para no frenar la fila.
+**Supuestos confirmados**
+- **Privacidad y confidencialidad:** Restricción absoluta de acceso a costos de compra y márgenes de ganancia para los cajeros; únicamente deben ver el precio de venta final.
+- **Límite de apartados:** Plazo máximo de 7 días naturales para guardar mercancía reservada antes de liberarla al estante.
+- **Datos obligatorios de apartados:** Nombre completo y número de teléfono del cliente como únicos requisitos obligatorios para registrar la reserva.
+- **Requisito para puntos:** Registro obligatorio del número de teléfono del cliente en el sistema antes de finalizar la venta para abonar puntos.
+- **Variación de costos:** Fluctuación frecuente en los precios de un mismo producto según el proveedor que lo surta en la semana.
 
-**Hallazgos no esperados (Nuevos aprendizajes):**
-- Traspapeleo de registros: Pérdida y desorden habitual en las libretas físicas de apartados que genera molestias directamente en el mostrador.
-- Asunción de pérdidas por caducidad: Si un producto perecedero apartado se vence en el plazo de 7 días, el negocio asume el costo y entrega un producto totalmente nuevo al cliente al momento de liquidar.
+**Supuestos que resultaron falsos**
+- **Captura manual de precios o claves abiertas en caja:** Se suponía que el cajero ingresaría claves o precios manualmente cuando un producto no tuviera código. Sin embargo, por regla de negocio, está prohibido ingresar precios abiertos; el cajero pide al cliente traer un producto idéntico con código legible para no detener la fila y deja el producto dañado separado para etiquetarlo al final del día.
+
+**Hallazgos no esperados (Nuevos aprendizajes)**
+- **Asignación manual diaria de turnos:** El dueño debe anotar cada mañana qué empleado estará asignado a qué caja para poder auditar el dinero al cierre del turno.
+- **Asunción de mermas por productos perecederos apartados:** Si un producto perecedero apartado se deteriora durante el plazo de 7 días, el negocio asume la pérdida y le entrega uno nuevo al cliente al liquidar.
+- **Impacto de la desorganización de libretas:** El traspapeleo de notas en papel no solo genera descuadres de inventario, sino discusiones y molestias directas con los clientes en el mostrador.
