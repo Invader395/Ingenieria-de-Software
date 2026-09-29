@@ -2,7 +2,7 @@
 
 **Sistema:** Minimarket Control  
 **Autor:** Julián Guerrero Martínez  
-**Versión:** 2.4  
+**Versión:** 2.5  
 **Fecha de la última actualización:** 28 de septiembre de 2026  
 
 ---
@@ -15,7 +15,7 @@ Este documento define de forma precisa, comprobable y detallada los requisitos f
 **Alcance del sistema:**  
 El sistema abarca la gestión interna del punto de venta y control operativo del negocio mediante:
 - Autenticación y control de acceso por roles (Administrador y Cajero).
-- Registro, actualización y catálogo de productos organizados por categoría.
+- Registro, actualización, ajuste manual de stock y catálogo de productos organizados por categoría.
 - Descuento y actualización automática de existencias en tiempo real tras cada venta y registro de mermas.
 - Generación automática de alertas de stock mínimo y consulta de reportes de productos por reabastecer.
 - Catálogo de proveedores con registro de datos de contacto e historial de precios de compra por producto para comparación de tarifas.
@@ -72,6 +72,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | **RF-021** | Canjear puntos de cliente frecuente | Importante | Declarante en la Visión del Producto |
 | **RF-022** | Registrar el pago del pedido apartado | Imprescindible | Confirmado en entrevista (Excepción 1) |
 | **RF-023** | Consultar reporte de productos con stock bajo umbral mínimo | Imprescindible | Declarante en la Visión del Producto |
+| **RF-024** | Modificar stock de productos | Imprescindible | Confirmado en entrevista (Ajuste/Reabastecimiento de inventario) |
 
 ---
 
@@ -105,7 +106,8 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | **Descripción** | El sistema registra un nuevo producto en el catálogo solicitando código de barras, nombre, categoría, precio de venta y stock mínimo. |
 | **Origen** | Confirmado en entrevista con el dueño (Gestión de catálogo). |
 | **Prioridad** | Imprescindible |
-| **Criterio de aceptación** | - Al guardar el producto todos los campos deben estar compeltos. - El código del producto debe ser único. - Una vez guardado el producto el sistema crea el registro en la base de datos. - Al finalizar el registro la información se despliega en el catálogo general. | **Relacionado con** | RF-004, RF-005, RF-006, RF-020 |
+| **Criterio de aceptación** | - Al guardar el producto todos los campos deben estar completos.<br>- El código del producto debe ser único.<br>- Una vez guardado el producto el sistema crea el registro en la base de datos.<br>- Al finalizar el registro la información se despliega en el catálogo general. |
+| **Relacionado con** | RF-004, RF-005, RF-006, RF-020, RF-024 |
 
 ---
 
@@ -138,7 +140,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | **Origen** | Confirmado en entrevista con el dueño (Control de existencias). |
 | **Prioridad** | Imprescindible |
 | **Criterio de aceptación** | Al realizar la búsqueda por código de barras o nombre, el sistema despliega el stock actual en tiempo real. |
-| **Relacionado con** | RF-003, RF-009, RF-012, RF-020, RF-023 |
+| **Relacionado con** | RF-003, RF-009, RF-012, RF-020, RF-023, RF-024 |
 
 ---
 
@@ -288,11 +290,11 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 #### RF-020 · Generar alerta automática de stock bajo umbral mínimo
 | Campo | Contenido |
 | :--- | :--- |
-| **Descripción** | El sistema evalúa en tiempo real las existencias tras cada movimiento de inventario (venta, reserva o merma) y genera un indicador o notificación de alerta cuando la cantidad disponible es igual o inferior al stock mínimo configurado. |
+| **Descripción** | El sistema evalúa en tiempo real las existencias tras cada movimiento de inventario (venta, reserva, merma o ajuste/reabastecimiento) y genera un indicador o notificación de alerta cuando la cantidad disponible es igual o inferior al stock mínimo configurado. |
 | **Origen** | Declarante explícito en la Visión del Producto (Sección Alcance) y reglas de inventario. |
 | **Prioridad** | Imprescindible |
-| **Criterio de aceptación** | Inmediatamente después de que una transacción (RF-009, RF-012, RF-017) reduzca el stock disponible de un producto a un nivel $\le$ stock mínimo del ítem, el sistema marca el producto con la bandera/alerta visual de *"Stock crítico"* en el sistema. |
-| **Relacionado con** | RF-003, RF-006, RF-009, RF-012, RF-017, RF-023 |
+| **Criterio de aceptación** | Inmediatamente después de que una transacción (RF-009, RF-012, RF-017, RF-024) modifique el stock disponible de un producto a un nivel $\le$ stock mínimo del ítem, el sistema marca el producto con la bandera/alerta visual de *"Stock crítico"* en el sistema. Si una modificación incrementa el stock por encima del umbral, la alerta se remueve automáticamente. |
+| **Relacionado con** | RF-003, RF-006, RF-009, RF-012, RF-017, RF-023, RF-024 |
 
 ---
 
@@ -326,6 +328,17 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | **Prioridad** | Imprescindible |
 | **Criterio de aceptación** | Al acceder al panel de reportes de inventario y seleccionar "Ver productos con stock bajo", el sistema despliega en pantalla la tabla con: código de producto, nombre, stock actual, stock mínimo y unidades faltantes sugeridas para reabastecer. |
 | **Relacionado con** | RF-006, RF-020 |
+
+---
+
+#### RF-024 · Modificar stock de productos
+| Campo | Contenido |
+| :--- | :--- |
+| **Descripción** | El sistema permite ajustar o actualizar manualmente la cantidad de unidades disponibles en el inventario de un producto (por reabastecimiento o corrección de inventario físico) ingresando la nueva cantidad o el incremento/decremento directo y el motivo de la modificación. |
+| **Origen** | Confirmado en entrevista con el dueño (Ajuste/Reabastecimiento de inventario). |
+| **Prioridad** | Imprescindible |
+| **Criterio de aceptación** | Al ingresar la nueva cantidad de stock para un producto válido y guardar los cambios, el sistema actualiza inmediatamente el inventario en la base de datos, registra el movimiento en la bitácora de auditoría y recalcula las alertas de stock mínimo (RF-020). |
+| **Relacionado con** | RF-003, RF-006, RF-020, RNF-CON-001 |
 
 ---
 
@@ -373,12 +386,12 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Atributo de calidad** | Confiabilidad (Trazabilidad e Integridad de datos) |
-| **Descripción** | Todo movimiento de inventario, registro de apartado o venta almacena automáticamente fecha, hora exacta y el identificador del empleado en turno, impidiendo la modificación posterior del registro. |
+| **Descripción** | Todo movimiento de inventario, registro de apartado, ajuste manual de stock o venta almacena automáticamente fecha, hora exacta y el identificador del empleado en turno, impidiendo la modificación posterior del registro. |
 | **Métrica** | 100% de las transacciones guardan marca de tiempo ($1\text{ segundo}$ de precisión) e ID de empleado, bloqueando comandos de alteración (UPDATE/DELETE) en la tabla de bitácora. |
 | **Origen** | Derivado del tipo de sistema (Sistemas de Información). |
 | **Prioridad** | Imprescindible |
 | **Por qué importa** | Elimina la incertidumbre sobre descuadres de caja y discrepancias de mercancía, permitiendo auditorías objetivas sin depender de memorias. |
-| **Afecta a** | RF-002, RF-008, RF-009, RF-011, RF-015, RF-016, RF-017, RF-022 |
+| **Afecta a** | RF-002, RF-008, RF-009, RF-011, RF-015, RF-016, RF-017, RF-022, RF-024 |
 
 ---
 
@@ -391,7 +404,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 3. **CU-03:** Gestionar cliente frecuente (Alta, acumulación y canje de puntos)
 4. **CU-04:** Gestionar proveedores y consultar comparativa de precios
 5. **CU-05:** Consultar reportes de ventas por empleado y stock bajo
-6. **CU-06:** Gestionar mermas y cancelaciones de apartados
+6. **CU-06:** Gestionar mermas, modificaciones de stock y cancelaciones de apartados
 
 ---
 
@@ -462,7 +475,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | **RF-013** | Entrevista 22 sep | CU-01, CU-03 | Modal Cliente Frecuente en Caja | Vigente |
 | **RF-014** | Entrevista 22 sep | CU-04 Consultar proveedores | Pantalla Comparativa de Precios | Vigente |
 | **RF-015** | Entrevista 22 sep | CU-05 Consultar reportes | Dashboard de Reportes / Ventas | Vigente |
-| **RF-016** | Entrevista 22 sep | CU-06 Gestionar apartados | Tabla de Apartados Expirados | Vigente |
+| **RF-016** | Entrevista 22 sep | CU-06 Gestionar inventario | Tabla de Apartados Expirados | Vigente |
 | **RF-017** | Derivado de inventario | CU-06 Gestionar mermas | Formulario de Registro de Merma | Vigente |
 | **RF-018** | Entrevista 22 sep | CU-01, CU-03 | Modal Alta Rápida de Cliente | Vigente |
 | **RF-019** | Visión del producto | CU-04 Consultar proveedores | Modal Registrar Proveedor | Vigente |
@@ -470,6 +483,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | **RF-021** | Visión del producto | CU-01, CU-03 | Opción Canje de Puntos en Caja | Vigente |
 | **RF-022** | Entrevista 22 sep | CU-02 Registrar pedido apartado | Modal Cobro / Liquidar Apartado | Vigente |
 | **RF-023** | Visión del producto | CU-05 Consultar reportes | Reporte de Reabastecimiento / Umbral | Vigente |
+| **RF-024** | Entrevista 28 sep | CU-06 Gestionar inventario | Formulario / Modal Modificar Stock | Vigente |
 | **RNF-USA-001** | Entrevista 22 sep | CU-01 Registrar venta en caja | Flujo de Cobro de 4 pasos | Vigente |
 | **RNF-SEG-001** | Entrevista 22 sep | CU-04 Consultar proveedores | Control de Acceso y Login de Dueño | Vigente |
 | **RNF-CON-001** | Tipo de Sistema | Todos los casos de uso | Módulo de Bitácora / Auditoría | Vigente |
@@ -481,11 +495,5 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Fecha | Requisito | Qué cambió | Por qué |
 | :--- | :--- | :--- | :--- |
 | 22/09/2026 | Todos | Creación inicial de especificación (v1.0). | Borrador intersemestral |
-| 24/09/2026 | RF-011 | Se añadieron nombre y teléfono como datos obligatorios. | Solicitud explícita del cliente en la entrevista |
-| 24/09/2026 | RF-016 | Incorporación del requisito RF-016 (Liberación en 7 días). | Regla de negocio descubierta en la entrevista |
-| 24/09/2026 | RNF-SEG-001 | Ajuste en origen y prioridad estricta. | El dueño confirmó confidencialidad total de costos ante empleados |
-| 28/09/2026 | RF-001 a RF-017 | Desglose atómico en infinitivo e independización de reglas (RF-009, RF-010, RF-012, RF-017). | Adecuación a la guía de redacción de requisitos (v2.0) |
-| 28/09/2026 | RF-018 | Incorporación del requisito RF-018 (Alta de cliente frecuente) como Imprescindible. | Prerrequisito indispensable confirmado para poder acumular puntos |
-| 28/09/2026 | RF-019 a RF-022 | Adición de RF-019 (Registrar proveedor), RF-020 (Reporte stock bajo umbral), RF-021 (Canjear puntos) y RF-022 (Liquidar apartado). | Alineación al 100% con la Visión del Producto y alcance declarado (v2.2) |
-| 28/09/2026 | RF-015 | Ajuste de verbo a "Consultar reporte..." en RF-015. | Diferenciación entre procesamiento interno y consulta visual de usuario (v2.3) |
-| 28/09/2026 | RF-020, RF-023 | Separación de RF-020 (Generar alerta automática) y adición de RF-023 (Consultar reporte de stock bajo). | Cumplimiento del principio de atomicidad de requisitos (v2.4) |
+| 24/09/2026 | RF-011 | Se añadieron nombre y teléfono como datos obligatorios | Ajuste tras revisión con el cliente |
+| 28/09/2026 | RF-024 | Incorporación del requisito funcional "Modificar stock de productos" (v2.5) | Necesidad de reabastecimiento directo y ajuste manual de inventario |
