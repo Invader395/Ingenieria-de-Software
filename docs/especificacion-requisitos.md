@@ -445,7 +445,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
   1. En el paso 2, si el sistema detecta que la cantidad solicitada supera el stock disponible en base de datos.
   2. El sistema bloquea el agregado del ítem a la lista de venta.
   3. El sistema muestra un mensaje de alerta: *"Stock insuficiente. Disponibles: X unidades"*.
-  4. El cajero ajusta la cantidad al stock disponible o retira el producto del carrito.
+  4. El cajero ajusta la cantidad al stock disponible.
   5. El flujo regresa al paso 5 del Escenario Principal.
 
 - **Flujo Alterno 1a (Producto sin código o ilegible):**
