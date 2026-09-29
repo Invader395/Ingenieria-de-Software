@@ -105,9 +105,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | **Descripción** | El sistema registra un nuevo producto en el catálogo solicitando código de barras, nombre, categoría, precio de venta y stock mínimo. |
 | **Origen** | Confirmado en entrevista con el dueño (Gestión de catálogo). |
 | **Prioridad** | Imprescindible |
-| **Criterio de aceptación** | - Al guardar el producto todos los campos deben estar compeltos.
-- El código del producto debe ser único.
-- Una vez guardado el producto el sistema crea el registro en la base de datos. - Al finalizar el registro la información se despliega en el catálogo general. | **Relacionado con** | RF-004, RF-005, RF-006, RF-020 |
+| **Criterio de aceptación** | - Al guardar el producto todos los campos deben estar compeltos. - El código del producto debe ser único. - Una vez guardado el producto el sistema crea el registro en la base de datos. - Al finalizar el registro la información se despliega en el catálogo general. | **Relacionado con** | RF-004, RF-005, RF-006, RF-020 |
 
 ---
 
