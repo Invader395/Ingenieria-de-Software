@@ -51,10 +51,10 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | :--- | :--- | :--- | :--- |
 | **RF-001** | Iniciar sesión en el sistema | Imprescindible | Derivado de la gestión de turnos y seguridad por rol |
 | **RF-002** | Cerrar sesión en el sistema | Imprescindible | Derivado del control de acceso por turnos |
-| **RF-003** | Alta de productos | Imprescindible | Confirmado en entrevista (Gestión de catálogo) |
-| **RF-004** | Baja de productos | Importante | Confirmado en entrevista (Gestión de catálogo) |
+| **RF-003** | Dar de alta de productos | Imprescindible | Confirmado en entrevista (Gestión de catálogo) |
+| **RF-004** | Dar de baja de productos | Importante | Confirmado en entrevista (Gestión de catálogo) |
 | **RF-005** | Modificar datos de productos | Importante | Confirmado en entrevista (Gestión de catálogo) |
-| **RF-006** | Consulta de productos en stock | Imprescindible | Confirmado en entrevista (Control de existencias) |
+| **RF-006** | Consultar productos en stock | Imprescindible | Confirmado en entrevista (Control de existencias) |
 | **RF-007** | Registrar producto con proveedor | Imprescindible | Confirmado en entrevista (Matriz de costos) |
 | **RF-008** | Registrar venta en caja | Imprescindible | Confirmado en entrevista (Proceso actual 3) |
 | **RF-009** | Descontar existencias de inventario por venta | Imprescindible | Confirmado en entrevista (Proceso actual 3) |
