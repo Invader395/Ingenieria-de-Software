@@ -70,7 +70,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | **RF-019** | Registrar proveedor | Imprescindible | Confirmado en entrevista (Gestión de proveedores) |
 | **RF-020** | Generar alerta automática de stock bajo umbral mínimo | Imprescindible | Declarante en la Visión del Producto |
 | **RF-021** | Canjear puntos de cliente frecuente | Importante | Declarante en la Visión del Producto |
-| **RF-022** | Liquidar pedido apartado | Imprescindible | Confirmado en entrevista (Excepción 1) |
+| **RF-022** | Registrar el pago del pedido apartado | Imprescindible | Confirmado en entrevista (Excepción 1) |
 | **RF-023** | Consultar reporte de productos con stock bajo umbral mínimo | Imprescindible | Declarante en la Visión del Producto |
 
 ---
