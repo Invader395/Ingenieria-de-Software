@@ -361,7 +361,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | :--- | :--- |
 | **Atributo de calidad** | Usabilidad |
 | **Descripción** | El proceso completo de cobro y registro de una venta en mostrador se realiza en menos de cuatro pasos de navegación en la pantalla. |
-| **Métrica** | Un máximo de 4 clics o confirmaciones de teclado desde que se agrega el último producto al carrito hasta la finalización del cobro y despliegue del recibo en pantalla. |
+| **Métrica** | - Un máximo de 4 clics o confirmaciones de teclado desde que se agrega el último producto al carrito hasta la finalización del cobro y despliegue del recibo en pantalla. |
 | **Origen** | Confirmado en entrevista con el dueño (Verificación de Rapidez). |
 | **Prioridad** | Imprescindible |
 | **Por qué importa** | Las ventas se realizan en horas pico con filas en 3 cajas. Si el software requiere más pasos, alentece el cobro y provoca que los empleados abandonen el sistema para anotar en papel. |
@@ -374,7 +374,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | :--- | :--- |
 | **Atributo de calidad** | Seguridad (Control de Acceso) |
 | **Descripción** | El sistema restringe el acceso al catálogo de proveedores, costos de compra y márgenes de ganancia únicamente a usuarios con rol de Administrador/Dueño mediante contraseña. |
-| **Métrica** | 0% de accesos permitidos a vistas de proveedores o costos desde sesiones con rol de Cajero/Empleado. |
+| **Métrica** | - 0% de accesos permitidos a vistas de proveedores o costos desde sesiones con rol de Cajero/Empleado. |
 | **Origen** | Confirmado en entrevista con el dueño (Regla estricta no revelada inicialmente). |
 | **Prioridad** | Imprescindible |
 | **Por qué importa** | El dueño exige confidencialidad absoluta sobre sus márgenes de ganancia y los costos pactados con proveedores para evitar filtraciones o conflictos operativos. |
