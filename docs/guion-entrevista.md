@@ -58,7 +58,7 @@ Si un producto está en el estante pero no tiene código o precio visible, le pe
 
 ---
 
-# Bitácora de entrevista
+# Conclusión de entrevista
 
 **Identificación de dolores (Puntos de dolor del cliente)**
 - **Lentitud y cuellos de botella:** Registro manual en libreta durante horas pico, lo que genera filas largas y cobros lentos en las tres cajas.
