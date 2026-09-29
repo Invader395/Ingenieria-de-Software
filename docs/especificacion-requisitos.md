@@ -51,8 +51,8 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | :--- | :--- | :--- | :--- |
 | **RF-001** | Iniciar sesión en el sistema | Imprescindible | Derivado de la gestión de turnos y seguridad por rol |
 | **RF-002** | Cerrar sesión en el sistema | Imprescindible | Derivado del control de acceso por turnos |
-| **RF-003** | Dar de alta de productos | Imprescindible | Confirmado en entrevista (Gestión de catálogo) |
-| **RF-004** | Dar de baja de productos | Importante | Confirmado en entrevista (Gestión de catálogo) |
+| **RF-003** | Dar de alta productos | Imprescindible | Confirmado en entrevista (Gestión de catálogo) |
+| **RF-004** | Dar de baja productos | Importante | Confirmado en entrevista (Gestión de catálogo) |
 | **RF-005** | Modificar datos de productos | Importante | Confirmado en entrevista (Gestión de catálogo) |
 | **RF-006** | Consultar productos en stock | Imprescindible | Confirmado en entrevista (Control de existencias) |
 | **RF-007** | Registrar producto con proveedor | Imprescindible | Confirmado en entrevista (Matriz de costos) |
@@ -99,7 +99,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 
 ---
 
-#### RF-003 · Alta de productos
+#### RF-003 · Dar de alta productos
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema registra un nuevo producto en el catálogo solicitando código de barras, nombre, categoría, precio de venta y stock mínimo. |
@@ -110,7 +110,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 
 ---
 
-#### RF-004 · Baja de productos
+#### RF-004 · Dar de baja productos
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema deshabilita un producto del catálogo para impedir su selección en ventas futuras manteniendo su historial de transacciones. |
@@ -242,7 +242,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 
 ---
 
-#### RF-016 · Liberar automáticamente mercancía de apartados expirados
+#### RF-016 · Cancelar automáticamente apartados de mercancía expirados
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema cancela los apartados no liquidados tras 7 días naturales y reintegra las unidades reservadas al stock disponible. |
