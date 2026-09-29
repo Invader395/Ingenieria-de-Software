@@ -430,11 +430,11 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 3. Una vez validada la disponibilidad el sistema añade el ítem a la lista de venta.
 4. Una vez que se añade el item se actualiza el subtotal.
 5. El cajero repite el paso 1 para cada producto restante.
-6. El cajero presiona el botón "Finalizar Venta" (Paso 1 del cobro).
+6. El cajero presiona el botón "Finalizar Venta".
 7. El sistema solicita opcionalmente el número telefónico del cliente para acumular/canjear puntos.
 8. Si se registra un número telefónico se continua con el caso de uso **CU-04 Acumulación/Canje de puntos de cliente frecuente**.
-9. El cajero selecciona el método de pago en efectivo e ingresa el monto recibido (Paso 3).
-10. El cajero confirma la transacción presionando "Cobrar" (Paso 4).
+9. El cajero selecciona el método de pago en efectivo e ingresa el monto recibido.
+10. El cajero confirma la transacción presionando "Cobrar".
 11. El sistema descuenta el stock de la base de datos (RF-009).
 12. El sistema evalúa si el nivel de stock activa la alerta automática (RF-020).
 13. El sistema registra la transacción en la bitácora con la fecha, hora e ID de empleado (RNF-CON-001).
