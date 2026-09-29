@@ -2,7 +2,7 @@
 
 **Sistema:** Minimarket Control  
 **Autor:** Julián Guerrero Martínez  
-**Versión:** 2.5  
+**Versión:** 2.6  
 **Fecha de la última actualización:** 28 de septiembre de 2026  
 
 ---
@@ -408,51 +408,212 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 
 ---
 
-### 5.2 Detalle del Caso de Uso Principal: CU-01 Registrar venta en caja
+### 5.2 Detalle de los Casos de Uso del Sistema
+
+#### CU-01 Registrar venta en caja
 
 - **Identificador:** CU-01
 - **Título:** Registrar venta en caja
 - **Actor principal:** Cajero / Empleado
-- **Objetivo:** Registrar los productos adquiridos por un cliente, procesar el cobro, acumular/canjear puntos y descontar las existencias del inventario.
+- **Objetivo:** Registrar los productos adquiridos por un cliente
 - **Precondición:** El cajero ha iniciado sesión en el sistema (RF-001) y se encuentra en la pantalla de Punto de Venta.
 
-#### Escenario Principal (Flujo Feliz):
-1. El cajero escanea el código de barras del primer producto presentado por el cliente.
-2. El sistema valida la disponibilidad de stock (RF-010), añade el ítem a la lista de venta y actualiza el subtotal.
-3. El cajero repite el paso 1 para cada producto restante.
-4. El cajero presiona el botón "Finalizar Venta" (Paso 1 del cobro).
-5. El sistema solicita opcionalmente el número telefónico del cliente para acumular/canjear puntos.
-6. El cajero omite el número o ingresa un teléfono válido y presiona "Continuar a Pago" (Paso 2).
-7. El cajero selecciona el método de pago en efectivo e ingresa el monto recibido (Paso 3).
-8. El cajero confirma la transacción presionando "Cobrar" (Paso 4).
-9. El sistema descuenta el stock de la base de datos (RF-009), evalúa si el nivel activa la alerta de stock crítico (RF-020), registra la transacción en la bitácora con la fecha, hora e ID de empleado, calcula los puntos abonados (RF-013), calcula el cambio y despliega el comprobante.
+##### Escenario Principal (Flujo Feliz):
+1. El cajero escanea el código de barras del producto presentado por el cliente.
+2. El sistema valida la disponibilidad de stock (RF-010).
+3. Una vez validada la disponibilidad el sistema añade el ítem a la lista de venta.
+4. Una vez que se añade el item se actualiza el subtotal.
+5. El cajero repite el paso 1 para cada producto restante.
+6. El cajero presiona el botón "Finalizar Venta" (Paso 1 del cobro).
+7. El sistema solicita opcionalmente el número telefónico del cliente para acumular/canjear puntos.
+8. Si se registra un número telefónico se continua con el caso de uso **CU-03 Gestionar cliente frecuente**.
+9. El cajero selecciona el método de pago en efectivo e ingresa el monto recibido (Paso 3).
+10. El cajero confirma la transacción presionando "Cobrar" (Paso 4).
+11. El sistema descuenta el stock de la base de datos (RF-009).
+12. El sistema evalúa si el nivel de stock activa la alerta automática (RF-020).
+13. El sistema registra la transacción en la bitácora con la fecha, hora e ID de empleado (RNF-CON-001).
+14. El sistema calcula el cambio y despliega el comprobante en pantalla.
 
-#### Flujos Alternos:
-- **Flujo Alterno 2a (Producto sin código o ilegible):**
-  1. En el paso 1, si el producto no tiene código visible o no se puede leer, el cajero solicita al cliente que tome un producto idéntico del estante que sí tenga código legible (regla del negocio).
-  2. El producto dañado/sin código se coloca a un lado para etiquetado o registro de merma (RF-017).
-  3. El cajero escanea el nuevo producto recibido y el flujo continúa en el paso 2.
+##### Flujos Alternos:
+- **Flujo Alterno 2a (Stock insuficiente - RF-010):**
+  1. En el paso 2, si el sistema detecta que la cantidad solicitada supera el stock disponible en base de datos.
+  2. El sistema bloquea el agregado del ítem a la lista de venta.
+  3. El sistema muestra un mensaje de alerta: *"Stock insuficiente. Disponibles: X unidades"*.
+  4. El cajero ajusta la cantidad al stock disponible o retira el producto del carrito.
+  5. El flujo regresa al paso 5 del Escenario Principal.
 
-- **Flujo Alterno 2b (Stock insuficiente - RF-010):**
-  1. En el paso 2, el sistema detecta que la cantidad solicitada supera el stock disponible en base de datos.
-  2. El sistema bloquea el agregado del ítem y muestra un mensaje de alerta: *"Stock insuficiente. Disponibles: X unidades"*.
-  3. El cajero ajusta la cantidad al stock disponible o retira el producto del carrito y el flujo regresa al paso 3.
-
-- **Flujo Alterno 6a (Cliente no registrado solicita alta inmediata - RF-018):**
-  1. En el paso 6, el cajero ingresa el número telefónico proporcionado por el cliente y el sistema indica que no existe.
-  2. El cajero presiona el botón "Registrar cliente".
-  3. El cajero ingresa el nombre completo del cliente y confirma.
-  4. El sistema crea el perfil del cliente (RF-018) y retorna al flujo de cobro manteniendo los productos en el carrito.
-  5. El flujo continúa en el paso 7 procesando los puntos correspondientes a la compra actual (RF-013).
-
-- **Flujo Alterno 6b (Cliente canjea puntos - RF-021):**
-  1. En el paso 6, tras ingresar un teléfono registrado, el sistema muestra el saldo de puntos disponibles.
-  2. El cajero selecciona "Canjear puntos".
-  3. El sistema calcula el descuento equivalente en $MXN y lo resta del total a pagar.
-  4. El flujo continúa en el paso 7 con el importe ajustado.
+- **Flujo Alterno 1a (Producto sin código o ilegible):**
+  1. En el paso 1, si el producto no tiene código visible o no se puede leer.
+  2. El cajero solicita al cliente que tome un producto idéntico del estante que sí tenga código legible.
+  3. El producto dañado/sin código se coloca a un lado para etiquetado o registro de merma (RF-017).
+  4. El cajero escanea el nuevo producto recibido y el flujo continúa en el paso 2 del Escenario Principal.
 
 - **Postcondición:** El inventario de los productos vendidos se actualiza en tiempo real, se actualizan las alertas de stock si corresponde, se genera el registro inmutable en la bitácora y la pantalla queda limpia para la siguiente venta.
-- **Requisitos que realiza:** RF-008, RF-009, RF-010, RF-013, RF-018, RF-020, RF-021, RNF-USA-001, RNF-CON-001.
+- **Requisitos que realiza:** RF-008, RF-009, RF-010, RF-020, RNF-USA-001, RNF-CON-001.
+
+---
+
+#### CU-02 Registrar y liquidar pedido apartado
+
+- **Identificador:** CU-02
+- **Título:** Registrar y liquidar pedido apartado
+- **Actor principal:** Cajero / Empleado
+- **Objetivo:** Guardar un encargo de mercancía reservando el stock o procesar el cobro pendiente de un apartado existente.
+- **Precondición:** El cajero ha iniciado sesión en el sistema (RF-001) y se encuentra en el módulo de apartados.
+
+##### Escenario Principal (Creación de apartado):
+1. El cajero selecciona la opción "Crear nuevo apartado".
+2. El cajero ingresa los productos solicitados por el cliente.
+3. El sistema valida la disponibilidad de stock para cada producto (RF-010).
+4. El cajero ingresa el nombre completo y número telefónico del cliente (RF-011).
+5. El cajero presiona el botón "Guardar apartado".
+6. El sistema genera un folio único con estado "Pendiente de liquidación" y fecha límite de 7 días naturales (RF-011).
+7. El sistema descuenta y reserva las unidades en el inventario para venta directa (RF-012).
+8. El sistema registra el movimiento en la bitácora con la fecha, hora e ID de empleado (RNF-CON-001).
+
+##### Flujos Alternos:
+- **Flujo Alterno 1a (Liquidación de apartado - RF-022):**
+  1. El cajero selecciona la opción "Buscar apartado".
+  2. El cajero ingresa el folio o número telefónico del cliente.
+  3. El sistema despliega el detalle del apartado pendiente y el monto adeudado.
+  4. El cajero confirma la recepción del pago y presiona "Liquidar y entregar".
+  5. El sistema cambia el estado del apartado a "Liquidado/Entregado" (RF-022).
+  6. El sistema registra la venta cobrada asignada al cajero y libera la reserva de la mercancía.
+
+- **Flujo Alterno 6a (Expiración de apartado - RF-016):**
+  1. Al cumplirse las 00:00 horas del octavo día natural sin liquidarse el apartado.
+  2. El sistema cambia automáticamente el estado del apartado a "Expirado" (RF-016).
+  3. El sistema reintegra automáticamente las unidades reservadas al stock disponible para venta directa.
+
+- **Postcondición:** El apartado queda registrado o liquidado en la base de datos y el inventario reflejado correctamente.
+- **Requisitos que realiza:** RF-011, RF-012, RF-016, RF-022, RNF-CON-001.
+
+---
+
+#### CU-03 Gestionar cliente frecuente
+
+- **Identificador:** CU-03
+- **Título:** Gestionar cliente frecuente (Alta, acumulación y canje de puntos)
+- **Actor principal:** Cajero / Empleado
+- **Objetivo:** Registrar un cliente frecuente, acumular puntos por su compra o aplicar canje de puntos como descuento.
+- **Precondición:** El cajero se encuentra dentro del flujo de cobro en caja (CU-01) o en el módulo de clientes.
+
+##### Escenario Principal (Acumulación de puntos):
+1. El sistema solicita el número telefónico de 10 dígitos del cliente.
+2. El cajero ingresa el número telefónico proporcionado.
+3. El sistema valida que el número telefónico pertenece a un cliente frecuente registrado.
+4. El sistema despliega el nombre del cliente y su saldo actual de puntos.
+5. El cajero presiona "Acumular puntos en esta venta".
+6. El sistema calcula 1 punto por cada $10 MXN pagados en el total de la venta (RF-013).
+7. Al confirmarse el pago, el sistema abona los puntos al saldo del cliente y regresa al flujo principal de cobro.
+
+##### Flujos Alternos:
+- **Flujo Alterno 3a (Cliente no registrado / Alta inmediata - RF-018):**
+  1. En el paso 3, si el sistema detecta que el número telefónico no existe.
+  2. El sistema despliega la opción "Registrar cliente frecuente".
+  3. El cajero ingresa el nombre completo del cliente y confirma (RF-018).
+  4. El sistema crea el registro con saldo inicial de 0 puntos.
+  5. El flujo regresa al paso 4 del Escenario Principal.
+
+- **Flujo Alterno 5a (Canje de puntos por descuento - RF-021):**
+  1. En el paso 5, el cliente solicita canjear sus puntos acumulados por dinero.
+  2. El cajero selecciona la opción "Canjear puntos" (RF-021).
+  3. El cajero ingresa la cantidad de puntos a canjear ($\le$ saldo disponible).
+  4. El sistema calcula el equivalente en descuento ($MXN$) y lo resta del total a pagar en la caja.
+  5. El sistema descuenta los puntos utilizados del saldo del cliente.
+  6. El flujo regresa al proceso de cobro en caja con el monto ajustado.
+
+- **Postcondición:** El saldo de puntos del cliente se actualiza en el sistema tras confirmarse la venta.
+- **Requisitos que realiza:** RF-013, RF-018, RF-021, RNF-USA-001.
+
+---
+
+#### CU-04 Gestionar proveedores y consultar comparativa de precios
+
+- **Identificador:** CU-04
+- **Título:** Gestionar proveedores y consultar comparativa de precios
+- **Actor principal:** Dueño / Administrador
+- **Objetivo:** Registrar proveedores, vincular productos con sus costos de compra y comparar tarifas para elegir la mejor opción de reabastecimiento.
+- **Precondición:** El dueño ha iniciado sesión con rol de Administrador (RF-001) y accede al módulo de proveedores.
+
+##### Escenario Principal (Consulta comparativa de precios):
+1. El dueño selecciona la opción "Consultar comparativa de precios".
+2. El dueño busca y selecciona un producto específico del catálogo.
+3. El sistema consulta la matriz histórica de costos registrados para ese producto (RF-014).
+4. El sistema despliega la lista de proveedores que surten el producto, ordenados del costo unitario más bajo al más alto (RF-014).
+5. El dueño revisa las tarifas para seleccionar el proveedor conveniente.
+
+##### Flujos Alternos:
+- **Flujo Alterno 1a (Alta de nuevo proveedor - RF-019):**
+  1. El dueño selecciona "Registrar nuevo proveedor".
+  2. El dueño ingresa el nombre comercial, teléfono de contacto y dirección del proveedor (RF-019).
+  3. El dueño presiona "Guardar proveedor".
+  4. El sistema crea el registro del proveedor en la base de datos.
+
+- **Flujo Alterno 1b (Asignar costo de producto por proveedor - RF-007):**
+  1. El dueño selecciona un proveedor registrado y presiona "Asignar producto".
+  2. El dueño elige el producto e ingresa el costo de compra unitario pactado (RF-007).
+  3. El sistema guarda la relación y el costo histórico en la matriz del producto.
+
+- **Postcondición:** Los datos de proveedores y precios comparativos se mantienen actualizados y restringidos exclusivamente al rol Administrador.
+- **Requisitos que realiza:** RF-007, RF-014, RF-019, RNF-SEG-001.
+
+---
+
+#### CU-05 Consultar reportes de ventas por empleado y stock bajo
+
+- **Identificador:** CU-05
+- **Título:** Consultar reportes de ventas por empleado y stock bajo
+- **Actor principal:** Dueño / Administrador
+- **Objetivo:** Consultar el rendimiento diario de ventas por cada cajero y revisar la lista de productos que requieren reabastecimiento urgente.
+- **Precondición:** El dueño ha iniciado sesión en el sistema (RF-001) y se encuentra en el panel de reportes.
+
+##### Escenario Principal (Reporte diario de ventas por empleado):
+1. El dueño selecciona la opción "Reporte diario de ventas por empleado".
+2. El dueño selecciona una fecha específica en el calendario.
+3. El dueño presiona el botón "Consultar".
+4. El sistema procesa la bitácora de transacciones de la fecha seleccionada.
+5. El sistema despliega en pantalla el desglose por cada cajero: total acumulado ($MXN$), número de operaciones realizadas y promedio de venta (RF-015).
+
+##### Flujos Alternos:
+- **Flujo Alterno 1a (Reporte de productos con stock bajo umbral - RF-023):**
+  1. En el paso 1, el dueño selecciona la opción "Reporte de productos con stock bajo".
+  2. El sistema evalúa el inventario general buscando ítems con existencia $\le$ stock mínimo.
+  3. El sistema despliega en pantalla la lista de productos críticos indicando el stock actual, el umbral mínimo y las unidades faltantes sugeridas para reabastecer (RF-023).
+
+- **Postcondición:** Los datos consultados se muestran en pantalla para la toma de decisiones sin alterar los registros existentes.
+- **Requisitos que realiza:** RF-015, RF-023, RNF-CON-001.
+
+---
+
+#### CU-06 Gestionar mermas, modificaciones de stock y cancelaciones de apartados
+
+- **Identificador:** CU-06
+- **Título:** Gestionar mermas, modificaciones de stock y cancelaciones de apartados
+- **Actor principal:** Dueño / Administrador / Cajero
+- **Objetivo:** Registrar pérdidas de mercancía por daño o caducidad y ajustar manualmente las existencias de productos en inventario.
+- **Precondición:** El usuario ha iniciado sesión con las credenciales correspondientes y accede al módulo de inventarios.
+
+##### Escenario Principal (Registro de merma de producto):
+1. El usuario selecciona la opción "Registrar merma".
+2. El usuario busca y selecciona el producto dañado o caducado.
+3. El usuario ingresa la cantidad de unidades afectadas y justifica el motivo (RF-017).
+4. El usuario presiona el botón "Guardar merma".
+5. El sistema descuenta las unidades mermadas del inventario total (RF-017).
+6. El sistema evalúa si el nuevo nivel de stock activa la alerta automática de stock bajo (RF-020).
+7. El sistema guarda la transacción inmutable en la bitácora de auditoría con la marca de tiempo e ID de usuario (RNF-CON-001).
+
+##### Flujos Alternos:
+- **Flujo Alterno 1a (Modificar/Ajustar stock de productos - RF-024):**
+  1. En el paso 1, el usuario selecciona "Modificar/Ajustar stock".
+  2. El usuario busca el producto y captura la nueva cantidad de existencias reales o el incremento por reabastecimiento (RF-024).
+  3. El usuario ingresa el motivo del ajuste.
+  4. El sistema actualiza las existencias en la base de datos.
+  5. El sistema recalcula y actualiza las alertas automáticas de stock mínimo (RF-020).
+  6. El sistema registra el ajuste en la bitácora de auditoría (RNF-CON-001).
+
+- **Postcondición:** El inventario físico queda sincronizado con el inventario del sistema y registrado en la bitácora inmutable.
+- **Requisitos que realiza:** RF-017, RF-020, RF-024, RNF-CON-001.
 
 ---
 
@@ -460,31 +621,31 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 
 | Requisito | Origen | Caso de uso | Elemento del prototipo | Estado |
 | :--- | :--- | :--- | :--- | :--- |
-| **RF-001** | Derivado de seguridad | CU-01 Registrar venta en caja | Pantalla Login / Autenticación | Vigente |
+| **RF-001** | Derivado de seguridad | CU-01, CU-02, CU-04, CU-05 | Pantalla Login / Autenticación | Vigente |
 | **RF-002** | Derivado de seguridad | CU-01 Registrar venta en caja | Botón / Menú Cerrar Sesión | Vigente |
 | **RF-003** | Entrevista 22 sep | CU-03 Gestión de catálogo | Modal Alta de Producto | Vigente |
 | **RF-004** | Entrevista 22 sep | CU-03 Gestión de catálogo | Tabla Catálogo / Acciones | Vigente |
 | **RF-005** | Entrevista 22 sep | CU-03 Gestión de catálogo | Modal Editar Producto | Vigente |
-| **RF-006** | Entrevista 22 sep | CU-01, CU-03 | Buscador de Inventario / Alerta Stock | Vigente |
+| **RF-006** | Entrevista 22 sep | CU-01, CU-03, CU-05, CU-06 | Buscador de Inventario / Alerta Stock | Vigente |
 | **RF-007** | Entrevista 22 sep | CU-04 Consultar proveedores | Matriz Proveedor-Producto | Vigente |
 | **RF-008** | Entrevista 22 sep | CU-01 Registrar venta en caja | Pantalla Punto de Venta / Cobro | Vigente |
 | **RF-009** | Entrevista 22 sep | CU-01 Registrar venta en caja | Contador de Inventario en BD | Vigente |
-| **RF-010** | Entrevista 22 sep | CU-01 Registrar venta en caja | Alerta Modal de Stock Insuficiente | Vigente |
+| **RF-010** | Entrevista 22 sep | CU-01, CU-02 | Alerta Modal de Stock Insuficiente | Vigente |
 | **RF-011** | Entrevista 22 sep | CU-02 Registrar pedido apartado | Pantalla Módulo de Apartados | Vigente |
 | **RF-012** | Entrevista 22 sep | CU-02 Registrar pedido apartado | Indicador Stock Reservado | Vigente |
 | **RF-013** | Entrevista 22 sep | CU-01, CU-03 | Modal Cliente Frecuente en Caja | Vigente |
 | **RF-014** | Entrevista 22 sep | CU-04 Consultar proveedores | Pantalla Comparativa de Precios | Vigente |
 | **RF-015** | Entrevista 22 sep | CU-05 Consultar reportes | Dashboard de Reportes / Ventas | Vigente |
-| **RF-016** | Entrevista 22 sep | CU-06 Gestionar inventario | Tabla de Apartados Expirados | Vigente |
+| **RF-016** | Entrevista 22 sep | CU-02, CU-06 | Tabla de Apartados Expirados | Vigente |
 | **RF-017** | Derivado de inventario | CU-06 Gestionar mermas | Formulario de Registro de Merma | Vigente |
 | **RF-018** | Entrevista 22 sep | CU-01, CU-03 | Modal Alta Rápida de Cliente | Vigente |
 | **RF-019** | Visión del producto | CU-04 Consultar proveedores | Modal Registrar Proveedor | Vigente |
-| **RF-020** | Visión del producto | CU-01, CU-03, CU-05 | Badge / Indicador de Alerta de Stock Crítico | Vigente |
+| **RF-020** | Visión del producto | CU-01, CU-05, CU-06 | Badge / Indicador de Alerta de Stock Crítico | Vigente |
 | **RF-021** | Visión del producto | CU-01, CU-03 | Opción Canje de Puntos en Caja | Vigente |
 | **RF-022** | Entrevista 22 sep | CU-02 Registrar pedido apartado | Modal Cobro / Liquidar Apartado | Vigente |
 | **RF-023** | Visión del producto | CU-05 Consultar reportes | Reporte de Reabastecimiento / Umbral | Vigente |
 | **RF-024** | Entrevista 28 sep | CU-06 Gestionar inventario | Formulario / Modal Modificar Stock | Vigente |
-| **RNF-USA-001** | Entrevista 22 sep | CU-01 Registrar venta en caja | Flujo de Cobro de 4 pasos | Vigente |
+| **RNF-USA-001** | Entrevista 22 sep | CU-01, CU-03 | Flujo de Cobro de 4 pasos | Vigente |
 | **RNF-SEG-001** | Entrevista 22 sep | CU-04 Consultar proveedores | Control de Acceso y Login de Dueño | Vigente |
 | **RNF-CON-001** | Tipo de Sistema | Todos los casos de uso | Módulo de Bitácora / Auditoría | Vigente |
 
@@ -497,3 +658,4 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | 22/09/2026 | Todos | Creación inicial de especificación (v1.0). | Borrador intersemestral |
 | 24/09/2026 | RF-011 | Se añadieron nombre y teléfono como datos obligatorios | Ajuste tras revisión con el cliente |
 | 28/09/2026 | RF-024 | Incorporación del requisito funcional "Modificar stock de productos" (v2.5) | Necesidad de reabastecimiento directo y ajuste manual de inventario |
+| 28/09/2026 | Casos de Uso | Reestructuración completa de los Casos de Uso CU-01 al CU-06 (v2.6) | Adaptación a la estructura paso a paso simplificada |
