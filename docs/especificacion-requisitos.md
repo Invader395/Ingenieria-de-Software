@@ -64,7 +64,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | **RF-013** | Acumular puntos para cliente frecuente | Importante | Confirmado en entrevista (Verificación Puntos) |
 | **RF-014** | Consultar comparativa de precios de proveedores | Imprescindible | Confirmado en entrevista (Proceso actual 2) |
 | **RF-015** | Consultar reporte diario de ventas por empleado | Imprescindible | Confirmado en entrevista (Proceso actual 3) |
-| **RF-016** | Liberar automáticamente mercancía de apartados expirados | Importante | Descubrimiento en entrevista (Límite 7 días) |
+| **RF-016** | Cancelar automáticamente apartados de mercancía expirados | Importante | Descubrimiento en entrevista (Límite 7 días) |
 | **RF-017** | Registrar merma de productos | Importante | Derivado del control de inventario y pérdidas |
 | **RF-018** | Registrar alta de cliente frecuente | Imprescindible | Confirmado en entrevista (Prerrequisito de puntos) |
 | **RF-019** | Registrar proveedor | Imprescindible | Confirmado en entrevista (Gestión de proveedores) |
