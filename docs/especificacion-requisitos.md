@@ -387,7 +387,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | :--- | :--- |
 | **Atributo de calidad** | Confiabilidad (Trazabilidad e Integridad de datos) |
 | **Descripción** | Todo movimiento de inventario, registro de apartado, ajuste manual de stock o venta almacena automáticamente fecha, hora exacta y el identificador del empleado en turno, impidiendo la modificación posterior del registro. |
-| **Métrica** | 100% de las transacciones guardan marca de tiempo ($1\text{ segundo}$ de precisión) e ID de empleado, bloqueando comandos de alteración (UPDATE/DELETE) en la tabla de bitácora. |
+| **Métrica** | - 100% de las transacciones guardan marca de tiempo ($1\text{ segundo}$ de precisión) e ID de empleado.<br>- Se bloquean los comandos de alteración (UPDATE/DELETE) en la tabla de bitácora. |
 | **Origen** | Derivado del tipo de sistema (Sistemas de Información). |
 | **Prioridad** | Imprescindible |
 | **Por qué importa** | Elimina la incertidumbre sobre descuadres de caja y discrepancias de mercancía, permitiendo auditorías objetivas sin depender de memorias. |
