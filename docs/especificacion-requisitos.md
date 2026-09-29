@@ -402,15 +402,19 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 1. **CU-01:** Registrar venta en caja (Caso de uso principal detallado)
 2. **CU-02:** Registrar pedido apartado
 3. **CU-03:** Liquidar pedido apartado
-4. **CU-03:** Alta de cliente frecuente
-5. **CU-04:** Acumulación/Canje de puntos de cliente frecuente
-6. **CU-05:** Alta de proveedores
-7. **CU-06:** Consultar comparativa de precios de proveedores
-8. **CU-07:** Consultar reportes de ventas por empleado
-9. **CU-08:** Consultar detalles de stock bajo de productos
-10. **CU-09:** Gestionar mermas de stock
-11. **CU-10:** Modificaciones de stock
-12. **CU-11:** Cancelaciones de apartados
+4. **CU-04:** Dar de alta a cliente frecuente
+5. **CU-05:** Acumular puntos de cliente frecuente
+6. **CU-06:** Canjear puntos de cliente frecuente
+7. **CU-07:** Alta de proveedores
+8. **CU-08:** Consultar comparativa de precios de proveedores
+9. **CU-09:** Consultar reporte de ventas por empleado
+10. **CU-10:** Notificar producto con stock por debajo del umbral especificado
+11. **CU-11:** Consultar detalle de productos con stock bajo
+12. **CU-12:** Registrar merma de productos
+13. **CU-13:** Modificar stock de productos
+14. **CU-14:** Cancelar apartado de productos
+15. **CU-15:** Descontar stock de producto
+16. **CU-16:** Mostrar comprobante en pantalla
 
 ---
 
@@ -421,7 +425,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 - **Identificador:** CU-01
 - **Título:** Registrar venta en caja
 - **Actor principal:** Cajero / Empleado
-- **Objetivo:** Registrar los productos adquiridos por un cliente
+- **Objetivo:** Registrar la venta de productos a un cliente
 - **Precondición:** El cajero ha iniciado sesión en el sistema (RF-001) y se encuentra en la pantalla de Punto de Venta.
 
 ##### Escenario Principal (Flujo Feliz):
@@ -432,27 +436,39 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 5. El cajero repite el paso 1 para cada producto restante.
 6. El cajero presiona el botón "Finalizar Venta".
 7. El sistema solicita opcionalmente el número telefónico del cliente para acumular/canjear puntos.
-8. Si se registra un número telefónico se continua con el caso de uso **CU-04 Acumulación/Canje de puntos de cliente frecuente**.
+8. Si se registra un número telefónico se continua con el caso de uso **CU-05 Acumular puntos de cliente frecuente**.
 9. El cajero selecciona el método de pago en efectivo e ingresa el monto recibido.
 10. El cajero confirma la transacción presionando "Cobrar".
-11. El sistema descuenta el stock de la base de datos (RF-009).
-12. El sistema evalúa si el nivel de stock activa la alerta automática (RF-020).
+11. El sistema continua con el caso de uso **CU-14 Descontar stock de producto**.
+12. El sistema evalúa si el nivel de stock activa la alerta automática.
 13. El sistema registra la transacción en la bitácora con la fecha, hora e ID de empleado (RNF-CON-001).
-14. El sistema calcula el cambio y despliega el comprobante en pantalla.
+14. El sistema calcula el cambio y continua con el caso de uso  **CU-15 Mostrar comprobante en pantalla**..
 
 ##### Flujos Alternos:
-- **Flujo Alterno 2a (Stock insuficiente - RF-010):**
-  1. En el paso 2, si el sistema detecta que la cantidad solicitada supera el stock disponible en base de datos.
+- **Flujo Alterno 1.1 (Producto sin código o ilegible):**
+  1. Si el producto no tiene código visible o no se puede leer.
+  2. El cliente presenta otro producto con código legible.
+  3. El cajero escanea el nuevo producto recibido y el flujo continúa en el paso 2 del Escenario Principal.
+
+- **Flujo Alterno 1.2.1 (No hay otro producto con código legible):**
+  1. Si el cliente no presenta otro producto con código legible.
+  3. El cajero escanea el siguiente producto recibido y el flujo continúa en el paso 2 del Escenario Principal.
+
+- **Flujo Alterno 2.1 (Stock insuficiente - RF-010):**
+  1. Si el sistema detecta que la cantidad solicitada supera el stock disponible en base de datos.
   2. El sistema bloquea el agregado del ítem a la lista de venta.
   3. El sistema muestra un mensaje de alerta: *"Stock insuficiente. Disponibles: X unidades"*.
   4. El cajero ajusta la cantidad al stock disponible.
   5. El flujo regresa al paso 5 del Escenario Principal.
 
-- **Flujo Alterno 1a (Producto sin código o ilegible):**
-  1. En el paso 1, si el producto no tiene código visible o no se puede leer.
-  2. El cajero solicita al cliente que tome un producto idéntico del estante que sí tenga código legible.
-  3. El producto dañado/sin código se coloca a un lado para etiquetado o registro de merma (RF-017).
-  4. El cajero escanea el nuevo producto recibido y el flujo continúa en el paso 2 del Escenario Principal.
+- **Flujo Alterno 2.4.1 (No hay stock disponible):**
+  1. Si no hay stock disponible.
+  2. El sistema retira el producto de la venta.
+  3. El flujo regresa al paso 5 del Escenario Principal.
+
+- **Flujo Alterno 12.1:**
+  1. Si el stock esta por debajo del umbral especificado.
+  2. Se continua con el caso de uso **CU-10: Notificar producto con stock por debajo del umbral especificado**
 
 - **Postcondición:** El inventario de los productos vendidos se actualiza en tiempo real, se actualizan las alertas de stock si corresponde, se genera el registro inmutable en la bitácora y la pantalla queda limpia para la siguiente venta.
 - **Requisitos que realiza:** RF-008, RF-009, RF-010, RF-020, RNF-USA-001, RNF-CON-001.
