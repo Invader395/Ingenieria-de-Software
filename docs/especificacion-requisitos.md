@@ -361,7 +361,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | :--- | :--- |
 | **Atributo de calidad** | Usabilidad |
 | **Descripción** | El proceso completo de cobro y registro de una venta en mostrador se realiza en menos de cuatro pasos de navegación en la pantalla. |
-| **Métrica** | - Un máximo de 4 clics o confirmaciones de teclado desde que se agrega el último producto al carrito hasta la finalización del cobro y despliegue del recibo en pantalla. |
+| **Métrica** | - Un máximo de 4 clics o confirmaciones de teclado desde que se agrega el último producto al carrito hasta la finalización del cobro.<br>- Un máximo de 4 clics o confirmaciones de teclado desde que se agrega el último producto al carrito hasta la finalización del cobro despliegue del recibo en pantalla. |
 | **Origen** | Confirmado en entrevista con el dueño (Verificación de Rapidez). |
 | **Prioridad** | Imprescindible |
 | **Por qué importa** | Las ventas se realizan en horas pico con filas en 3 cajas. Si el software requiere más pasos, alentece el cobro y provoca que los empleados abandonen el sistema para anotar en papel. |
