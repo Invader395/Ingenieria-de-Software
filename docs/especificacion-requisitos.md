@@ -20,7 +20,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 - Generación automática de alertas de stock mínimo y consulta de reportes de productos por reabastecer.
 - Catálogo de proveedores con registro de datos de contacto e historial de precios de compra por producto para comparación de tarifas.
 - Registro de ventas realizadas en caja asociadas automáticamente al empleado en turno.
-- Gestión de clientes frecuentes (alta de cliente por teléfono, acumulación y canje de puntos), permitiendo también ventas anónimas.
+- Gestión de clientes frecuentes (alta de cliente por teléfono, acumulación de puntos en ventas y en la liquidación de apartados, y canje de puntos), permitiendo también ventas y liquidaciones de apartados sin acumular puntos.
 - Creación, consulta, liquidación y entrega de pedidos apartados con reserva inmediata de mercancía por un plazo máximo de 7 días naturales.
 - Consulta de reporte diario consolidado de ventas por empleado.
 
@@ -217,7 +217,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | **Descripción** | El sistema calcula y suma puntos en el saldo del cliente en función del importe efectivamente cobrado al ingresar su número telefónico. |
 | **Origen** | Confirmado en entrevista con el dueño (Verificación Puntos). |
 | **Prioridad** | Importante |
-| **Criterio de aceptación** | - Al ingresar un número telefónico registrado durante el cobro, el sistema abona 1 punto por cada $10 MXN completos del importe efectivamente cobrado.<br>- Los puntos calculados se suman al saldo acumulado del cliente en la base de datos.<br>- Las ventas anónimas no acumulan puntos.<br>- Si el número no existe, el sistema permite procesar la venta como anónima o iniciar el alta del cliente (RF-018) sin detener la transacción.<br>- La liquidación de un pedido apartado no genera puntos. |
+| **Criterio de aceptación** | - Al ingresar un número telefónico registrado durante el cobro, el sistema abona 1 punto por cada $10 MXN completos del importe efectivamente cobrado.<br>- Los puntos calculados se suman al saldo acumulado del cliente en la base de datos.<br>- Las ventas anónimas no acumulan puntos.<br>- Si el número no existe, el sistema permite procesar la venta como anónima o iniciar el alta del cliente (RF-018) sin detener la transacción.<br>- La liquidación de un apartado acumula puntos conforme a RF-022. |
 | **Relacionado con** | RF-008, RF-018, RF-021, RF-022, RNF-USA-001 |
 
 ---
@@ -313,11 +313,11 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 #### RF-022 · Liquidar pedido apartado
 | Campo | Contenido |
 | :--- | :--- |
-| **Descripción** | El sistema registra el pago del saldo pendiente de un pedido apartado, cambiando su estado a "Liquidado" y permitiendo la entrega de la mercancía reservada. |
+| **Descripción** | El sistema registra el pago del saldo pendiente de un pedido apartado, cambiando su estado a "Liquidado" y permitiendo la entrega de la mercancía reservada. Opcionalmente, si el cliente proporciona su número telefónico, la liquidación acumula puntos como en una venta. |
 | **Origen** | Confirmado en entrevista con el dueño (Excepción 1). |
 | **Prioridad** | Imprescindible |
-| **Criterio de aceptación** | - El sistema permite buscar el apartado vigente mediante su folio o número telefónico del cliente.<br>- El sistema solo permite liquidar apartados en estado "Pendiente de liquidación".<br>- Al confirmar el cobro de la cantidad adeudada, el sistema cambia el estado del pedido a "Liquidado".<br>- El sistema registra la venta cobrada asignándola al cajero en turno.<br>- El sistema libera el registro de reserva de la mercancía.<br>- La liquidación del apartado no genera puntos para el cliente frecuente. |
-| **Relacionado con** | RF-008, RF-011, RF-012, RF-013, RF-016, RNF-CON-001 |
+| **Criterio de aceptación** | - Antes de confirmar el cobro, el sistema solicita opcionalmente el número telefónico del cliente para acumular puntos.<br>- Si se ingresa un número registrado, el sistema abona 1 punto por cada $10 MXN completos del importe efectivamente cobrado en la liquidación (RF-013).<br>- Si el número no está registrado, el sistema permite liquidar sin acumular puntos o iniciar el alta del cliente (RF-018) sin detener la transacción.<br>- Si no se proporciona número telefónico, la liquidación continúa sin acumular puntos.<br>- Los puntos se abonan solo al confirmarse la liquidación. Un apartado expirado (RF-016) no genera puntos.|
+| **Relacionado con** | RF-008, RF-011, RF-012, RF-013, RF-016, RF-018, RNF-CON-001 |
 
 ---
 
