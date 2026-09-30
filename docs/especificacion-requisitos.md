@@ -406,7 +406,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 5. **CU-05:** Acumular puntos de cliente frecuente
 6. **CU-06:** Canjear puntos de cliente frecuente
 7. **CU-07:** Dar de alta a proveedor
-8. **CU-08:** Consultar comparativa de precios de proveedores
+8. **CU-08:** Consultar la comparativa de precios de proveedores
 9. **CU-09:** Consultar reporte de ventas por empleado
 10. **CU-10:** Notificar producto con stock por debajo del umbral especificado
 11. **CU-11:** Consultar detalle de productos con stock bajo
