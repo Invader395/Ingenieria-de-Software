@@ -73,6 +73,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | **RF-022** | Registrar el pago del pedido apartado | Imprescindible | Confirmado en entrevista (Excepción 1) |
 | **RF-023** | Consultar reporte de productos con stock bajo umbral mínimo | Imprescindible | Declarante en la Visión del Producto |
 | **RF-024** | Modificar stock de productos | Imprescindible | Confirmado en entrevista (Ajuste/Reabastecimiento de inventario) |
+| **RF-025** | Consultar puntos de cliente frecuente | Imprescindible | Confirmado en entrevista |
 
 ---
 
@@ -392,6 +393,18 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | **Prioridad** | Imprescindible |
 | **Por qué importa** | Elimina la incertidumbre sobre descuadres de caja y discrepancias de mercancía, permitiendo auditorías objetivas sin depender de memorias. |
 | **Afecta a** | RF-002, RF-008, RF-009, RF-011, RF-015, RF-016, RF-017, RF-022, RF-024 |
+
+---
+
+#### RF-025 · Consultar puntos de cliente frecuente
+
+| Campo | Contenido |
+| :--- | :--- |
+| **Descripción** | El sistema muestra el saldo de puntos acumulados de un cliente frecuente al ingresar su número telefónico, sin necesidad de iniciar una venta. |
+| **Origen** | Confirmado con el dueño (29 sep); mencionado en RF-018 ("acumulación y consulta de puntos"). |
+| **Prioridad** | Importante |
+| **Criterio de aceptación** | - Al ingresar un número telefónico de 10 dígitos registrado, el sistema despliega el nombre completo y el saldo actual de puntos.<br>- Si el número telefónico no está registrado, el sistema informa que el cliente no existe.<br>- Si el formato del número no es válido, el sistema no realiza la búsqueda e indica el error. |
+| **Relacionado con** | RF-013, RF-018, RF-021 |
 
 ---
 
