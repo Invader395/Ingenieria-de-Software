@@ -327,7 +327,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | **Descripción** | El sistema permite al usuario autenticado consultar en pantalla un listado con todos los productos cuya existencia disponible sea menor o igual a su umbral mínimo, indicando la cantidad faltante para reabastecer. |
 | **Origen** | Declarante explícito en la Visión del Producto (Sección Alcance). |
 | **Prioridad** | Imprescindible |
-| **Criterio de aceptación** | - Al presionar "Ver productos con stock bajo" en el panel de reportes, el sistema filtra los productos con stock $\le$ stock mínimo.<br>- El sistema despliega una tabla con el código de producto, nombre y stock actual.<br>- La vista muestra el stock mínimo configurado para cada producto.<br>- El sistema calcula y despliega las unidades faltantes sugeridas para reabastecer cada ítem. |
+| **Criterio de aceptación** | - Al presionar "Ver productos con stock bajo" en el panel de reportes, el sistema filtra los productos con stock $\le$ stock mínimo especificado.<br>- El sistema despliega una tabla con el código de producto, nombre y stock actual.<br>- La vista muestra el stock mínimo configurado para cada producto.<br>- El sistema calcula y despliega las unidades faltantes sugeridas para reabastecer cada ítem. |
 | **Relacionado con** | RF-006, RF-020 |
 
 ---
