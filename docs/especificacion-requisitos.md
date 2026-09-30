@@ -427,6 +427,8 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 14. **CU-14:** Cancelar apartado de productos
 15. **CU-15:** Descontar stock de producto
 16. **CU-16:** Mostrar comprobante en pantalla
+17. **CU-17:** Dar de alta productos
+18. **CU-18:** Registrar producto con proveedor
 
 ---
 
