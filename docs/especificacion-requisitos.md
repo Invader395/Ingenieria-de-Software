@@ -348,7 +348,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema muestra el saldo de puntos acumulados de un cliente frecuente al ingresar su número telefónico, sin necesidad de iniciar una venta. |
-| **Origen** | Confirmado con el dueño (29 sep); mencionado en RF-018 ("acumulación y consulta de puntos"). |
+| **Origen** | Confirmado en entrevista. |
 | **Prioridad** | Importante |
 | **Criterio de aceptación** | - Al ingresar un número telefónico de 10 dígitos registrado, el sistema despliega el nombre completo y el saldo actual de puntos.<br>- Si el número telefónico no está registrado, el sistema informa que el cliente no existe.<br>- Si el formato del número no es válido, el sistema no realiza la búsqueda e indica el error. |
 | **Relacionado con** | RF-013, RF-018, RF-021 |
