@@ -361,7 +361,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | ID | Atributo | Nombre | Prioridad | Origen |
 | :--- | :--- | :--- | :--- | :--- |
 | **RNF-USA-001** | Usabilidad | Pasos máximos para el proceso de cobro | Imprescindible | Visión del Producto y confirmación en entrevista |
-| **RNF-SEG-001** | Seguridad | Restricción de acceso a costos por roles | Imprescindible | Confirmado en entrevista (Regla estricta de privacidad) |
+| **RNF-SEG-001** | Seguridad | Restricción de acceso a información confidencial | Imprescindible | Confirmado en entrevista (Regla estricta de privacidad) |
 | **RNF-CON-001** | Confiabilidad / Trazabilidad | Registro inmutable de auditoría por transacción | Imprescindible | Derivado del tipo de sistema (Sistemas de Información) |
 
 ---
@@ -372,25 +372,25 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Atributo de calidad** | Usabilidad |
-| **Descripción** | El proceso completo de cobro y registro de una venta en mostrador se realiza en menos de cuatro pasos de navegación en la pantalla. |
-| **Métrica** | - Un máximo de 4 clics o confirmaciones de teclado desde que se agrega el último producto al carrito hasta la finalización del cobro y despliegue del recibo en pantalla. |
+| **Descripción** | El proceso completo de cobro y registro de una venta en mostrador se realiza en un máximo de cuatro pasos de navegación desde que se encuentra preparada la lista de productos hasta la finalización del cobro y despliegue del comprobante. |
+| **Métrica** | - Un máximo de 4 clics o confirmaciones de teclado desde que se agrega el último producto al carrito hasta la finalización del cobro.<br>- Despliegue del recibo en pantalla en menos de 1 segundo tras confirmar la transacción. |
 | **Origen** | Confirmado en entrevista con el dueño (Verificación de Rapidez). |
 | **Prioridad** | Imprescindible |
-| **Por qué importa** | Las ventas se realizan en horas pico con filas en 3 cajas. Si el software requiere más pasos, alentece el cobro y provoca que los empleados abandonen el sistema para anotar en papel. |
-| **Afecta a** | RF-008, RF-013, RF-018, RF-021 |
+| **Por qué importa** | Las ventas se realizan en horas pico con filas en 3 cajas. Si el software requiere demasiados pasos, alentece el cobro y puede provocar que los empleados abandonen el sistema para anotar en papel. |
+| **Afecta a** | RF-008, RF-013, RF-018, RF-021, RF-022 |
 
 ---
 
-#### RNF-SEG-001 · Restricción de acceso a costos por roles
+#### RNF-SEG-001 · Restricción de acceso a información confidencial
 | Campo | Contenido |
 | :--- | :--- |
 | **Atributo de calidad** | Seguridad (Control de Acceso) |
-| **Descripción** | El sistema restringe el acceso al catálogo de proveedores, costos de compra y márgenes de ganancia únicamente a usuarios con rol de Administrador/Dueño mediante contraseña. |
-| **Métrica** | - 0% de accesos permitidos a vistas de proveedores o costos desde sesiones con rol de Cajero/Empleado. |
-| **Origen** | Confirmado en entrevista con el dueño (Regla estricta no revelada inicialmente). |
+| **Descripción** | El sistema restringe el acceso a proveedores, costos de compra, márgenes de ganancia y reporte de ventas por empleado únicamente a usuarios con rol de Administrador mediante autenticación. |
+| **Métrica** | - 0% de accesos permitidos a vistas de proveedores, costos o márgenes desde sesiones con rol de Cajero.<br>- 0% de accesos permitidos al reporte de ventas por empleado desde sesiones con rol de Cajero. |
+| **Origen** | Confirmado en entrevista con el dueño (Regla estricta de privacidad). |
 | **Prioridad** | Imprescindible |
-| **Por qué importa** | El dueño exige confidencialidad absoluta sobre sus márgenes de ganancia y los costos pactados con proveedores para evitar filtraciones o conflictos operativos. |
-| **Afecta a** | RF-001, RF-007, RF-014, RF-019 |
+| **Por qué importa** | El dueño exige confidencialidad sobre sus márgenes de ganancia, costos pactados con proveedores y datos de desempeño individual de los empleados. |
+| **Afecta a** | RF-001, RF-007, RF-014, RF-015, RF-019 |
 
 ---
 
@@ -398,12 +398,12 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Atributo de calidad** | Confiabilidad (Trazabilidad e Integridad de datos) |
-| **Descripción** | Todo movimiento de inventario, registro de apartado, ajuste manual de stock o venta almacena automáticamente fecha, hora exacta y el identificador del empleado en turno, impidiendo la modificación posterior del registro. |
-| **Métrica** | - 100% de las transacciones guardan marca de tiempo ($1\text{ segundo}$ de precisión) e ID de empleado.<br>- Se bloquean los comandos de alteración (UPDATE/DELETE) en la tabla de bitácora. |
+| **Descripción** | Todo movimiento relevante del sistema almacena automáticamente fecha, hora exacta y el identificador del empleado en turno, impidiendo la modificación o eliminación posterior del registro. |
+| **Métrica** | - 100% de las transacciones guardan marca de tiempo (precisión de 1 segundo) e ID de empleado.<br>- Se bloquean los comandos de alteración (UPDATE / DELETE) en la tabla de bitácora.<br>- Las modificaciones de productos, ajustes de stock y mermas quedan registradas en un tiempo máximo de 1 segundo tras ejecutarse la acción. |
 | **Origen** | Derivado del tipo de sistema (Sistemas de Información). |
 | **Prioridad** | Imprescindible |
-| **Por qué importa** | Elimina la incertidumbre sobre descuadres de caja y discrepancias de mercancía, permitiendo auditorías objetivas sin depender de memorias. |
-| **Afecta a** | RF-002, RF-008, RF-009, RF-011, RF-015, RF-016, RF-017, RF-022, RF-024 |
+| **Por qué importa** | Permite identificar el origen de movimientos de inventario, descuadres de caja y discrepancias de mercancía sin depender de registros manuales. |
+| **Afecta a** | RF-002, RF-005, RF-008, RF-009, RF-011, RF-015, RF-016, RF-017, RF-022, RF-024 |
 
 ---
 
@@ -434,53 +434,87 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 
 #### CU-01 Registrar venta en caja
 
-- **Identificador:** CU-01
-- **Título:** Registrar venta en caja
-- **Actor principal:** Cajero / Empleado
-- **Objetivo:** Registrar la venta de productos a un cliente
-- **Precondición:** El cajero ha iniciado sesión en el sistema (RF-001) y se encuentra en la pantalla de Punto de Venta.
+- **Actor principal:** Cajero
+- **Objetivo:** Registrar la venta de productos a un cliente.
+- **Precondición:** El cajero ha iniciado sesión (RF-001) y se encuentra en la pantalla de Punto de Venta.
+- **Postcondición:** La venta queda registrada, el stock se actualiza, las alertas se recalculan y se muestra el comprobante en pantalla.
+- **Requisitos:** RF-008, RF-009, RF-010, RF-020, RNF-USA-001, RNF-CON-001.
 
 ##### Escenario Principal (Flujo Feliz):
-1. El cajero escanea el código de barras del producto presentado por el cliente.
+1. El cajero escanea el código de barras del producto presentado por el cliente (RF-008).
 2. El sistema valida la disponibilidad de stock (RF-010).
-3. Una vez validada la disponibilidad el sistema añade el ítem a la lista de venta.
-4. Una vez que se añade el item se actualiza el subtotal.
-5. El cajero repite el paso 1 para cada producto restante.
-6. El cajero presiona el botón "Finalizar Venta".
-7. El sistema solicita opcionalmente el número telefónico del cliente para acumular/canjear puntos.
-8. Si se registra un número telefónico se continua con el caso de uso **CU-05 Acumular puntos de cliente frecuente**.
-9. El cajero selecciona el método de pago en efectivo e ingresa el monto recibido.
-10. El cajero confirma la transacción presionando "Cobrar".
-11. El sistema continua con el caso de uso **CU-14 Descontar stock de producto**.
-12. El sistema evalúa si el nivel de stock activa la alerta automática.
-13. El sistema registra la transacción en la bitácora con la fecha, hora e ID de empleado (RNF-CON-001).
-14. El sistema calcula el cambio y continua con el caso de uso  **CU-15 Mostrar comprobante en pantalla**..
+3. Una vez validada la disponibilidad, el sistema añade el ítem a la lista de venta.
+4. El sistema actualiza el subtotal en pantalla.
+5. El cajero repite los pasos 1 al 4 para cada producto restante.
+6. El cajero presiona el botón "Finalizar Venta" (RNF-USA-001).
+7. El sistema solicita opcionalmente el número telefónico del cliente para acumular o canjear puntos (RF-020).
+8. Si se ingresa un número de cliente registrado, el sistema muestra el saldo de puntos y se permite continuar opcionalmente con el caso de uso **CU-06 Canjear puntos de cliente frecuente**.
+9. El cajero selecciona el método de pago e ingresa el monto recibido.
+10. El sistema valida que el monto recibido cubra el total de la venta.
+11. El sistema registra la venta asignando automáticamente al cajero en turno (RF-008).
+12. El sistema continúa con el caso de uso **CU-15 Descontar stock de producto**.
+13. El sistema recalcula los niveles de inventario y, si corresponde, continúa con el caso de uso **CU-10 Notificar producto con stock por debajo del umbral especificado**.
+14. Si se identificó al cliente, el sistema continúa con el caso de uso **CU-05 Acumular puntos de cliente frecuente**.
+15. El sistema registra la transacción en la bitácora inmutable con fecha, hora exacta e ID del empleado (RNF-CON-001).
+16. El sistema calcula el cambio a devolver al cliente.
+17. El sistema continúa con el caso de uso **CU-16 Mostrar comprobante en pantalla**.
 
 ##### Flujos Alternos:
-- **Flujo Alterno 1.1 (Producto sin código o ilegible):**
-  1. Si el producto no tiene código visible o no se puede leer.
-  2. El cliente presenta otro producto con código legible.
-  3. El cajero escanea el nuevo producto recibido y el flujo continúa en el paso 2 del Escenario Principal.
 
-- **Flujo Alterno 1.2.1 (No hay otro producto con código legible):**
-  1. Si el cliente no presenta otro producto con código legible.
-  3. El cajero escanea el siguiente producto recibido y el flujo continúa en el paso 2 del Escenario Principal.
+- **Flujo Alterno 1.1 (FA-01.1 — Producto inexistente o inactivo):**
+  1. Si el producto escaneado no existe o se encuentra inactivo en la base de datos.
+  2. El sistema informa que el producto no está disponible.
+  3. El sistema bloquea el agregado del ítem a la venta.
+  4. El flujo regresa al paso 1 del Escenario Principal.
 
-- **Flujo Alterno 2.1 (Stock insuficiente - RF-010):**
-  1. Si el sistema detecta que la cantidad solicitada supera el stock disponible en base de datos.
-  2. El sistema bloquea el agregado del ítem a la lista de venta.
-  3. El sistema muestra un mensaje de alerta: *"Stock insuficiente. Disponibles: X unidades"*.
-  4. El cajero ajusta la cantidad al stock disponible.
-  5. El flujo regresa al paso 5 del Escenario Principal.
+- **Flujo Alterno 2.1 (FA-01.2 — Stock insuficiente - RF-010):**
+  1. Si el sistema detecta que la cantidad solicitada supera el stock disponible en la base de datos.
+  2. El sistema muestra el mensaje de alerta: *"Stock insuficiente. Disponibles: X unidades"*.
+  3. El cajero ajusta la cantidad solicitada al stock disponible.
+  4. El flujo regresa al paso 3 del Escenario Principal.
 
-- **Flujo Alterno 2.4.1 (No hay stock disponible):**
-  1. Si no hay stock disponible.
-  2. El sistema retira el producto de la venta.
-  3. El flujo regresa al paso 5 del Escenario Principal.
+- **Flujo Alterno 6.1 (FA-01.3 — Venta sin productos):**
+  1. Si el cajero presiona "Finalizar venta" y la lista de venta está vacía.
+  2. El sistema muestra una alerta indicando que no hay ítems agregados.
+  3. El sistema impide continuar con el proceso de cobro.
+  4. El flujo regresa al paso 1 del Escenario Principal.
 
-- **Flujo Alterno 12.1:**
-  1. Si el stock esta por debajo del umbral especificado.
-  2. Se continua con el caso de uso **CU-10: Notificar producto con stock por debajo del umbral especificado**
+- **Flujo Alterno 7.1 (FA-01.4 — Teléfono no registrado):**
+  1. Si el número telefónico ingresado no se encuentra registrado en el sistema.
+  2. El sistema permite al cajero elegir entre continuar como venta anónima o ejecutar **CU-04 Dar de alta a cliente frecuente**.
+  3. Si se elige venta anónima, el flujo continúa en el paso 9 del Escenario Principal.
+
+- **Flujo Alterno 10.1 (FA-01.5 — Pago insuficiente):**
+  1. Si el monto ingresado por el cajero es menor al total de la venta.
+  2. El sistema informa el monto faltante en pantalla.
+  3. El sistema bloquea el registro de la venta hasta completar el pago.
+  4. El flujo regresa al paso 9 del Escenario Principal.
+
+- **Flujo Alterno 10.2 (FA-01.6 — Venta abandonada):**
+  1. Si el cliente o el cajero deciden cancelar la operación antes de confirmar el pago.
+  2. El sistema cancela la transacción activa sin modificar el inventario ni los puntos del cliente.
+  3. La pantalla se limpia y el caso de uso finaliza.
+
+- **Flujo Alterno 8.1 (FA-01.7 — Canje de puntos):**
+  1. Si el cliente registrado decide utilizar sus puntos acumulados para pagar.
+  2. Se ejecuta el caso de uso **CU-06 Canjear puntos de cliente frecuente** antes de confirmar el pago.
+  3. El sistema recalcula el total a pagar y el flujo continúa en el paso 9 del Escenario Principal.
+
+- **Flujo Alterno 8.2 (FA-01.8 — Compra cubierta completamente con puntos):**
+  1. Si el valor del canje de puntos cubre el 100% del monto total de la venta.
+  2. El total a pagar se actualiza a $0 MXN.
+  3. El sistema descuenta únicamente los puntos necesarios y el flujo salta al paso 11 del Escenario Principal.
+
+- **Flujo Alterno 10.3 (FA-01.9 — Stock modificado antes del cobro):**
+  1. Antes de procesar el registro de la venta, el sistema vuelve a validar la disponibilidad de stock en tiempo real (RF-010).
+  2. Si el stock fue modificado en otra caja y ya no existe disponibilidad suficiente, el sistema bloquea el cobro.
+  3. El sistema muestra una alerta de actualización de inventario.
+  4. El flujo regresa al paso 2 del Escenario Principal.
+
+- **Flujo Alterno 7.2 (FA-01.10 — Cliente no registrado / Venta anónima):**
+  1. Si el cliente no proporciona un número telefónico o decide no identificarse.
+  2. El cajero omite la captura del número telefónico.
+  3. La venta continúa de forma anónima y el flujo salta directamente al paso 9 del Escenario Principal.
 
 - **Postcondición:** El inventario de los productos vendidos se actualiza en tiempo real, se actualizan las alertas de stock si corresponde, se genera el registro inmutable en la bitácora y la pantalla queda limpia para la siguiente venta.
 - **Requisitos que realiza:** RF-008, RF-009, RF-010, RF-020, RNF-USA-001, RNF-CON-001.
