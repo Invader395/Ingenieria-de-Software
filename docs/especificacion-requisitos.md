@@ -440,7 +440,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 - **Postcondición:** La venta queda registrada, el stock se actualiza, las alertas se recalculan y se muestra el comprobante en pantalla.
 - **Requisitos:** RF-008, RF-009, RF-010, RF-020, RNF-USA-001, RNF-CON-001.
 
-##### Escenario Principal (Flujo Feliz):
+##### Escenario Principal (Happy Path):
 1. El cajero escanea el código de barras del producto presentado por el cliente (RF-008).
 2. El sistema valida la disponibilidad de stock (RF-010).
 3. Una vez validada la disponibilidad, el sistema añade el ítem a la lista de venta.
@@ -461,57 +461,57 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 
 ##### Flujos Alternos:
 
-- **Flujo Alterno 1.1 (FA-01.1 — Producto inexistente o inactivo):**
+- **Flujo Alterno 1.1 (FA-01.1 - Producto inexistente o inactivo):**
   1. Si el producto escaneado no existe o se encuentra inactivo en la base de datos.
   2. El sistema informa que el producto no está disponible.
   3. El sistema bloquea el agregado del ítem a la venta.
   4. El flujo regresa al paso 1 del Escenario Principal.
 
-- **Flujo Alterno 2.1 (FA-01.2 — Stock insuficiente - RF-010):**
+- **Flujo Alterno 2.1 (FA-01.2 - Stock insuficiente - RF-010):**
   1. Si el sistema detecta que la cantidad solicitada supera el stock disponible en la base de datos.
   2. El sistema muestra el mensaje de alerta: *"Stock insuficiente. Disponibles: X unidades"*.
   3. El cajero ajusta la cantidad solicitada al stock disponible.
   4. El flujo regresa al paso 3 del Escenario Principal.
 
-- **Flujo Alterno 6.1 (FA-01.3 — Venta sin productos):**
+- **Flujo Alterno 6.1 (FA-01.3 - Venta sin productos):**
   1. Si el cajero presiona "Finalizar venta" y la lista de venta está vacía.
   2. El sistema muestra una alerta indicando que no hay ítems agregados.
   3. El sistema impide continuar con el proceso de cobro.
   4. El flujo regresa al paso 1 del Escenario Principal.
 
-- **Flujo Alterno 7.1 (FA-01.4 — Teléfono no registrado):**
+- **Flujo Alterno 7.1 (FA-01.4 - Teléfono no registrado):**
   1. Si el número telefónico ingresado no se encuentra registrado en el sistema.
   2. El sistema permite al cajero elegir entre continuar como venta anónima o ejecutar **CU-04 Dar de alta a cliente frecuente**.
   3. Si se elige venta anónima, el flujo continúa en el paso 9 del Escenario Principal.
 
-- **Flujo Alterno 10.1 (FA-01.5 — Pago insuficiente):**
+- **Flujo Alterno 10.1 (FA-01.5 - Pago insuficiente):**
   1. Si el monto ingresado por el cajero es menor al total de la venta.
   2. El sistema informa el monto faltante en pantalla.
   3. El sistema bloquea el registro de la venta hasta completar el pago.
   4. El flujo regresa al paso 9 del Escenario Principal.
 
-- **Flujo Alterno 10.2 (FA-01.6 — Venta abandonada):**
+- **Flujo Alterno 10.2 (FA-01.6 - Venta abandonada):**
   1. Si el cliente o el cajero deciden cancelar la operación antes de confirmar el pago.
   2. El sistema cancela la transacción activa sin modificar el inventario ni los puntos del cliente.
   3. La pantalla se limpia y el caso de uso finaliza.
 
-- **Flujo Alterno 8.1 (FA-01.7 — Canje de puntos):**
+- **Flujo Alterno 8.1 (FA-01.7 - Canje de puntos):**
   1. Si el cliente registrado decide utilizar sus puntos acumulados para pagar.
   2. Se ejecuta el caso de uso **CU-06 Canjear puntos de cliente frecuente** antes de confirmar el pago.
   3. El sistema recalcula el total a pagar y el flujo continúa en el paso 9 del Escenario Principal.
 
-- **Flujo Alterno 8.2 (FA-01.8 — Compra cubierta completamente con puntos):**
+- **Flujo Alterno 8.2 (FA-01.8 - Compra cubierta completamente con puntos):**
   1. Si el valor del canje de puntos cubre el 100% del monto total de la venta.
   2. El total a pagar se actualiza a $0 MXN.
   3. El sistema descuenta únicamente los puntos necesarios y el flujo salta al paso 11 del Escenario Principal.
 
-- **Flujo Alterno 10.3 (FA-01.9 — Stock modificado antes del cobro):**
+- **Flujo Alterno 10.3 (FA-01.9 - Stock modificado antes del cobro):**
   1. Antes de procesar el registro de la venta, el sistema vuelve a validar la disponibilidad de stock en tiempo real (RF-010).
   2. Si el stock fue modificado en otra caja y ya no existe disponibilidad suficiente, el sistema bloquea el cobro.
   3. El sistema muestra una alerta de actualización de inventario.
   4. El flujo regresa al paso 2 del Escenario Principal.
 
-- **Flujo Alterno 7.2 (FA-01.10 — Cliente no registrado / Venta anónima):**
+- **Flujo Alterno 7.2 (FA-01.10 - Cliente no registrado / Venta anónima):**
   1. Si el cliente no proporciona un número telefónico o decide no identificarse.
   2. El cajero omite la captura del número telefónico.
   3. La venta continúa de forma anónima y el flujo salta directamente al paso 9 del Escenario Principal.
