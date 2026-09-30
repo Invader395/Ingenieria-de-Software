@@ -2,8 +2,8 @@
 
 **Sistema:** Minimarket Control  
 **Autor:** Julián Guerrero Martínez  
-**Versión:** 2.7  
-**Fecha de la última actualización:** 29 de septiembre de 2026  
+**Versión:** 2.8  
+**Fecha de la última actualización:** 30 de septiembre de 2026  
 
 ---
 
@@ -70,7 +70,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | **RF-019** | Registrar proveedor | Imprescindible | Confirmado en entrevista (Gestión de proveedores) |
 | **RF-020** | Generar alerta automática de stock bajo umbral mínimo | Imprescindible | Declarante en la Visión del Producto |
 | **RF-021** | Canjear puntos de cliente frecuente | Importante | Declarante en la Visión del Producto |
-| **RF-022** | Registrar el pago del pedido apartado | Imprescindible | Confirmado en entrevista (Excepción 1) |
+| **RF-022** | Liquidar pedido apartado | Imprescindible | Confirmado en entrevista (Excepción 1) |
 | **RF-023** | Consultar reporte de productos con stock bajo umbral mínimo | Imprescindible | Declarante en la Visión del Producto |
 | **RF-024** | Modificar stock de productos | Imprescindible | Confirmado en entrevista (Ajuste/Reabastecimiento de inventario) |
 | **RF-025** | Consultar puntos de cliente frecuente | Imprescindible | Confirmado en entrevista |
@@ -273,7 +273,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | **Origen** | Confirmado en entrevista con el dueño (Prerrequisito para acumulación de puntos). |
 | **Prioridad** | Imprescindible |
 | **Criterio de aceptación** | - Al ingresar un nombre completo y un teléfono válido de 10 dígitos no duplicado, el sistema crea el nuevo registro.<br>- El cliente recién registrado inicia automáticamente con un saldo inicial de 0 puntos.<br>- Si el número telefónico ya existe en el sistema, este bloquea el registro.<br>- Al bloquear el registro por duplicidad, el sistema despliega el mensaje "El número telefónico ya se encuentra registrado". |
-| **Relacionado con** | RF-013, RF-021, RF-025, RNF-USA-001 |
+| **Relacionado con** | RF-013, RF-021, RF-022, RF-025, RNF-USA-001 |
 
 ---
 
@@ -564,3 +564,4 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | 28/09/2026 | RF-024 | Incorporación del requisito funcional "Modificar stock de productos" (v2.5) | Necesidad de reabastecimiento directo y ajuste manual de inventario |
 | 28/09/2026 | Casos de Uso | Reestructuración completa de los Casos de Uso CU-01 al CU-06 (v2.6) | Adaptación a la estructura paso a paso simplificada |
 | 29/09/2026 | Casos de Uso | Desglose atómico individualizado de Casos de Uso (CU-01 al CU-11) (v2.7) | Ajuste de estructura a solicitudes específicas de casos de uso separados |
+| 30/09/2026 | Sección 1, RF-013, RF-018, RF-022 | La liquidación de apartados acumula puntos si el cliente proporciona su teléfono; se permite liquidar sin acumular puntos (v2.8) | Alinear la acumulación de puntos en apartados con la regla de negocio de la Visión del Producto |
