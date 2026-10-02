@@ -51,28 +51,28 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | :--- | :--- | :--- | :--- |
 | **RF-001** | Iniciar sesión en el sistema | Imprescindible | Derivado de la gestión de turnos y seguridad por rol |
 | **RF-002** | Cerrar sesión en el sistema | Imprescindible | Derivado del control de acceso por turnos |
-| **RF-003** | Dar de alta productos | Imprescindible | Confirmado en entrevista (Gestión de catálogo) |
-| **RF-004** | Dar de baja productos | Importante | Confirmado en entrevista (Gestión de catálogo) |
-| **RF-005** | Modificar datos de productos | Importante | Confirmado en entrevista (Gestión de catálogo) |
-| **RF-006** | Consultar productos en stock | Imprescindible | Confirmado en entrevista (Control de existencias) |
-| **RF-007** | Registrar producto con proveedor | Imprescindible | Confirmado en entrevista (Matriz de costos) |
-| **RF-008** | Registrar venta en caja | Imprescindible | Confirmado en entrevista (Proceso actual 3) |
-| **RF-009** | Descontar existencias de inventario por venta | Imprescindible | Confirmado en entrevista (Proceso actual 3) |
-| **RF-010** | Validar disponibilidad de stock antes de cobro | Imprescindible | Confirmado en entrevista (Regla de negocio) |
-| **RF-011** | Registrar pedido apartado | Imprescindible | Confirmado en entrevista (Excepción 1) |
-| **RF-012** | Reservar mercancía de apartado en inventario | Imprescindible | Confirmado en entrevista (Excepción 1) |
-| **RF-013** | Acumular puntos para cliente frecuente | Importante | Confirmado en entrevista (Verificación Puntos) |
-| **RF-014** | Consultar comparativa de precios de proveedores | Imprescindible | Confirmado en entrevista (Proceso actual 2) |
-| **RF-015** | Consultar reporte diario de ventas por empleado | Imprescindible | Confirmado en entrevista (Proceso actual 3) |
+| **RF-003** | Dar de alta productos | Imprescindible | Confirmado en entrevista |
+| **RF-004** | Dar de baja productos | Importante | Confirmado en entrevista |
+| **RF-005** | Modificar datos de productos | Importante | Confirmado en entrevista |
+| **RF-006** | Consultar productos en stock | Imprescindible | Confirmado en entrevista |
+| **RF-007** | Registrar producto con proveedor | Imprescindible | Confirmado en entrevista |
+| **RF-008** | Registrar venta en caja | Imprescindible | Confirmado en entrevista |
+| **RF-009** | Descontar existencias de inventario por venta | Imprescindible | Confirmado en entrevista |
+| **RF-010** | Validar disponibilidad de stock antes de cobro | Imprescindible | Confirmado en entrevista |
+| **RF-011** | Registrar pedido apartado | Imprescindible | Confirmado en entrevista |
+| **RF-012** | Reservar mercancía de apartado en inventario | Imprescindible | Confirmado en entrevista |
+| **RF-013** | Acumular puntos para cliente frecuente | Importante | Confirmado en entrevista |
+| **RF-014** | Consultar comparativa de precios de proveedores | Imprescindible | Confirmado en entrevista |
+| **RF-015** | Consultar reporte diario de ventas por empleado | Imprescindible | Confirmado en entrevista |
 | **RF-016** | Cancelar automáticamente apartados de mercancía expirados | Importante | Descubrimiento en entrevista (Límite 7 días) |
 | **RF-017** | Registrar merma de productos | Importante | Derivado del control de inventario y pérdidas |
-| **RF-018** | Registrar alta de cliente frecuente | Imprescindible | Confirmado en entrevista (Prerrequisito de puntos) |
-| **RF-019** | Registrar proveedor | Imprescindible | Confirmado en entrevista (Gestión de proveedores) |
-| **RF-020** | Generar alerta automática de stock bajo umbral mínimo | Imprescindible | Declarante en la Visión del Producto |
-| **RF-021** | Canjear puntos de cliente frecuente | Importante | Declarante en la Visión del Producto |
-| **RF-022** | Liquidar pedido apartado | Imprescindible | Confirmado en entrevista (Excepción 1) |
-| **RF-023** | Consultar reporte de productos con stock bajo umbral mínimo | Imprescindible | Declarante en la Visión del Producto |
-| **RF-024** | Modificar stock de productos | Imprescindible | Confirmado en entrevista (Ajuste/Reabastecimiento de inventario) |
+| **RF-018** | Registrar alta de cliente frecuente | Imprescindible | Confirmado en entrevista |
+| **RF-019** | Registrar proveedor | Imprescindible | Confirmado en entrevista |
+| **RF-020** | Generar alerta automática de stock bajo umbral mínimo | Imprescindible | Declarado en la Visión del Producto |
+| **RF-021** | Canjear puntos de cliente frecuente | Importante | Declarado en la Visión del Producto |
+| **RF-022** | Liquidar pedido apartado | Imprescindible | Confirmado en entrevista |
+| **RF-023** | Consultar reporte de productos con stock bajo umbral mínimo | Imprescindible | Declarado en la Visión del Producto |
+| **RF-024** | Modificar stock de productos | Imprescindible | Confirmado en entrevista |
 | **RF-025** | Consultar puntos de cliente frecuente | Imprescindible | Confirmado en entrevista |
 
 ---
