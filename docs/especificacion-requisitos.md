@@ -10,24 +10,30 @@
 ## 1. Propósito y alcance
 
 **Propósito del documento:**  
-Este documento define de forma precisa, comprobable y detallada los requisitos funcionales y no funcionales del sistema *Minimarket Control*. Está dirigido al desarrollador del sistema, a la dupla evaluadora y al cliente (dueño del minimarket) para guiar las etapas de diseño, desarrollo de prototipos en Figma, pruebas de software y análisis de impacto de cambios.
+Este documento define de forma precisa, comprobable y detallada los requisitos funcionales y no funcionales del sistema *Minimarket Control*. Para fines evaluativos y de entrega de clase, el enfoque de esta especificación se centra en guiar el diseño y desarrollo del prototipo interactivo en Figma, sirviendo de base para la evaluación de la dupla evaluadora y la revisión con el cliente (dueño del minimarket).
 
 **Alcance del sistema:**  
-El sistema abarca la gestión interna del punto de venta y control operativo del negocio mediante:
-- Autenticación y control de acceso por roles (Administrador y Cajero).
-- Registro, actualización, ajuste manual de stock y catálogo de productos organizados por categoría.
-- Descuento y actualización automática de existencias en tiempo real tras cada venta y registro de mermas.
-- Generación automática de alertas de stock mínimo y consulta de reportes de productos por reabastecer.
-- Catálogo de proveedores con registro de datos de contacto e historial de precios de compra por producto para comparación de tarifas.
-- Registro de ventas realizadas en caja asociadas automáticamente al empleado en turno.
-- Gestión de clientes frecuentes (alta de cliente por teléfono, acumulación de puntos en ventas y en la liquidación de apartados, y canje de puntos), permitiendo también ventas y liquidaciones de apartados sin acumular puntos.
-- Creación, consulta, liquidación y entrega de pedidos apartados con reserva inmediata de mercancía por un plazo máximo de 7 días naturales.
-- Consulta de reporte diario consolidado de ventas por empleado.
+Para efectos de la entrega de clase, el alcance del proyecto se limita exclusivamente al desarrollo de un prototipo en Figma que contempla los siguientes flujos y pantallas:
+- **Inicio de sesión y autenticación:** Flujo de acceso de usuarios, incluyendo la pantalla y alerta por credenciales inválidas.
+- **Gestión de inventario y alertas:**
+  - Alerta de stock bajo.
+  - Alerta de producto no encontrado durante la búsqueda o escaneo.
+- **Punto de venta y atención a clientes:**
+  - Opción de registro de cliente frecuente o realización de venta anónima.
+  - Opción para el canje de puntos acumulados (se incluye la opción en la interfaz, pero no se verá reflejada la aplicación del descuento/canje al proceder con la confirmación).
+  - Muestra del comprobante de venta finalizada en pantalla.
+  - Comportamiento del comprobante de venta finalizada en pantalla para casos donde ocurrió una modificación de productos por retiro o cancelación parcial de artículos (mantiene la visualización general sin reflejar aún la modificación dinámica detallada en el comprobante final).
 
 **Fuera del alcance:**  
+- Implementación de backend, base de datos funcional o código de producción.
+- Reflejo dinámico del canje de puntos al confirmar la transacción en el prototipo.
+- Actualización dinámica en el comprobante en pantalla de productos retirados o modificados durante la venta.
+- Módulos de compras, catálogo completo de proveedores e historial de precios de compra.
+- Creación, seguimiento y liquidación de pedidos apartados.
+- Generación y consulta de reportes consolidados por empleado o turno.
 - Procesamiento de pagos en línea mediante tarjetas de crédito, débito o pasarelas externas.
-- Generación y timbrado de facturación electrónica automática.
-- Servicio de logística, entrega a domicilio o aplicaciones móviles para clientes.
+- Generación y timbrado de facturación electrónica.
+- Servicios de logística, entrega a domicilio o aplicaciones móviles para clientes finalistas.
 
 ---
 
