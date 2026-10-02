@@ -12,7 +12,7 @@
 
 **Nombre del sistema:** Minimarket Control
 
-**Descripción:** Prototipo interactivo en Figma diseñado para la computadora de la tienda que define la experiencia visual y de flujo para el control del inventario y punto de venta del minimarket. Para la entrega de clase, el prototipo demuestra los flujos de acceso por usuario, alertas visuales de inventario y la dinámica de cobro en caja con clientes frecuentes y ventas anónimas.
+**Descripción:** Programa para la computadora de la tienda que ayuda al dueño a saber en todo momento qué mercancía hay en los estantes, a cuánto se le compró cada producto a cada proveedor y a registrar las ventas diarias totales al final del día. Además, permite anotar a los clientes frecuentes para regalarles puntos por sus compras, guardar los encargos que hacen por adelantado para que solo pasen a recogerlos y anotar qué empleado atendió cada venta.
 
 ---
 
