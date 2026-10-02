@@ -83,7 +83,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema autentica la identidad del usuario mediante credenciales (usuario y contraseña) para asignar los permisos correspondientes según su rol (Administrador o Cajero). |
-| **Origen** | Derivado del control de turnos y seguridad por rol. |
+| **Origen** | Derivado de la gestión de turnos y seguridad por rol |
 | **Prioridad** | Imprescindible |
 | **Criterio de aceptación** | - Al ingresar un usuario y contraseña válidos, el sistema inicia la sesión en la interfaz correspondiente a su rol.<br>- Si las credenciales son incorrectas, el sistema bloquea el acceso.<br>- Al bloquear el acceso por credenciales incorrectas, el sistema despliega el mensaje "Credenciales inválidas". |
 | **Relacionado con** | RF-002, RNF-SEG-001 |
@@ -94,7 +94,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema finaliza la sesión activa del usuario actual y retorna a la pantalla de autenticación. |
-| **Origen** | Derivado del control de acceso por turnos. |
+| **Origen** | Derivado del control de acceso por turnos |
 | **Prioridad** | Imprescindible |
 | **Criterio de aceptación** | - Al presionar el botón "Cerrar sesión", el sistema destruye el token de sesión activo.<br>- El sistema bloquea inmediatamente el acceso a las funciones del punto de venta.<br>- El sistema redirige al usuario y muestra la pantalla de inicio de sesión. |
 | **Relacionado con** | RF-001, RNF-CON-001 |
@@ -104,10 +104,10 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 #### RF-003 · Dar de alta productos
 | Campo | Contenido |
 | :--- | :--- |
-| **Descripción** | El sistema registra un nuevo producto en el catálogo solicitando código de barras, nombre, categoría, precio de venta y stock mínimo. |
-| **Origen** | Confirmado en entrevista con el dueño (Gestión de catálogo). |
+| **Descripción** | El sistema permite al Administrador y al Cajero registrar un nuevo producto en el catálogo solicitando código de barras, nombre, categoría, precio de venta y stock mínimo. |
+| **Origen** | Confirmado en entrevista |
 | **Prioridad** | Imprescindible |
-| **Criterio de aceptación** | - Al guardar el producto todos los campos deben estar completos.<br>- El código del producto debe ser único, incluso respecto de productos que se encuentren inactivos.<br>- Una vez guardado el producto el sistema crea el registro en la base de datos.<br>- Al finalizar el registro la información se despliega en el catálogo general. |
+| **Criterio de aceptación** | - El Administrador o el Cajero pueden iniciar el alta de un producto.<br>- Al guardar el producto todos los campos deben estar completos.<br>- El código del producto debe ser único, incluso respecto de productos que se encuentren inactivos.<br>- Una vez guardado el producto el sistema crea el registro en la base de datos.<br>- Al finalizar el registro la información se despliega en el catálogo general. |
 | **Relacionado con** | RF-004, RF-005, RF-006, RF-020, RF-024 |
 
 ---
@@ -116,7 +116,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema deshabilita un producto del catálogo para impedir su selección en ventas futuras manteniendo su historial de transacciones. |
-| **Origen** | Confirmado en entrevista con el dueño (Gestión de catálogo). |
+| **Origen** | Confirmado en entrevista |
 | **Prioridad** | Importante |
 | **Criterio de aceptación** | - Al confirmar la baja de un producto, el sistema cambia su estado a "Inactivo".<br>- El producto inactivo no puede venderse ni aparecer como producto disponible en la pantalla de caja.<br>- El sistema conserva el registro del producto y su historial de transacciones. |
 | **Relacionado con** | RF-003, RF-008 |
@@ -127,7 +127,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema actualiza los datos informativos de un producto existente (nombre, categoría, precio de venta o stock mínimo). Esta función puede ser ejecutada por el Administrador y por el Cajero. |
-| **Origen** | Confirmado en entrevista con el dueño (Gestión de catálogo). |
+| **Origen** | Confirmado en entrevista |
 | **Prioridad** | Importante |
 | **Criterio de aceptación** | - Al guardar los cambios sobre un producto seleccionado, el sistema valida la coherencia de los datos ingresados.<br>- El sistema guarda la nueva información en la base de datos.<br>- Los nuevos valores se reflejan inmediatamente en todo el sistema.<br>- El sistema registra la modificación en la bitácora de auditoría con fecha, hora e ID del usuario que la realizó.<br>- Si la modificación cambia el stock mínimo, el sistema reevalúa la alerta de stock bajo del producto (RF-020). |
 | **Relacionado con** | RF-003, RF-006, RF-020, RNF-CON-001 |
@@ -138,7 +138,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema muestra la cantidad de unidades disponibles en inventario para un producto específico o listado general. |
-| **Origen** | Confirmado en entrevista con el dueño (Control de existencias). |
+| **Origen** | Confirmado en entrevista |
 | **Prioridad** | Imprescindible |
 | **Criterio de aceptación** | - El sistema permite realizar la búsqueda por código de barras o por nombre del producto.<br>- Al realizar la búsqueda, el sistema despliega el stock actual en tiempo real.<br>- La información mostrada incluye la cantidad disponible para venta directa. |
 | **Relacionado con** | RF-003, RF-009, RF-012, RF-020, RF-023, RF-024 |
@@ -149,7 +149,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema vincula un producto existente con un proveedor registrado guardando el costo de compra unitario. |
-| **Origen** | Confirmado en entrevista con el dueño (Matriz de costos). |
+| **Origen** | Confirmado en entrevista |
 | **Prioridad** | Imprescindible |
 | **Criterio de aceptación** | - El usuario debe ingresar el identificador de un proveedor registrado, el producto y el costo de adquisición.<br>- Al guardar la relación, el sistema añade el registro a la matriz histórica de costos del producto.<br>- El costo ingresado queda asociado a la fecha de registro para futuras comparativas.<br>- La información de costos de compra solo puede ser consultada por el Administrador. |
 | **Relacionado con** | RF-003, RF-014, RF-019, RNF-SEG-001 |
@@ -160,7 +160,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema procesa la transacción comercial asignando el monto pagado, el desglose de artículos, la marca de tiempo y el identificador del cajero en turno. |
-| **Origen** | Confirmado en entrevista con el dueño (Proceso actual 3). |
+| **Origen** | Confirmado en entrevista |
 | **Prioridad** | Imprescindible |
 | **Criterio de aceptación** | - Al confirmar el cobro, el sistema genera la transacción asociando la fecha y hora exacta.<br>- El registro asigna automáticamente el ID del cajero con la sesión activa.<br>- El sistema emite el recibo digital/impreso con el desglose de artículos y total pagado. |
 | **Relacionado con** | RF-009, RF-010, RNF-USA-001, RNF-CON-001 |
@@ -171,7 +171,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema resta automáticamente de las existencias generales las unidades comercializadas al finalizar una venta. |
-| **Origen** | Confirmado en entrevista con el dueño (Proceso actual 3). |
+| **Origen** | Confirmado en entrevista |
 | **Prioridad** | Imprescindible |
 | **Criterio de aceptación** | - Tras confirmarse una venta de $N$ unidades de un producto, el sistema localiza el registro en base de datos.<br>- La cantidad en inventario para dicho ítem disminuye exactamente en $N$ unidades.<br>- El descuento en el stock se ejecuta en tiempo real tras la confirmación del pago. |
 | **Relacionado con** | RF-006, RF-008, RF-020, RNF-CON-001 |
@@ -182,7 +182,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema verifica que la cantidad solicitada de un producto no supere las existencias físicas disponibles en la base de datos antes de permitir el cobro. |
-| **Origen** | Confirmado en entrevista con el dueño (Regla de negocio). |
+| **Origen** | Confirmado en entrevista |
 | **Prioridad** | Imprescindible |
 | **Criterio de aceptación** | - Antes de agregar un ítem o procesar el cobro, el sistema compara la cantidad solicitada contra el stock disponible.<br>- Si la cantidad solicitada supera las unidades disponibles, el sistema bloquea la adición del producto.<br>- Al bloquear la acción, el sistema despliega el mensaje "Stock insuficiente. Disponibles: X unidades". |
 | **Relacionado con** | RF-006, RF-008 |
@@ -193,7 +193,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema crea un pedido diferido vinculando los productos elegidos al nombre completo y número telefónico del cliente. |
-| **Origen** | Confirmado en entrevista con el dueño (Excepción 1). |
+| **Origen** | Confirmado en entrevista |
 | **Prioridad** | Imprescindible |
 | **Criterio de aceptación** | - Al crear el pedido, el sistema exige ingresar el nombre completo y número telefónico del cliente.<br>- Al guardar la información, el sistema genera un folio único para el apartado.<br>- El sistema asigna automáticamente el estado "Pendiente de liquidación".<br>- La fecha límite de liquidación se fija automáticamente en 7 días naturales a partir de su creación. |
 | **Relacionado con** | RF-012, RF-016, RF-022 |
@@ -204,7 +204,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema descuenta del stock disponible para venta directa las unidades asociadas a un nuevo pedido apartado. |
-| **Origen** | Confirmado en entrevista con el dueño (Excepción 1). |
+| **Origen** | Confirmado en entrevista |
 | **Prioridad** | Imprescindible |
 | **Criterio de aceptación** | - Al generarse un pedido apartado con $N$ unidades de un producto, el sistema actualiza el inventario.<br>- Las existencias para venta directa en mostrador se reducen exactamente en $N$ unidades.<br>- Las unidades descontadas quedan reservadas en el sistema y vinculadas exclusivamente al folio del apartado. |
 | **Relacionado con** | RF-006, RF-011, RF-016, RF-020 |
@@ -215,7 +215,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema calcula y suma puntos en el saldo del cliente en función del importe efectivamente cobrado al ingresar su número telefónico. |
-| **Origen** | Confirmado en entrevista con el dueño (Verificación Puntos). |
+| **Origen** | Confirmado en entrevista |
 | **Prioridad** | Importante |
 | **Criterio de aceptación** | - Al ingresar un número telefónico registrado durante el cobro, el sistema abona 1 punto por cada $10 MXN completos del importe efectivamente cobrado.<br>- Los puntos calculados se suman al saldo acumulado del cliente en la base de datos.<br>- Las ventas anónimas no acumulan puntos.<br>- Si el número no existe, el sistema permite procesar la venta como anónima o iniciar el alta del cliente (RF-018) sin detener la transacción.<br>- La liquidación de un apartado acumula puntos conforme a RF-022. |
 | **Relacionado con** | RF-008, RF-018, RF-021, RF-022, RNF-USA-001 |
@@ -226,7 +226,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema muestra un listado de los costos históricos de compra de un producto provistos por diferentes proveedores. |
-| **Origen** | Confirmado en entrevista con el dueño (Proceso actual 2). |
+| **Origen** | Confirmado en entrevista |
 | **Prioridad** | Imprescindible |
 | **Criterio de aceptación** | - Al seleccionar un producto en el módulo de proveedores, el sistema consulta los costos históricos registrados.<br>- El sistema despliega la lista de todos los proveedores asociados a dicho producto.<br>- La lista se presenta ordenada automáticamente del costo unitario más bajo al más alto.<br>- La información solo está disponible para usuarios con rol de Administrador. |
 | **Relacionado con** | RF-007, RF-019, RNF-SEG-001 |
@@ -237,7 +237,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema permite únicamente al Administrador consultar en pantalla un resumen consolidado de ingresos y ventas desglosadas por cada empleado en una fecha seleccionada. |
-| **Origen** | Confirmado en entrevista con el dueño (Proceso actual 3). |
+| **Origen** | Confirmado en entrevista |
 | **Prioridad** | Imprescindible |
 | **Criterio de aceptación** | - Al seleccionar una fecha en el panel de reportes y presionar "Consultar", el sistema recupera las transacciones del día.<br>- El sistema despliega en pantalla la lista de cajeros con el total acumulado en dinero ($MXN$).<br>- La vista incluye el número total de ventas realizadas por cada empleado.<br>- El sistema calcula y muestra el promedio de venta por transacción para cada cajero.<br>- Una sesión con rol Cajero no puede acceder a este reporte. |
 | **Relacionado con** | RF-008, RNF-SEG-001, RNF-CON-001 |
@@ -248,7 +248,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema cancela los apartados no liquidados tras 7 días naturales y reintegra las unidades reservadas al stock disponible. |
-| **Origen** | Descubrimiento en entrevista con el dueño (Excepción 1). |
+| **Origen** | Descubrimiento en entrevista (Límite 7 días) |
 | **Prioridad** | Importante |
 | **Criterio de aceptación** | - A las 00:00 horas del octavo día natural tras la creación de un apartado no pagado, el sistema identifica la expiración.<br>- El sistema cambia automáticamente el estado del pedido apartado a "Expirado".<br>- Las unidades que estaban reservadas se reintegran e incrementan el stock disponible para venta directa.<br>- Los apartados liquidados antes del vencimiento no se cancelan.<br>- La cancelación automática queda registrada en la bitácora de auditoría. |
 | **Relacionado con** | RF-011, RF-012, RF-020, RF-022, RNF-CON-001 |
@@ -259,7 +259,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema reduce el inventario de un producto por concepto de daño, caducidad o extravío, registrando la justificación. Esta función puede ser ejecutada por el Administrador y por el Cajero. |
-| **Origen** | Derivado del control de inventario y pérdidas en tienda. |
+| **Origen** | Derivado del control de inventario y pérdidas |
 | **Prioridad** | Importante |
 | **Criterio de aceptación** | - El usuario debe ingresar la cantidad de unidades defectuosas y el motivo de la merma.<br>- La cantidad debe ser mayor a cero y no puede superar el stock disponible.<br>- Al guardar el registro, el sistema resta las unidades indicadas del inventario total.<br>- El sistema genera un asiento inmutable en la bitácora de mermas asociando la fecha, hora y usuario. |
 | **Relacionado con** | RF-006, RF-020, RNF-CON-001 |
@@ -270,7 +270,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema registra un nuevo cliente frecuente solicitando su nombre completo y número telefónico de 10 dígitos para habilitar la acumulación y consulta de puntos. |
-| **Origen** | Confirmado en entrevista con el dueño (Prerrequisito para acumulación de puntos). |
+| **Origen** | Confirmado en entrevista |
 | **Prioridad** | Imprescindible |
 | **Criterio de aceptación** | - Al ingresar un nombre completo y un teléfono válido de 10 dígitos no duplicado, el sistema crea el nuevo registro.<br>- El cliente recién registrado inicia automáticamente con un saldo inicial de 0 puntos.<br>- Si el número telefónico ya existe en el sistema, este bloquea el registro.<br>- Al bloquear el registro por duplicidad, el sistema despliega el mensaje "El número telefónico ya se encuentra registrado". |
 | **Relacionado con** | RF-013, RF-021, RF-022, RF-025, RNF-USA-001 |
@@ -280,10 +280,10 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 #### RF-019 · Registrar proveedor
 | Campo | Contenido |
 | :--- | :--- |
-| **Descripción** | El sistema registra un nuevo proveedor ingresando su nombre comercial, teléfono de contacto y dirección. |
-| **Origen** | Confirmado en entrevista con el dueño (Gestión de proveedores). |
+| **Descripción** | El sistema permite únicamente al Administrador registrar un nuevo proveedor ingresando su nombre comercial, teléfono de contacto y dirección. |
+| **Origen** | Confirmado en entrevista |
 | **Prioridad** | Imprescindible |
-| **Criterio de aceptación** | - El usuario debe ingresar el nombre comercial, teléfono de contacto y dirección del proveedor.<br>- Al guardar con un nombre comercial no registrado previamente, el sistema genera la ficha del proveedor en la base de datos.<br>- Una vez creado, el proveedor queda disponible en el sistema para asignarle productos y precios de compra.<br>- El registro y consulta de información de proveedores se restringe al Administrador. |
+| **Criterio de aceptación** | - Solo el Administrador puede iniciar el alta de un proveedor.<br>- El Administrador debe ingresar el nombre comercial, teléfono de contacto y dirección del proveedor.<br>- Al guardar con un nombre comercial no registrado previamente, el sistema genera la ficha del proveedor en la base de datos.<br>- Una vez creado, el proveedor queda disponible en el sistema para asignarle productos y precios de compra.<br>- El registro y consulta de información de proveedores se restringe al Administrador. |
 | **Relacionado con** | RF-007, RF-014, RNF-SEG-001 |
 
 ---
@@ -292,7 +292,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema evalúa en tiempo real las existencias tras cada movimiento de inventario (venta, reserva, cancelación de apartado, merma o ajuste/reabastecimiento) o cambio del stock mínimo, y genera un indicador o notificación de alerta cuando la cantidad disponible es igual o inferior al stock mínimo configurado. |
-| **Origen** | Declarante explícito en la Visión del Producto (Sección Alcance) y reglas de inventario. |
+| **Origen** | Declarado en la Visión del Producto |
 | **Prioridad** | Imprescindible |
 | **Criterio de aceptación** | - Tras cada movimiento que modifique el stock (RF-009, RF-012, RF-016, RF-017, RF-024) o el stock mínimo (RF-005), el sistema compara el nuevo nivel con el stock mínimo del ítem.<br>- Si el stock disponible es igual o menor al umbral mínimo, el sistema asigna automáticamente la marca de "Stock crítico" al producto.<br>- Si una modificación incrementa el stock por encima del umbral mínimo, el sistema remueve la alerta visual automáticamente. |
 | **Relacionado con** | RF-003, RF-005, RF-006, RF-009, RF-012, RF-016, RF-017, RF-023, RF-024 |
@@ -303,7 +303,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema descuenta un monto determinado de puntos acumulados por un cliente para aplicarlo como descuento equivalente en dinero durante el cobro. La equivalencia entre puntos y pesos es definida por el Dueño. |
-| **Origen** | Declarante explícito en la Visión del Producto (Sección Alcance y Reglas de negocio). |
+| **Origen** | Declarado en la Visión del Producto |
 | **Prioridad** | Importante |
 | **Criterio de aceptación** | - Al seleccionar "Canjear puntos" e ingresar una cantidad válida ($\le$ saldo actual), el sistema valida la transacción.<br>- El sistema calcula el descuento monetario equivalente según la equivalencia definida por el Dueño.<br>- Al proceder al pago, el sistema resta la cantidad de puntos utilizados del saldo del cliente y reduce el total a pagar en el importe descontado.<br>- Si el valor equivalente de los puntos es igual o mayor al total de la compra, el total queda en $0 y el sistema resta únicamente los puntos necesarios para cubrirlo; los puntos restantes permanecen en el saldo. |
 | **Relacionado con** | RF-008, RF-013, RF-018, RF-025, RNF-USA-001 |
@@ -314,7 +314,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema registra el pago del saldo pendiente de un pedido apartado, cambiando su estado a "Liquidado" y permitiendo la entrega de la mercancía reservada. Opcionalmente, si el cliente proporciona su número telefónico, la liquidación acumula puntos como en una venta. |
-| **Origen** | Confirmado en entrevista con el dueño (Excepción 1). |
+| **Origen** | Confirmado en entrevista |
 | **Prioridad** | Imprescindible |
 | **Criterio de aceptación** | - El sistema permite buscar el apartado vigente mediante su folio o número telefónico del cliente.<br>- El sistema solo permite liquidar apartados en estado "Pendiente de liquidación".<br>- Antes de confirmar el cobro, el sistema solicita opcionalmente el número telefónico del cliente para acumular puntos.<br>- Si se ingresa un número registrado, el sistema abona 1 punto por cada $10 MXN completos del importe efectivamente cobrado en la liquidación (RF-013).<br>- Si el número no está registrado, el sistema permite liquidar sin acumular puntos o iniciar el alta del cliente (RF-018) sin detener la transacción.<br>- Si no se proporciona número telefónico, la liquidación continúa sin acumular puntos.<br>- Al confirmar el cobro de la cantidad adeudada, el sistema cambia el estado del pedido a "Liquidado".<br>- El sistema registra la venta cobrada asignándola al cajero en turno.<br>- El sistema libera el registro de reserva de la mercancía.<br>- Los puntos se abonan solo al confirmarse la liquidación.<br>- Un apartado expirado (RF-016) no genera puntos. |
 | **Relacionado con** | RF-008, RF-011, RF-012, RF-013, RF-016, RF-018, RNF-CON-001 |
@@ -325,7 +325,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema permite al usuario autenticado consultar en pantalla un listado con todos los productos cuya existencia disponible sea menor o igual a su umbral mínimo, indicando la cantidad faltante para reabastecer. |
-| **Origen** | Declarante explícito en la Visión del Producto (Sección Alcance). |
+| **Origen** | Declarado en la Visión del Producto |
 | **Prioridad** | Imprescindible |
 | **Criterio de aceptación** | - Al presionar "Ver productos con stock bajo" en el panel de reportes, el sistema filtra los productos con stock $\le$ stock mínimo especificado.<br>- El sistema despliega una tabla con el código de producto, nombre y stock actual.<br>- La vista muestra el stock mínimo configurado para cada producto.<br>- El sistema calcula y despliega las unidades faltantes sugeridas para reabastecer cada ítem. |
 | **Relacionado con** | RF-006, RF-020 |
@@ -336,7 +336,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema permite al Administrador y al Cajero ajustar manualmente la cantidad de unidades disponibles en el inventario de un producto por reabastecimiento o corrección del inventario físico, ingresando la nueva cantidad o un incremento/decremento y el motivo de la modificación. |
-| **Origen** | Confirmado en entrevista con el dueño (Ajuste/Reabastecimiento de inventario). |
+| **Origen** | Confirmado en entrevista |
 | **Prioridad** | Imprescindible |
 | **Criterio de aceptación** | - El usuario debe seleccionar un producto existente.<br>- El usuario debe ingresar una cantidad válida y el motivo de la modificación.<br>- La nueva cantidad de stock no puede ser negativa.<br>- Al guardar, el sistema actualiza el inventario en la base de datos.<br>- El sistema genera un registro automático de la modificación en la bitácora de auditoría con fecha, hora e ID del usuario.<br>- El sistema evalúa y recalcula inmediatamente las alertas de stock mínimo (RF-020). |
 | **Relacionado con** | RF-003, RF-006, RF-020, RNF-CON-001 |
@@ -347,7 +347,7 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 | Campo | Contenido |
 | :--- | :--- |
 | **Descripción** | El sistema muestra el saldo de puntos acumulados de un cliente frecuente al ingresar su número telefónico, sin necesidad de iniciar una venta. |
-| **Origen** | Confirmado en entrevista con el dueño. |
+| **Origen** | Confirmado en entrevista |
 | **Prioridad** | Importante |
 | **Criterio de aceptación** | - Al ingresar un número telefónico de 10 dígitos registrado, el sistema despliega el nombre completo y el saldo actual de puntos.<br>- Si el número telefónico no está registrado, el sistema informa que el cliente no existe.<br>- Si el formato del número no es válido, el sistema no realiza la búsqueda e indica el error.<br>- La consulta requiere únicamente el número telefónico del cliente registrado. |
 | **Relacionado con** | RF-013, RF-018, RF-021 |
@@ -527,30 +527,30 @@ El sistema abarca la gestión interna del punto de venta y control operativo del
 
 | Requisito | Origen | Caso de uso | Elemento del prototipo | Estado |
 | :--- | :--- | :--- | :--- | :--- |
-| **RF-001** | Derivado de seguridad | CU-01, CU-02, CU-03, CU-05, CU-06, CU-07, CU-08, CU-10 | Pantalla Login / Autenticación | Vigente |
-| **RF-002** | Derivado de seguridad | CU-01 Registrar venta en caja | Botón / Menú Cerrar Sesión | Vigente |
-| **RF-003** | Entrevista 22 sep | CU-10 Modificaciones de stock | Modal Alta de Producto | Vigente |
-| **RF-004** | Entrevista 22 sep | CU-10 Modificaciones de stock | Tabla Catálogo / Acciones | Vigente |
-| **RF-005** | Entrevista 22 sep | CU-10 Modificaciones de stock | Modal Editar Producto | Vigente |
-| **RF-006** | Entrevista 22 sep | CU-01, CU-08, CU-09, CU-10 | Buscador de Inventario / Alerta Stock | Vigente |
-| **RF-007** | Entrevista 22 sep | CU-06 Consultar comparativa | Matriz Proveedor-Producto | Vigente |
-| **RF-008** | Entrevista 22 sep | CU-01, CU-03 | Pantalla Punto de Venta / Cobro | Vigente |
-| **RF-009** | Entrevista 22 sep | CU-01 Registrar venta en caja | Contador de Inventario en BD | Vigente |
-| **RF-010** | Entrevista 22 sep | CU-01, CU-02 | Alerta Modal de Stock Insuficiente | Vigente |
-| **RF-011** | Entrevista 22 sep | CU-02 Registrar pedido apartado | Pantalla Módulo de Apartados | Vigente |
-| **RF-012** | Entrevista 22 sep | CU-02 Registrar pedido apartado | Indicador Stock Reservado | Vigente |
-| **RF-013** | Entrevista 22 sep | CU-04 Acumulación/Canje | Modal Cliente Frecuente en Caja | Vigente |
-| **RF-014** | Entrevista 22 sep | CU-06 Consultar comparativa | Pantalla Comparativa de Precios | Vigente |
-| **RF-015** | Entrevista 22 sep | CU-07 Consultar reportes ventas | Dashboard de Reportes / Ventas | Vigente |
-| **RF-016** | Entrevista 22 sep | CU-11 Cancelaciones apartados | Tabla de Apartados Expirados | Vigente |
-| **RF-017** | Derivado de inventario | CU-09 Gestionar mermas | Formulario de Registro de Merma | Vigente |
-| **RF-018** | Entrevista 22 sep | CU-03 Alta cliente frecuente | Modal Alta Rápida de Cliente | Vigente |
-| **RF-019** | Visión del producto | CU-05 Alta de proveedores | Modal Registrar Proveedor | Vigente |
-| **RF-020** | Visión del producto | CU-01, CU-08, CU-09, CU-10 | Badge / Indicador de Alerta de Stock Crítico | Vigente |
-| **RF-021** | Visión del producto | CU-04 Acumulación/Canje | Opción Canje de Puntos en Caja | Vigente |
-| **RF-022** | Entrevista 22 sep | CU-03 Liquidar pedido apartado | Modal Cobro / Liquidar Apartado | Vigente |
-| **RF-023** | Visión del producto | CU-08 Consultar stock bajo | Reporte de Reabastecimiento / Umbral | Vigente |
-| **RF-024** | Entrevista 28 sep | CU-10 Modificaciones de stock | Formulario / Modal Modificar Stock | Vigente |
+| **RF-001** | Derivado de la gestión de turnos y seguridad por rol | CU-01, CU-02, CU-03, CU-05, CU-06, CU-07, CU-08, CU-10 | Pantalla Login / Autenticación | Vigente |
+| **RF-002** | Derivado del control de acceso por turnos | CU-01 Registrar venta en caja | Botón / Menú Cerrar Sesión | Vigente |
+| **RF-003** | Confirmado en entrevista | CU-10 Modificaciones de stock | Modal Alta de Producto | Vigente |
+| **RF-004** | Confirmado en entrevista | CU-10 Modificaciones de stock | Tabla Catálogo / Acciones | Vigente |
+| **RF-005** | Confirmado en entrevista | CU-10 Modificaciones de stock | Modal Editar Producto | Vigente |
+| **RF-006** | Confirmado en entrevista | CU-01, CU-08, CU-09, CU-10 | Buscador de Inventario / Alerta Stock | Vigente |
+| **RF-007** | Confirmado en entrevista | CU-06 Consultar comparativa | Matriz Proveedor-Producto | Vigente |
+| **RF-008** | Confirmado en entrevista | CU-01, CU-03 | Pantalla Punto de Venta / Cobro | Vigente |
+| **RF-009** | Confirmado en entrevista | CU-01 Registrar venta en caja | Contador de Inventario en BD | Vigente |
+| **RF-010** | Confirmado en entrevista | CU-01, CU-02 | Alerta Modal de Stock Insuficiente | Vigente |
+| **RF-011** | Confirmado en entrevista | CU-02 Registrar pedido apartado | Pantalla Módulo de Apartados | Vigente |
+| **RF-012** | Confirmado en entrevista | CU-02 Registrar pedido apartado | Indicador Stock Reservado | Vigente |
+| **RF-013** | Confirmado en entrevista | CU-04 Acumulación/Canje | Modal Cliente Frecuente en Caja | Vigente |
+| **RF-014** | Confirmado en entrevista | CU-06 Consultar comparativa | Pantalla Comparativa de Precios | Vigente |
+| **RF-015** | Confirmado en entrevista | CU-07 Consultar reportes ventas | Dashboard de Reportes / Ventas | Vigente |
+| **RF-016** | Descubrimiento en entrevista (Límite 7 días) | CU-11 Cancelaciones apartados | Tabla de Apartados Expirados | Vigente |
+| **RF-017** | Derivado del control de inventario y pérdidas | CU-09 Gestionar mermas | Formulario de Registro de Merma | Vigente |
+| **RF-018** | Confirmado en entrevista | CU-03 Alta cliente frecuente | Modal Alta Rápida de Cliente | Vigente |
+| **RF-019** | Confirmado en entrevista | CU-05 Alta de proveedores | Modal Registrar Proveedor | Vigente |
+| **RF-020** | Declarado en la Visión del Producto | CU-01, CU-08, CU-09, CU-10 | Badge / Indicador de Alerta de Stock Crítico | Vigente |
+| **RF-021** | Declarado en la Visión del Producto | CU-04 Acumulación/Canje | Opción Canje de Puntos en Caja | Vigente |
+| **RF-022** | Confirmado en entrevista | CU-03 Liquidar pedido apartado | Modal Cobro / Liquidar Apartado | Vigente |
+| **RF-023** | Declarado en la Visión del Producto | CU-08 Consultar stock bajo | Reporte de Reabastecimiento / Umbral | Vigente |
+| **RF-024** | Confirmado en entrevista | CU-10 Modificaciones de stock | Formulario / Modal Modificar Stock | Vigente |
 | **RNF-USA-001** | Entrevista 22 sep | CU-01, CU-03, CU-04 | Flujo de Cobro de 4 pasos | Vigente |
 | **RNF-SEG-001** | Entrevista 22 sep | CU-05, CU-06 | Control de Acceso y Login de Dueño | Vigente |
 | **RNF-CON-001** | Tipo de Sistema | Todos los casos de uso | Módulo de Bitácora / Auditoría | Vigente |
