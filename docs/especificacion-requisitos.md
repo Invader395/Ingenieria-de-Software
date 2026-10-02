@@ -573,3 +573,8 @@ Para efectos de la entrega de clase, el alcance del proyecto se limita exclusiva
 | 28/09/2026 | Casos de Uso | Reestructuración completa de los Casos de Uso CU-01 al CU-06 (v2.6) | Adaptación a la estructura paso a paso simplificada |
 | 29/09/2026 | Casos de Uso | Desglose atómico individualizado de Casos de Uso (CU-01 al CU-11) (v2.7) | Ajuste de estructura a solicitudes específicas de casos de uso separados |
 | 30/09/2026 | Sección 1, RF-013, RF-018, RF-022 | La liquidación de apartados acumula puntos si el cliente proporciona su teléfono; se permite liquidar sin acumular puntos (v2.8) | Alinear la acumulación de puntos en apartados con la regla de negocio de la Visión del Producto |
+
+---
+
+## 8. Prototipo funcional: Me pide pagar para que cualquiera lo pueda ver cualquier persona
+https://www.figma.com/proto/1SCGFC2CSaXkwFPVwggXip/Sin-t%C3%ADtulo?node-id=3-7644&t=BAqyIyCiIDv8bBaG-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1
