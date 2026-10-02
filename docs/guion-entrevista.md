@@ -81,4 +81,3 @@ Si un producto está en el estante pero no tiene código o precio visible, le pe
 - **Asignación manual diaria de turnos:** El dueño debe anotar cada mañana qué empleado estará asignado a qué caja para poder auditar el dinero al cierre del turno.
 - **Asunción de mermas por productos perecederos apartados:** Si un producto perecedero apartado se deteriora durante el plazo de 7 días, el negocio asume la pérdida y le entrega uno nuevo al cliente al liquidar.
 - **Impacto de la desorganización de libretas:** El traspapeleo de notas en papel no solo genera descuadres de inventario, sino discusiones y molestias directas con los clientes en el mostrador.
-- 
