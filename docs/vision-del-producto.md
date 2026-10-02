@@ -12,7 +12,7 @@
 
 **Nombre del sistema:** Minimarket Control
 
-**Descripción:** Programa para la computadora de la tienda que ayuda al dueño a saber en todo momento qué mercancía hay en los estantes, a cuánto se le compró cada producto a cada proveedor y a consultar las ventas diarias de cada empleado. Además, permite anotar a los clientes frecuentes para regalarles puntos por sus compras y por la liquidación de sus apartados, guardar los encargos que hacen por adelantado para que solo pasen a recogerlos y anotar qué empleado atendió cada venta.
+**Descripción:** Prototipo interactivo en Figma diseñado para la computadora de la tienda que define la experiencia visual y de flujo para el control del inventario y punto de venta del minimarket. Para la entrega de clase, el prototipo demuestra los flujos de acceso por usuario, alertas visuales de inventario y la dinámica de cobro en caja con clientes frecuentes y ventas anónimas.
 
 ---
 
@@ -37,36 +37,41 @@
 
 ## 3. Alcance
 
-### Dentro del alcance
-- Autenticación y control de acceso por roles (Administrador y Cajero).
-- Registro, modificación, baja y ajuste manual de stock de productos organizados por categoría.
-- Actualización automática de las existencias al momento de la venta y registro de mermas.
-- Alertas automáticas de stock mínimo y reporte de productos con stock igual o inferior al umbral mínimo configurado por producto.
-- Catálogo de proveedores con datos de contacto e historial de precios de compra por producto para que el dueño pueda comparar qué proveedor da el mejor precio.
-- Registro de ventas realizadas en caja, asociadas automáticamente al empleado en turno.
-- Registro de clientes frecuentes por teléfono, con acumulación de puntos en ventas y en la liquidación de apartados, canje de puntos y consulta de saldo; también se permiten ventas y liquidaciones de apartados sin registro ni acumulación de puntos.
-- Creación, consulta, liquidación y entrega de pedidos apartados, con reserva inmediata de la mercancía por un plazo máximo de 7 días naturales y cancelación automática al vencer.
-- Reporte de ventas diarias por empleado (solo Administrador).
-- Bitácora de auditoría de ventas, movimientos de inventario y modificaciones.
+### Dentro del alcance (Prototipo en Figma)
+- **Inicio de sesión y autenticación:** Pantalla de login e interfaz/alerta para credenciales inválidas.
+- **Gestión de inventario y alertas:**
+  - Alerta visual de stock bajo.
+  - Alerta visual de producto no encontrado durante la búsqueda o escaneo.
+- **Punto de venta y atención a clientes:**
+  - Opción de registro de cliente frecuente o realización de venta anónima.
+  - Opción visual para el canje de puntos acumulados (se muestra el elemento en interfaz, pero no reflejará dinámicamente la aplicación de descuentos/puntos al proceder con la confirmación).
+  - Muestra del comprobante de venta finalizada en pantalla.
+  - Comprobante de venta finalizada en pantalla para ventas donde existió modificación por retiro de productos (se mantiene una vista estática/general sin reflejar dinámicamente el desglose de productos retirados).
 
 ---
 
 ### Explícitamente fuera del alcance
+- Implementación de código de producción, lógica de backend o base de datos funcional.
+- Reflejo dinámico del canje de puntos al confirmar la transacción en el prototipo.
+- Actualización dinámica en el comprobante en pantalla de productos retirados o modificados durante la venta.
+- Módulos de compras, catálogo completo de proveedores e historial de precios de compra.
+- Creación, seguimiento y liquidación de pedidos apartados.
+- Generación y consulta de reportes consolidados por empleado o turno.
 - Procesamiento de pagos en línea mediante tarjetas de crédito, débito o pasarelas externas.
 - Generación y timbrado de facturación electrónica automática.
 - Servicio de logística, entrega a domicilio o aplicaciones móviles para clientes.
 
 ---
 
-**Por qué queda fuera:** El servicio de entrega a domicilio, la facturación electrónica y el procesamiento de pagos en línea quedan fuera debido a que el problema central del negocio es el control interno de inventario, proveedores y caja. Incluir logística de entregas, facturación electrónica o pasarelas de pago requeriría más tiempo de desarrollo, costos de servidores externos y mantenimiento, por motivos ajenos a lo que se requiere en el negocio.
+**Por qué queda fuera:** Para efectos de la entrega de clase, el alcance se delimita a un prototipo de alta fidelidad en Figma para validar la usabilidad y navegación en los flujos críticos de caja e inventario. El procesamiento dinámico de datos, facturación, pagos en línea y servicios adicionales quedan fuera por requerir infraestructura externa de servidores y desarrollo de producción ajeno a la meta de evaluación actual.
 
 ---
 
 ## 4. Tipo de sistema y restricciones
 
-**Tipo de sistema:** Sistemas de Información (Software a la medida)
+**Tipo de sistema:** Prototipo de Sistema de Información (Software a la medida)
 
-**Por qué es de ese tipo:** Porque es un sistema que registra, consulta y gestiona los datos y procesos de una organización, específicamente el inventario, los precios de proveedores, las ventas en punto de venta y los clientes frecuentes del minimarket.
+**Por qué es de ese tipo:** Porque proyecta la interfaz de un sistema para registrar, consultar y gestionar datos operativos de inventario, ventas y clientes frecuentes de un minimarket.
 
 **Atributos de calidad que impone:**
 
@@ -78,9 +83,9 @@
 | **Control de acceso** | Se deben restringir las funciones del sistema según el rol del usuario (por ejemplo, separar las opciones del dueño de las del cajero). | Los empleados podrían ver información confidencial como los costos de compra a proveedores o el reporte de ventas por empleado, o alterar registros sin que quede constancia. |
 
 **Reglas de negocio que ya identifiqué:**
-1. El precio de compra de los productos no es fijo, es decir, varía según el proveedor que ofrezca la mejor tarifa esa semana, afectando el cálculo del inventario y las compras.
-2. En el momento en que un pedido se aparta, se deben reservar las existencias de inmediato para que no se vendan en mostrador, pero el pago y la entrega se realizan posteriormente en la tienda, dentro de un plazo máximo de 7 días naturales; si no se liquida, el apartado se cancela y la mercancía regresa a la venta general.
-3. Los clientes frecuentes deben estar registrados en el sistema para poder acumular puntos en sus compras y en la liquidación de sus apartados, y canjearlos en sus compras. El alta puede hacerse en el momento de la venta o de la liquidación.
+1. El precio de compra de los productos no es fijo, varía según el proveedor que ofrezca la mejor tarifa esa semana.
+2. En el prototipo se contempla la opción de canje de puntos para clientes registrados, aunque la simulación no calcula dinámicamente el descuento final tras la confirmación.
+3. El comprobante en pantalla simula la finalización de la venta, incluso cuando se retiran productos durante la transacción, sin alterar dinámicamente la lista final en el prototipo.
 
 ---
 
@@ -89,7 +94,7 @@
 **Modelo elegido:** Enfoque Ágil (Scrum)
 
 **Por qué le conviene a este proyecto:**  
-Le conviene porque organiza el desarrollo en ciclos cortos (iteraciones) donde se entregan versiones funcionales del software desde las primeras semanas. En el minimarket, el riesgo principal es construir un punto de venta lento o complejo que entorpezca la atención al cliente. Al usar un enfoque ágil, podemos construir primero el módulo básico de cobro e inventario, ponerlo a prueba en caja para ajustar la usabilidad según la retroalimentación real del empleado y el dueño, e ir agregando de forma gradual los módulos de apartados, clientes frecuentes y comparación de proveedores sin detener la operación del negocio.
+Le conviene porque permite priorizar el diseño de los flujos críticos de usuario (como inicio de sesión, cobro y alertas) en iteraciones cortas. Al prototipar en Figma primero, se puede evaluar la usabilidad con el dueño y la dupla evaluadora antes de proceder con fases avanzadas de desarrollo técnico.
 
 ### Alternativas descartadas
 
