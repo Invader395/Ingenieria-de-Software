@@ -8,7 +8,7 @@ Minimarket Control es un sistema de información instalado en la tienda, hecho a
 
 Lo construye y mantiene una sola persona. La tienda tiene tres cajas y en cada una solo puede haber un empleado a la vez, por lo que el sistema debe soportar hasta tres sesiones abiertas de forma simultánea, una por caja. Todas las cajas trabajan contra el mismo inventario: la especificación contempla que el stock cambie en otra caja antes de cobrar (FA-01.9) y exige validar existencias en tiempo real (RF-010). Como cada venta registra automáticamente al empleado, la fecha y la hora a partir de su sesión activa (RF-001, RF-008 y RNF-CON-001), cada caja mantiene su propia sesión. El servidor es de la propia tienda, no de un proveedor.
 
-El sistema se organiza en cuatro módulos de negocio, además del inicio de sesión por rol de empleado y la bitácora de cambios:
+El sistema se organiza en cuatro módulos de negocio, además de tres componentes de apoyo: el inicio de sesión por rol de empleado, la bitácora de cambios y la alerta de stock bajo:
 - Ventas, cliente frecuente y puntos: Venta y Cliente frecuente.
 - Inventario y merma de productos: Producto y Merma.
 - Proveedores y costos de compra: Proveedor, con acceso solo para el administrador.
