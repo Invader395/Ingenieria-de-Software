@@ -76,12 +76,7 @@ flowchart TD
     alert -->|Muestra stock crítico| web
     prov -->|Consulta productos| inv
 
-    aut --> db
-    pos --> db
-    inv --> db
-    prov --> db
-    apart --> db
-    aud --> db
+    api -->|Cada módulo lee y escribe solo sus tablas| db
 
     style inv fill:#ff5d00,color:#fff
 ```
