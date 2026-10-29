@@ -32,4 +32,4 @@ No podemos escalar módulos por separado. Con una tienda y tres cajas no hace fa
 
 Si algún día hay que separar un módulo, el primero será Pedidos apartados, porque ya tiene límites propios y su tarea en segundo plano es lo que se aísla con menos fricción. Los puntos de cliente frecuente se quedan en Punto de venta: consultar el saldo durante el cobro como llamada de red empeoraría justo el tiempo de la pantalla de caja. La señal para separarlo es que el recibo tarde más de 1 segundo en mostrarse tras confirmar la venta (RNF-USA-001) de forma sostenida, mientras corre la revisión de apartados expirados. Como los límites ya están puestos, el corte sería por donde ya cortamos.
 
-El riesgo real es que, por atajo, un módulo lea las tablas de otro y se pierda el límite. Es especialmente delicado con los costos de compra, que solo el administrador puede ver. Lo revisamos en cada pull request.
+El riesgo real es que, por atajo, un módulo lea las tablas de otro y se pierda el límite. Es especialmente delicado con los costos de compra, que solo el administrador puede ver.
