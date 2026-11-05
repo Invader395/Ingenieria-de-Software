@@ -111,8 +111,7 @@ classDiagram
         +asignarCosto(producto: Producto, costoUnitario: decimal) CostoDeCompra
     }
 
-    class CostoDeCompra {
-        -idCostoDeCompra: int
+        class CostoDeCompra {
         -costoUnitario: decimal
         -fechaRegistro: Date
         +compararCon(otro: CostoDeCompra) int
@@ -207,8 +206,6 @@ classDiagram
     CostoDeCompra "*" --> "1" Proveedor : ofrecido por
     CostoDeCompra "*" --> "1" Producto : de
     RegistroDeAuditoria "*" --> "1" Empleado : hecho por
-
-    note "Todos los id son números enteros que genera el sistema: nadie los captura ni los modifica."
 ```
 
 ## Diagrama 5: Objetos (liquidación del apartado 42)
