@@ -25,7 +25,7 @@ flowchart TD
 
     subgraph sistema["Minimarket Control"]
         web["App web<br/>TypeScript"]
-        api["API del sistema"]
+        api["API del sistema<br/>Node.js"]
         db[("Base de datos<br/>PostgreSQL")]
     end
 
@@ -111,14 +111,16 @@ classDiagram
         +asignarCosto(producto: Producto, costoUnitario: decimal) CostoDeCompra
     }
 
-        class CostoDeCompra {
+    class CostoDeCompra {
+        -idProveedor: int
+        -idProducto: int
         -costoUnitario: decimal
         -fechaRegistro: Date
         +compararCon(otro: CostoDeCompra) int
     }
 
     class ClienteFrecuente {
-        -idCliente: int
+        -idClienteFrecuente: int
         -nombreCompleto: String
         -telefono: String
         -saldoPuntos: int
@@ -143,7 +145,7 @@ classDiagram
         -metodoPago: String
         -montoPagado: decimal
         -descuentoPuntos: decimal
-        +agregarLinea(producto: Producto, cantidad: int) LineaDeVenta
+        +agregarProducto(producto: Producto, cantidad: int) VentaTieneProducto
         +calcularTotal() decimal
         +aplicarCanje(descuento: decimal) void
         +validarPago() boolean
@@ -152,8 +154,9 @@ classDiagram
         +emitirComprobante() String
     }
 
-    class LineaDeVenta {
-        -idLineaDeVenta: int
+    class VentaTieneProducto {
+        -idVenta: int
+        -idProducto: int
         -cantidad: int
         -precioUnitario: decimal
         +calcularImporte() decimal
@@ -172,8 +175,9 @@ classDiagram
         +estaVigente() boolean
     }
 
-    class LineaDeApartado {
-        -idLineaDeApartado: int
+    class ApartadoTieneProducto {
+        -idApartado: int
+        -idProducto: int
         -cantidad: int
         +liberar() void
     }
@@ -189,15 +193,15 @@ classDiagram
 
     class RegistroDeAuditoria {
         <<inmutable>>
-        -idRegistro: int
+        -idRegistroDeAuditoria: int
         -fechaHora: DateTime
         -movimiento: String
     }
 
-    Venta "1" *-- "1..*" LineaDeVenta : contiene
-    Apartado "1" *-- "1..*" LineaDeApartado : reserva
-    LineaDeVenta "*" --> "1" Producto : es de
-    LineaDeApartado "*" --> "1" Producto : reserva
+    Venta "1" *-- "1..*" VentaTieneProducto : contiene
+    Apartado "1" *-- "1..*" ApartadoTieneProducto : reserva
+    VentaTieneProducto "*" --> "1" Producto : es de
+    ApartadoTieneProducto "*" --> "1" Producto : reserva
     Venta "*" --> "1" Empleado : atendida por
     Venta "*" --> "0..1" ClienteFrecuente : identifica a
     Apartado "0..1" --> "0..1" Venta : se liquida en
@@ -206,6 +210,9 @@ classDiagram
     CostoDeCompra "*" --> "1" Proveedor : ofrecido por
     CostoDeCompra "*" --> "1" Producto : de
     RegistroDeAuditoria "*" --> "1" Empleado : hecho por
+
+    note for Venta "Total a pagar = suma de (cantidad × precioUnitario) de cada VentaTieneProducto − descuentoPuntos"
+    note for VentaTieneProducto "idVenta e idProducto identifican la fila. El precioUnitario se copia de Producto.precioVenta al agregar el producto."
 ```
 
 ## Diagrama 5: Objetos (liquidación del apartado 42)
@@ -219,7 +226,7 @@ classDiagram
         rol = "Cajero"
     }
     class cli1["cli1 : ClienteFrecuente"] {
-        idCliente = 17
+        idClienteFrecuente = 17
         nombreCompleto = "Rosa Hernández Pérez"
         telefono = "4421234567"
         saldoPuntos = 51
@@ -232,12 +239,14 @@ classDiagram
         fechaCreacion = 2026-11-01
         fechaLimite = 2026-11-08
     }
-    class la1["la1 : LineaDeApartado"] {
-        idLineaDeApartado = 101
+    class atp1["atp1 : ApartadoTieneProducto"] {
+        idApartado = 42
+        idProducto = 8
         cantidad = 2
     }
-    class la2["la2 : LineaDeApartado"] {
-        idLineaDeApartado = 102
+    class atp2["atp2 : ApartadoTieneProducto"] {
+        idApartado = 42
+        idProducto = 9
         cantidad = 3
     }
     class v1["v1 : Venta"] {
@@ -247,13 +256,15 @@ classDiagram
         montoPagado = 200.00
         descuentoPuntos = 0.00
     }
-    class lv1["lv1 : LineaDeVenta"] {
-        idLineaDeVenta = 4051
+    class vp1["vp1 : VentaTieneProducto"] {
+        idVenta = 1315
+        idProducto = 8
         cantidad = 2
         precioUnitario = 42.50
     }
-    class lv2["lv2 : LineaDeVenta"] {
-        idLineaDeVenta = 4052
+    class vp2["vp2 : VentaTieneProducto"] {
+        idVenta = 1315
+        idProducto = 9
         cantidad = 3
         precioUnitario = 28.00
     }
@@ -278,20 +289,20 @@ classDiagram
         activo = true
     }
     class ra1["ra1 : RegistroDeAuditoria"] {
-        idRegistro = 9023
+        idRegistroDeAuditoria = 9023
         fechaHora = 2026-11-04 18:20
         movimiento = "Liquidación del apartado 42"
     }
 
-    ap1 --> la1
-    ap1 --> la2
-    la1 --> p1
-    la2 --> p2
+    ap1 --> atp1
+    ap1 --> atp2
+    atp1 --> p1
+    atp2 --> p2
     ap1 --> v1
-    v1 --> lv1
-    v1 --> lv2
-    lv1 --> p1
-    lv2 --> p2
+    v1 --> vp1
+    v1 --> vp2
+    vp1 --> p1
+    vp2 --> p2
     v1 --> emp1
     v1 --> cli1
     ra1 --> emp1
