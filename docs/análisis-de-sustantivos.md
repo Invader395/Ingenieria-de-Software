@@ -34,9 +34,9 @@ Todas las clases con identidad propia tienen un id entero que genera el sistema.
 | ClienteFrecuente | idClienteFrecuente, nombre completo, teléfono único de 10 dígitos, saldo de puntos (inicia en 0) | Acumular 1 punto por cada $10 cobrados, canjear puntos sin pasar del saldo, consultar su saldo |
 | Empleado | idEmpleado, usuario, contraseña, rol (Administrador o Cajero) | Iniciar y cerrar sesión; según su rol, cobrar o consultar reportes |
 | Venta | idVenta, fecha y hora, empleado que la atendió, cliente frecuente (opcional), sus productos (VentaTieneProducto), monto pagado, descuento por puntos, método de pago | Agregar productos, calcular el total a pagar (suma de cantidad × precio unitario de cada producto menos el descuento por puntos), validar que no esté vacía y que el pago cubra el total, aplicar el canje de puntos, calcular el cambio, confirmarse y emitir comprobante |
-| VentaTieneProducto | idVenta, idProducto, cantidad, precio unitario (se copia del producto al agregarlo) | Calcular su importe (cantidad × precio unitario) |
+| DetalleDeVenta | idVenta, idProducto, cantidad, precio unitario (se copia del producto al agregarlo) | Calcular su importe (cantidad × precio unitario) |
 | Apartado | idApartado, nombre y teléfono del cliente, estado (Pendiente de liquidación, Liquidado o Expirado), fecha de creación, fecha límite (7 días) | Reservar mercancía, liquidarse (genera una venta cobrada) y expirar a las 00:00 del octavo día devolviendo las unidades al stock |
-| ApartadoTieneProducto | idApartado, idProducto, cantidad reservada | Liberar sus unidades de vuelta al stock cuando el apartado expira |
+| DetalleDeApartado | idApartado, idProducto, cantidad reservada | Liberar sus unidades de vuelta al stock cuando el apartado expira |
 | Merma | idMerma, producto, cantidad (mayor a 0 y sin superar el stock), motivo (daño, caducidad o extravío), fecha, hora, empleado | Restar unidades del inventario y quedar registrada |
 | RegistroDeAuditoria | idRegistroDeAuditoria, fecha, hora (precisión de 1 s), ID del empleado, movimiento realizado | Guardarse automáticamente por cada movimiento relevante; nunca se modifica ni se borra |
 
