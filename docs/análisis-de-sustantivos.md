@@ -16,9 +16,9 @@ Se aplicó el filtro de las cuatro razones: es atributo, es sinónimo de otra, e
 | ClienteFrecuente | cliente frecuente | Tiene teléfono único y un saldo de puntos con reglas de acumulación y canje |
 | Empleado | empleado | El sistema guarda sus credenciales y rol (RF-001) y su ID para la bitácora (RNF-CON-001) |
 | Venta | venta, cobro, pago, transacción, comprobante | Tiene reglas de cobro: no puede estar vacía y el pago debe cubrir el total |
-| VentaTieneProducto | artículo, ítem, desglose | Guarda la cantidad y el precio unitario de cada producto vendido (RF-008) |
+| DetalleDeVenta | artículo, ítem, desglose | Guarda la cantidad y el precio unitario de cada producto vendido (RF-008) |
 | Apartado | apartado, pedido, reserva | Tiene estados y un plazo de 7 días (RF-011, RF-016 y RF-022) |
-| ApartadoTieneProducto | (los productos reservados de un apartado) | Guarda cuántas unidades de cada producto reserva el apartado (RF-011 y RF-012) |
+| DetalleDeApartado | (los productos reservados de un apartado) | Guarda cuántas unidades de cada producto reserva el apartado (RF-011 y RF-012) |
 | Merma | merma | Exige cantidad válida y motivo obligatorio (RF-017) |
 | RegistroDeAuditoria | bitácora, asiento | Es inmutable y guarda fecha, hora e ID del empleado (RNF-CON-001) |
 
