@@ -131,12 +131,19 @@ classDiagram
 
     class Empleado {
         -idEmpleado: int
+        -nombreCompleto: String
         -usuario: String
         -contrasena: String
-        -rol: String
+        -rol: Rol
         +iniciarSesion(contrasena: String) boolean
         +cerrarSesion() void
         +esAdministrador() boolean
+    }
+
+    class Rol {
+        <<enumeration>>
+        Administrador
+        Cajero
     }
 
     class Venta {
@@ -221,6 +228,7 @@ classDiagram
 classDiagram
     class emp1["emp1 : Empleado"] {
         idEmpleado = 2
+        nombreCompleto = "Marcos Cruz Ledesma"
         usuario = "mcruz"
         contrasena = "********"
         rol = "Cajero"
