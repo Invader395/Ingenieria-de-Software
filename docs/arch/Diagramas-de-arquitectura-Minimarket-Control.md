@@ -215,6 +215,7 @@ classDiagram
     class emp1["emp1 : Empleado"] {
         idEmpleado = 2
         usuario = "mcruz"
+        contrasena = "********"
         rol = "Cajero"
     }
     class cli1["cli1 : ClienteFrecuente"] {
@@ -260,17 +261,21 @@ classDiagram
         idProducto = 8
         codigoBarras = "7501000111206"
         nombre = "Aceite vegetal 1 L"
+        categoria = "Abarrotes"
         precioVenta = 42.50
         existencias = 16
         stockMinimo = 6
+        activo = true
     }
     class p2["p2 : Producto"] {
         idProducto = 9
         codigoBarras = "7501000222305"
         nombre = "Arroz 1 kg"
+        categoria = "Abarrotes"
         precioVenta = 28.00
         existencias = 12
         stockMinimo = 10
+        activo = true
     }
     class ra1["ra1 : RegistroDeAuditoria"] {
         idRegistro = 9023
@@ -281,7 +286,7 @@ classDiagram
     ap1 --> la1
     ap1 --> la2
     la1 --> p1
-    la2 --> p1
+    la2 --> p2
     ap1 --> v1
     v1 --> lv1
     v1 --> lv2
