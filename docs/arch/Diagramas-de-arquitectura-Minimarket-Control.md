@@ -81,7 +81,7 @@ flowchart TD
     style inv fill:#ff5d00,color:#fff
 ```
 
-## Diagrama 4: Clases
+## Diagrama 4
 
 ```mermaid
 classDiagram
@@ -152,7 +152,7 @@ classDiagram
         -metodoPago: String
         -montoPagado: decimal
         -descuentoPuntos: decimal
-        +agregarProducto(producto: Producto, cantidad: int) VentaTieneProducto
+        +agregarProducto(producto: Producto, cantidad: int) DetalleDeVenta
         +calcularTotal() decimal
         +aplicarCanje(descuento: decimal) void
         +validarPago() boolean
@@ -161,7 +161,7 @@ classDiagram
         +emitirComprobante() String
     }
 
-    class VentaTieneProducto {
+    class DetalleDeVenta {
         -idVenta: int
         -idProducto: int
         -cantidad: int
@@ -173,7 +173,7 @@ classDiagram
         -idApartado: int
         -nombreCliente: String
         -telefonoCliente: String
-        -estado: String
+        -estado: EstadoApartado
         -fechaCreacion: Date
         -fechaLimite: Date
         +reservar() void
@@ -182,7 +182,14 @@ classDiagram
         +estaVigente() boolean
     }
 
-    class ApartadoTieneProducto {
+    class EstadoApartado {
+        <<enumeration>>
+        Pendiente
+        Liquidado
+        Expirado
+    }
+
+    class DetalleDeApartado {
         -idApartado: int
         -idProducto: int
         -cantidad: int
@@ -205,24 +212,37 @@ classDiagram
         -movimiento: String
     }
 
-    Venta "1" *-- "1..*" VentaTieneProducto : contiene
-    Apartado "1" *-- "1..*" ApartadoTieneProducto : reserva
-    VentaTieneProducto "*" --> "1" Producto : es de
-    ApartadoTieneProducto "*" --> "1" Producto : reserva
-    Venta "*" --> "1" Empleado : atendida por
-    Venta "*" --> "0..1" ClienteFrecuente : identifica a
-    Apartado "0..1" --> "0..1" Venta : se liquida en
-    Merma "*" --> "1" Producto : descuenta de
-    Merma "*" --> "1" Empleado : registrada por
+    Venta "1" *-- "1..*" DetalleDeVenta : contiene
+    Apartado "1" *-- "1..*" DetalleDeApartado : reserva
+
+    DetalleDeVenta "*" --> "1" Producto : es de
+    DetalleDeApartado "*" --> "1" Producto : reserva
+
     CostoDeCompra "*" --> "1" Proveedor : ofrecido por
     CostoDeCompra "*" --> "1" Producto : de
+
+    Venta "*" --> "1" Empleado : atendida por
+    Venta "*" --> "0..1" ClienteFrecuente : identifica a
+
+    Apartado "0..1" --> "0..1" Venta : se liquida en
+
+    Merma "*" --> "1" Producto : descuenta de
+    Merma "*" --> "1" Empleado : registrada por
+
     RegistroDeAuditoria "*" --> "1" Empleado : hecho por
 
-    note for Venta "Total a pagar = suma de (cantidad × precioUnitario) de cada VentaTieneProducto − descuentoPuntos"
-    note for VentaTieneProducto "idVenta e idProducto identifican la fila. El precioUnitario se copia de Producto.precioVenta al agregar el producto."
+    note for Venta "Total a pagar = suma de (cantidad × precioUnitario) de cada DetalleDeVenta − descuentoPuntos"
+
+    note for DetalleDeVenta "idVenta e idProducto identifican la fila. El precioUnitario se copia de Producto.precioVenta al agregar el producto."
+
+    note for DetalleDeApartado "idApartado e idProducto identifican la fila. Registra la cantidad de unidades reservadas."
+
+    note for CostoDeCompra "idProveedor e idProducto identifican la fila. Permite registrar el costo de un producto ofrecido por un proveedor."
+
+    note for RegistroDeAuditoria "Se genera automáticamente y no puede modificarse ni eliminarse."
 ```
 
-## Diagrama 5: Objetos (liquidación del apartado 42)
+## Diagrama 5
 
 ```mermaid
 classDiagram
@@ -231,87 +251,103 @@ classDiagram
         nombreCompleto = "Marcos Cruz Ledesma"
         usuario = "mcruz"
         contrasena = "********"
-        rol = "Cajero"
+        rol = Cajero
     }
+
     class cli1["cli1 : ClienteFrecuente"] {
         idClienteFrecuente = 17
         nombreCompleto = "Rosa Hernández Pérez"
         telefono = "4421234567"
         saldoPuntos = 51
     }
+
     class ap1["ap1 : Apartado"] {
         idApartado = 42
         nombreCliente = "Rosa Hernández Pérez"
         telefonoCliente = "4421234567"
-        estado = "Liquidado"
-        fechaCreacion = 2026-11-01
-        fechaLimite = 2026-11-08
+        estado = Liquidado
+        fechaCreacion = "2026-11-01"
+        fechaLimite = "2026-11-08"
     }
-    class atp1["atp1 : ApartadoTieneProducto"] {
+
+    class da1["da1 : DetalleDeApartado"] {
         idApartado = 42
         idProducto = 8
         cantidad = 2
     }
-    class atp2["atp2 : ApartadoTieneProducto"] {
+
+    class da2["da2 : DetalleDeApartado"] {
         idApartado = 42
         idProducto = 9
         cantidad = 3
     }
+
     class v1["v1 : Venta"] {
         idVenta = 1315
-        fechaHora = 2026-11-04 18:20
-        metodoPago = "Efectivo"
+        fechaHora = "2026-11-04 18:20"
+        metodoPago = Efectivo
         montoPagado = 200.00
         descuentoPuntos = 0.00
     }
-    class vp1["vp1 : VentaTieneProducto"] {
+
+    class dv1["dv1 : DetalleDeVenta"] {
         idVenta = 1315
         idProducto = 8
         cantidad = 2
         precioUnitario = 42.50
     }
-    class vp2["vp2 : VentaTieneProducto"] {
+
+    class dv2["dv2 : DetalleDeVenta"] {
         idVenta = 1315
         idProducto = 9
         cantidad = 3
         precioUnitario = 28.00
     }
+
     class p1["p1 : Producto"] {
         idProducto = 8
         codigoBarras = "7501000111206"
         nombre = "Aceite vegetal 1 L"
-        categoria = "Abarrotes"
+        categoria = Abarrotes
         precioVenta = 42.50
         existencias = 16
         stockMinimo = 6
         activo = true
     }
+
     class p2["p2 : Producto"] {
         idProducto = 9
         codigoBarras = "7501000222305"
         nombre = "Arroz 1 kg"
-        categoria = "Abarrotes"
+        categoria = Abarrotes
         precioVenta = 28.00
         existencias = 12
         stockMinimo = 10
         activo = true
     }
+
     class ra1["ra1 : RegistroDeAuditoria"] {
         idRegistroDeAuditoria = 9023
-        fechaHora = 2026-11-04 18:20
+        fechaHora = "2026-11-04 18:20"
         movimiento = "Liquidación del apartado 42"
     }
 
-    ap1 --> atp1
-    ap1 --> atp2
-    atp1 --> p1
-    atp2 --> p2
+    ap1 --> da1
+    ap1 --> da2
+
+    da1 --> p1
+    da2 --> p2
+
     ap1 --> v1
-    v1 --> vp1
-    v1 --> vp2
-    vp1 --> p1
-    vp2 --> p2
+
+    v1 --> dv1
+    v1 --> dv2
+
+    dv1 --> p1
+    dv2 --> p2
+
     v1 --> emp1
     v1 --> cli1
+
     ra1 --> emp1
 ```
