@@ -86,6 +86,7 @@ flowchart TD
 ```mermaid
 classDiagram
     class Producto {
+        -idProducto: int
         -codigoBarras: String
         -nombre: String
         -categoria: String
@@ -103,6 +104,7 @@ classDiagram
     }
 
     class Proveedor {
+        -idProveedor: int
         -nombreComercial: String
         -telefono: String
         -direccion: String
@@ -110,12 +112,14 @@ classDiagram
     }
 
     class CostoDeCompra {
+        -idCostoDeCompra: int
         -costoUnitario: decimal
         -fechaRegistro: Date
         +compararCon(otro: CostoDeCompra) int
     }
 
     class ClienteFrecuente {
+        -idCliente: int
         -nombreCompleto: String
         -telefono: String
         -saldoPuntos: int
@@ -125,7 +129,7 @@ classDiagram
     }
 
     class Empleado {
-        -id: int
+        -idEmpleado: int
         -usuario: String
         -contrasena: String
         -rol: String
@@ -135,6 +139,7 @@ classDiagram
     }
 
     class Venta {
+        -idVenta: int
         -fechaHora: DateTime
         -metodoPago: String
         -montoPagado: decimal
@@ -149,13 +154,14 @@ classDiagram
     }
 
     class LineaDeVenta {
+        -idLineaDeVenta: int
         -cantidad: int
         -precioUnitario: decimal
         +calcularImporte() decimal
     }
 
     class Apartado {
-        -folio: String
+        -idApartado: int
         -nombreCliente: String
         -telefonoCliente: String
         -estado: String
@@ -168,11 +174,13 @@ classDiagram
     }
 
     class LineaDeApartado {
+        -idLineaDeApartado: int
         -cantidad: int
         +liberar() void
     }
 
     class Merma {
+        -idMerma: int
         -cantidad: int
         -motivo: String
         -fechaHora: DateTime
@@ -182,6 +190,7 @@ classDiagram
 
     class RegistroDeAuditoria {
         <<inmutable>>
+        -idRegistro: int
         -fechaHora: DateTime
         -movimiento: String
     }
@@ -198,24 +207,27 @@ classDiagram
     CostoDeCompra "*" --> "1" Proveedor : ofrecido por
     CostoDeCompra "*" --> "1" Producto : de
     RegistroDeAuditoria "*" --> "1" Empleado : hecho por
+
+    note "Todos los id son números enteros que genera el sistema: nadie los captura ni los modifica."
 ```
 
-## Diagrama 5: Objetos (liquidación del apartado AP-0042)
+## Diagrama 5: Objetos (liquidación del apartado 42)
 
 ```mermaid
 classDiagram
     class emp1["emp1 : Empleado"] {
-        id = 2
+        idEmpleado = 2
         usuario = "mcruz"
         rol = "Cajero"
     }
     class cli1["cli1 : ClienteFrecuente"] {
+        idCliente = 17
         nombreCompleto = "Rosa Hernández Pérez"
         telefono = "4421234567"
         saldoPuntos = 51
     }
     class ap1["ap1 : Apartado"] {
-        folio = "AP-0042"
+        idApartado = 42
         nombreCliente = "Rosa Hernández Pérez"
         telefonoCliente = "4421234567"
         estado = "Liquidado"
@@ -223,26 +235,32 @@ classDiagram
         fechaLimite = 2026-11-08
     }
     class la1["la1 : LineaDeApartado"] {
+        idLineaDeApartado = 101
         cantidad = 2
     }
     class la2["la2 : LineaDeApartado"] {
+        idLineaDeApartado = 102
         cantidad = 3
     }
     class v1["v1 : Venta"] {
+        idVenta = 1315
         fechaHora = 2026-11-04 18:20
         metodoPago = "Efectivo"
         montoPagado = 200.00
         descuentoPuntos = 0.00
     }
     class lv1["lv1 : LineaDeVenta"] {
+        idLineaDeVenta = 4051
         cantidad = 2
         precioUnitario = 42.50
     }
     class lv2["lv2 : LineaDeVenta"] {
+        idLineaDeVenta = 4052
         cantidad = 3
         precioUnitario = 28.00
     }
     class p1["p1 : Producto"] {
+        idProducto = 8
         codigoBarras = "7501000111206"
         nombre = "Aceite vegetal 1 L"
         precioVenta = 42.50
@@ -250,6 +268,7 @@ classDiagram
         stockMinimo = 6
     }
     class p2["p2 : Producto"] {
+        idProducto = 9
         codigoBarras = "7501000222305"
         nombre = "Arroz 1 kg"
         precioVenta = 28.00
@@ -257,14 +276,15 @@ classDiagram
         stockMinimo = 10
     }
     class ra1["ra1 : RegistroDeAuditoria"] {
+        idRegistro = 9023
         fechaHora = 2026-11-04 18:20
-        movimiento = "Liquidación de apartado AP-0042"
+        movimiento = "Liquidación del apartado 42"
     }
 
     ap1 --> la1
     ap1 --> la2
     la1 --> p1
-    la2 --> p2
+    la2 --> p1
     ap1 --> v1
     v1 --> lv1
     v1 --> lv2
