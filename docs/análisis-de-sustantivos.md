@@ -4,8 +4,6 @@
 
 acceso, administrador, ajuste, alerta, alta, apartado, artículo, asiento, autenticación, baja, base de datos, bitácora, botón, caja, cajero, cambio, cantidad, carrito, catálogo, categoría, cliente, cliente frecuente, cobro, código de barras, comparativa, comprobante, contraseña, costo de compra, credenciales, descuento, desglose, dirección, dueño, empleado, entrega, equivalencia, estado, existencias, fecha, fecha límite, ficha, folio, ganancia, historial, hora, importe, incremento, indicador, interfaz, inventario, ítem, justificación, lista de venta, lote, margen, marca de tiempo, matriz de costos, mensaje, mercancía, merma, método de pago, modal, monto, motivo, movimiento, nombre, nombre comercial, notificación, número telefónico, pago, panel, pantalla, pedido, precio de venta, producto, promedio, prototipo, proveedor, puntos, reabastecimiento, recibo, registro, reporte, reserva, rol, saldo, sesión, sistema, stock, stock crítico, stock mínimo, subtotal, tabla, tarifa, teléfono, token de sesión, total, transacción, turno, umbral, unidad, usuario, venta, venta anónima.
 
-Del alcance y del proceso actual: factura, facturación electrónica, tarjeta, pasarela de pagos, logística, entrega a domicilio, aplicación móvil, libreta, carpeta, hoja de papel, Figma.
-
 ## Paso 2. Clases candidatas (11)
 
 Se aplicó el filtro de las cuatro razones: es atributo, es sinónimo de otra, está fuera del sistema o es demasiado vago. Son las 8 clases de la Actividad 1 más CostoDeCompra, VentaTieneProducto y ApartadoTieneProducto. Esta última salió al dibujar el diagrama de clases: sin ella no hay dónde guardar cuántas unidades de cada producto reserva un apartado.
