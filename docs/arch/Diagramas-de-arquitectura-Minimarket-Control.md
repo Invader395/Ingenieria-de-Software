@@ -80,3 +80,197 @@ flowchart TD
 
     style inv fill:#ff5d00,color:#fff
 ```
+
+## Diagrama 4: Clases
+
+```mermaid
+classDiagram
+    class Producto {
+        -codigoBarras: String
+        -nombre: String
+        -categoria: String
+        -precioVenta: decimal
+        -existencias: int
+        -stockMinimo: int
+        -activo: boolean
+        +hayDisponibilidad(unidades: int) boolean
+        +descontar(unidades: int) void
+        +reponer(unidades: int) void
+        +ajustarStock(nuevaCantidad: int, motivo: String) void
+        +modificarDatos(nombre: String, categoria: String, precioVenta: decimal, stockMinimo: int) void
+        +darDeBaja() void
+        +estaEnStockCritico() boolean
+    }
+
+    class Proveedor {
+        -nombreComercial: String
+        -telefono: String
+        -direccion: String
+        +asignarCosto(producto: Producto, costoUnitario: decimal) CostoDeCompra
+    }
+
+    class CostoDeCompra {
+        -costoUnitario: decimal
+        -fechaRegistro: Date
+        +compararCon(otro: CostoDeCompra) int
+    }
+
+    class ClienteFrecuente {
+        -nombreCompleto: String
+        -telefono: String
+        -saldoPuntos: int
+        +acumularPuntos(importeCobrado: decimal) void
+        +canjearPuntos(puntos: int, equivalencia: decimal) decimal
+        +consultarSaldo() int
+    }
+
+    class Empleado {
+        -id: int
+        -usuario: String
+        -contrasena: String
+        -rol: String
+        +iniciarSesion(contrasena: String) boolean
+        +cerrarSesion() void
+        +esAdministrador() boolean
+    }
+
+    class Venta {
+        -fechaHora: DateTime
+        -metodoPago: String
+        -montoPagado: decimal
+        -descuentoPuntos: decimal
+        +agregarLinea(producto: Producto, cantidad: int) LineaDeVenta
+        +calcularTotal() decimal
+        +aplicarCanje(descuento: decimal) void
+        +validarPago() boolean
+        +calcularCambio() decimal
+        +confirmar() void
+        +emitirComprobante() String
+    }
+
+    class LineaDeVenta {
+        -cantidad: int
+        -precioUnitario: decimal
+        +calcularImporte() decimal
+    }
+
+    class Apartado {
+        -folio: String
+        -nombreCliente: String
+        -telefonoCliente: String
+        -estado: String
+        -fechaCreacion: Date
+        -fechaLimite: Date
+        +reservar() void
+        +liquidar(telefonoPuntos: String) Venta
+        +expirar() void
+        +estaVigente() boolean
+    }
+
+    class LineaDeApartado {
+        -cantidad: int
+        +liberar() void
+    }
+
+    class Merma {
+        -cantidad: int
+        -motivo: String
+        -fechaHora: DateTime
+        +validar() boolean
+        +aplicarAlInventario() void
+    }
+
+    class RegistroDeAuditoria {
+        <<inmutable>>
+        -fechaHora: DateTime
+        -movimiento: String
+    }
+
+    Venta "1" *-- "1..*" LineaDeVenta : contiene
+    Apartado "1" *-- "1..*" LineaDeApartado : reserva
+    LineaDeVenta "*" --> "1" Producto : es de
+    LineaDeApartado "*" --> "1" Producto : reserva
+    Venta "*" --> "1" Empleado : atendida por
+    Venta "*" --> "0..1" ClienteFrecuente : identifica a
+    Apartado "0..1" --> "0..1" Venta : se liquida en
+    Merma "*" --> "1" Producto : descuenta de
+    Merma "*" --> "1" Empleado : registrada por
+    CostoDeCompra "*" --> "1" Proveedor : ofrecido por
+    CostoDeCompra "*" --> "1" Producto : de
+    RegistroDeAuditoria "*" --> "1" Empleado : hecho por
+```
+
+## Diagrama 5: Objetos (liquidación del apartado AP-0042)
+
+```mermaid
+classDiagram
+    class emp1["emp1 : Empleado"] {
+        id = 2
+        usuario = "mcruz"
+        rol = "Cajero"
+    }
+    class cli1["cli1 : ClienteFrecuente"] {
+        nombreCompleto = "Rosa Hernández Pérez"
+        telefono = "4421234567"
+        saldoPuntos = 51
+    }
+    class ap1["ap1 : Apartado"] {
+        folio = "AP-0042"
+        nombreCliente = "Rosa Hernández Pérez"
+        telefonoCliente = "4421234567"
+        estado = "Liquidado"
+        fechaCreacion = 2026-11-01
+        fechaLimite = 2026-11-08
+    }
+    class la1["la1 : LineaDeApartado"] {
+        cantidad = 2
+    }
+    class la2["la2 : LineaDeApartado"] {
+        cantidad = 3
+    }
+    class v1["v1 : Venta"] {
+        fechaHora = 2026-11-04 18:20
+        metodoPago = "Efectivo"
+        montoPagado = 200.00
+        descuentoPuntos = 0.00
+    }
+    class lv1["lv1 : LineaDeVenta"] {
+        cantidad = 2
+        precioUnitario = 42.50
+    }
+    class lv2["lv2 : LineaDeVenta"] {
+        cantidad = 3
+        precioUnitario = 28.00
+    }
+    class p1["p1 : Producto"] {
+        codigoBarras = "7501000111206"
+        nombre = "Aceite vegetal 1 L"
+        precioVenta = 42.50
+        existencias = 16
+        stockMinimo = 6
+    }
+    class p2["p2 : Producto"] {
+        codigoBarras = "7501000222305"
+        nombre = "Arroz 1 kg"
+        precioVenta = 28.00
+        existencias = 12
+        stockMinimo = 10
+    }
+    class ra1["ra1 : RegistroDeAuditoria"] {
+        fechaHora = 2026-11-04 18:20
+        movimiento = "Liquidación de apartado AP-0042"
+    }
+
+    ap1 --> la1
+    ap1 --> la2
+    la1 --> p1
+    la2 --> p2
+    ap1 --> v1
+    v1 --> lv1
+    v1 --> lv2
+    lv1 --> p1
+    lv2 --> p2
+    v1 --> emp1
+    v1 --> cli1
+    ra1 --> emp1
+```
