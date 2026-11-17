@@ -6,7 +6,7 @@ acceso, administrador, ajuste, alerta, alta, apartado, artículo, asiento, auten
 
 ## Paso 2. Clases candidatas (11)
 
-Se aplicó el filtro de las cuatro razones: es atributo, es sinónimo de otra, está fuera del sistema o es demasiado vago. Son las 8 clases de la Actividad 1 más CostoDeCompra, VentaTieneProducto y ApartadoTieneProducto. Esta última salió al dibujar el diagrama de clases: sin ella no hay dónde guardar cuántas unidades de cada producto reserva un apartado.
+Se aplicó el filtro de las cuatro razones: es atributo, es sinónimo de otra, está fuera del sistema o es demasiado vago. Son las ocho clases de la Actividad 1 más CostoDeCompra, DetalleDeVenta y DetalleDeApartado. Esta última surgió al dibujar el diagrama de clases: sin ella no hay dónde guardar cuántas unidades de cada producto reserva un apartado.
 
 | Clase | Sustantivos de los que sale | Por qué pasó el filtro |
 |---|---|---|
@@ -24,23 +24,23 @@ Se aplicó el filtro de las cuatro razones: es atributo, es sinónimo de otra, e
 
 ## Paso 3. Qué sabe y qué hace cada clase
 
-Todas las clases con identidad propia tienen un id entero que genera el sistema. Las tres clases intermedias (CostoDeCompra, VentaTieneProducto y ApartadoTieneProducto) se identifican por las dos llaves que enlazan, como las tablas intermedias del esquema SQL.
+Todas las clases con identidad propia tienen un id entero que genera el sistema. DetalleDeVenta y DetalleDeApartado se identifican por las dos claves que relacionan venta/apartado con producto. CostoDeCompra necesita un identificador propio (`idCostoDeCompra`) además de las referencias a Proveedor y Producto, porque RF-007 y RF-014 exigen conservar varios costos históricos para la misma pareja en distintas fechas. Este ajuste también debe reflejarse en el esquema SQL cuando se implemente.
 
 | Clase | Sabe | Hace |
 |---|---|---|
 | Producto | idProducto, código de barras único, nombre, categoría, precio de venta, existencias, stock mínimo, estado (activo o inactivo) | Darse de baja, modificarse, descontar o reponer existencias, indicar si está en stock crítico |
 | Proveedor | idProveedor, nombre comercial único, teléfono de contacto, dirección | Registrarse (solo el administrador) y asignar costos de compra a productos |
-| CostoDeCompra | idProveedor, idProducto, costo unitario, fecha de registro | Ordenarse contra otros costos del mismo producto para la comparativa; solo lo ve el administrador |
+| CostoDeCompra | idCostoDeCompra, idProveedor, idProducto, costo unitario, fecha de registro | Ordenarse contra otros costos del mismo producto para la comparativa; solo lo ve el administrador |
 | ClienteFrecuente | idClienteFrecuente, nombre completo, teléfono único de 10 dígitos, saldo de puntos (inicia en 0) | Acumular 1 punto por cada $10 cobrados, canjear puntos sin pasar del saldo, consultar su saldo |
 | Empleado | idEmpleado, usuario, contraseña, rol (Administrador o Cajero) | Iniciar y cerrar sesión; según su rol, cobrar o consultar reportes |
-| Venta | idVenta, fecha y hora, empleado que la atendió, cliente frecuente (opcional), sus productos (VentaTieneProducto), monto pagado, descuento por puntos, método de pago | Agregar productos, calcular el total a pagar (suma de cantidad × precio unitario de cada producto menos el descuento por puntos), validar que no esté vacía y que el pago cubra el total, aplicar el canje de puntos, calcular el cambio, confirmarse y emitir comprobante |
+| Venta | idVenta, fecha y hora, empleado que la atendió, cliente frecuente (opcional), sus productos (DetalleDeVenta), monto pagado, descuento por puntos, método de pago | Agregar productos, calcular el total a pagar (suma de cantidad × precio unitario de cada producto menos el descuento por puntos), validar que no esté vacía y que el pago cubra el total, aplicar el canje de puntos, calcular el cambio, confirmarse y emitir comprobante |
 | DetalleDeVenta | idVenta, idProducto, cantidad, precio unitario (se copia del producto al agregarlo) | Calcular su importe (cantidad × precio unitario) |
 | Apartado | idApartado, nombre y teléfono del cliente, estado (Pendiente de liquidación, Liquidado o Expirado), fecha de creación, fecha límite (7 días) | Reservar mercancía, liquidarse (genera una venta cobrada) y expirar a las 00:00 del octavo día devolviendo las unidades al stock |
 | DetalleDeApartado | idApartado, idProducto, cantidad reservada | Liberar sus unidades de vuelta al stock cuando el apartado expira |
 | Merma | idMerma, producto, cantidad (mayor a 0 y sin superar el stock), motivo (daño, caducidad o extravío), fecha, hora, empleado | Restar unidades del inventario y quedar registrada |
 | RegistroDeAuditoria | idRegistroDeAuditoria, fecha, hora (precisión de 1 s), ID del empleado, movimiento realizado | Guardarse automáticamente por cada movimiento relevante; nunca se modifica ni se borra |
 
-Casos para comentar en clase: RegistroDeAuditoria, VentaTieneProducto, ApartadoTieneProducto y CostoDeCompra hacen muy poco, porque son sobre todo datos. Proveedor está cerca de lo mismo.
+Casos para comentar en clase: RegistroDeAuditoria, DetalleDeVenta, DetalleDeApartado y CostoDeCompra hacen muy poco, porque son sobre todo datos. Proveedor está cerca de lo mismo.
 
 ## Paso 4. Sustantivos descartados y por qué
 
@@ -55,7 +55,7 @@ Casos para comentar en clase: RegistroDeAuditoria, VentaTieneProducto, ApartadoT
 | | Folio | Dato de Apartado: su papel lo cubre idApartado |
 | | Subtotal, total, cambio, descuento, promedio, ganancia, margen | Datos calculados |
 | Es sinónimo de otra | cobro, pago, transacción, comprobante, recibo, venta anónima | Venta |
-| | Artículo, ítem, lista de venta, carrito, desglose | VentaTieneProducto |
+| | Artículo, ítem, lista de venta, carrito, desglose | DetalleDeVenta |
 | | Mercancía | Producto |
 | | Pedido, reserva | Apartado |
 | | Bitácora, asiento | RegistroDeAuditoria |
@@ -66,7 +66,7 @@ Casos para comentar en clase: RegistroDeAuditoria, VentaTieneProducto, ApartadoT
 | Está fuera del sistema | dueño, administrador, cajero, usuario | Actores del diagrama de contexto |
 | | Factura, facturación electrónica, tarjeta, pasarela de pagos | Documentos y sistemas externos |
 | | Logística, entrega a domicilio, aplicación móvil | Servicios que el sistema no gestiona |
-| | Libreta, carpeta, hoja de papel, Figma | Papel y herramientas que el sistema reemplaza o usa de fuera |
+| | Libreta, carpeta, hoja de papel, Figma | Documentos o herramientas externas al modelo de dominio; Figma se utiliza para prototipar, no limita el alcance del sistema |
 | Es demasiado vago | alta, baja, ajuste, corrección, incremento, reabastecimiento, acceso, autenticación, entrega | Operaciones de otras clases, sin datos propios |
 | | Reporte, comparativa | Vistas derivadas, sin datos propios |
 | | Inventario, catálogo, movimiento, historial, registro | Términos generales: son el conjunto de productos o un grupo de eventos |
@@ -78,5 +78,7 @@ Casos para comentar en clase: RegistroDeAuditoria, VentaTieneProducto, ApartadoT
 - **Empleado:** El cajero y el administrador son actores externos, pero el sistema sí guarda sus credenciales, rol e ID para la bitácora y el reporte por empleado (RF-001, RF-015 y RNF-CON-001). Por eso Empleado se mantiene como clase y los roles quedan como su atributo.
 - **Sesión:** Se trató como atributo de Empleado, porque es su estado dentro del sistema. Si se promueve a clase, serían 12 candidatas. En diseño aparece en el módulo de inicio de sesión.
 - **Alerta:** Se descartó como atributo (el estado "Stock crítico" de Producto). Evaluar el stock tras cada movimiento sigue siendo una operación, y en diseño reaparece como el observador del patrón Observer.
-- **Clases intermedias:** CostoDeCompra, VentaTieneProducto y ApartadoTieneProducto no tienen id propio. Se identifican por el par de llaves que enlazan (por ejemplo, venta y producto), así que un mismo producto no puede aparecer dos veces en la misma venta: si se escanea otra vez, se aumenta la cantidad.
+- **Clases intermedias:** DetalleDeVenta y DetalleDeApartado se identifican por el par de claves que enlazan (por ejemplo, venta y producto): si se escanea otro producto igual, aumenta la cantidad. CostoDeCompra es un registro histórico con `idCostoDeCompra` propio para conservar cotizaciones sucesivas de un proveedor para el mismo producto.
 - **Caja:** Para convertirla en clase necesitaría su propio requisito.
+- **Auditoría automática:** Una expiración programada no tiene un empleado en turno; el registro identifica al actor como Sistema y conserva el ID de empleado solo cuando la acción fue humana.
+- **Clases técnicas:** Las posibles clases de servicio y repositorio (para SC-001) no son nuevas entidades del negocio; forman parte del diseño de implementación cuando se apruebe ese cambio.
