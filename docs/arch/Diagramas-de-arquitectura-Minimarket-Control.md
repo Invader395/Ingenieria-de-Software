@@ -16,8 +16,6 @@ flowchart TD
     style sis fill:#ff5d00,color:#fff
 ```
 
-**Frontera:** Administrador y Cajero son actores externos; el lector USB es un periférico externo, no un servicio web. No se requiere una pasarela de pagos ni otros sistemas externos en el alcance actual.
-
 ## Diagrama 2: Contenedores C4 (nivel 2)
 
 ```mermaid
@@ -41,8 +39,6 @@ flowchart TD
 
     style api fill:#ff5d00,color:#fff
 ```
-
-**Despliegue previsto:** Aplicación web TypeScript, API Node.js y PostgreSQL comparten la red de la tienda. Las tres cajas acceden al mismo inventario mediante la API; el hardware lector se conecta por USB al equipo de caja.
 
 ## Diagrama 3: Componentes C4 de la API (nivel 3, monolito modular)
 
@@ -89,8 +85,6 @@ flowchart TD
 
     style inv fill:#ff5d00,color:#fff
 ```
-
-Cada módulo accede únicamente a sus datos; la comunicación entre módulos se realiza por interfaces. El módulo **Pedidos apartados** es el punto de modificación propuesto por SC-001, pero la consulta nueva no forma parte del diseño vigente mientras siga en propuesta.
 
 ## Diagrama 4: Clases UML (diseño vigente)
 
@@ -256,10 +250,6 @@ classDiagram
     note for RegistroDeAuditoria "Se crea una sola vez y no puede modificarse ni eliminarse. actor es Empleado con ID o Sistema para procesos automáticos."
 ```
 
-**Concordancia con secuencia y estados:** `Venta.confirmar()`, `Producto.hayDisponibilidad()`, `Producto.descontar()`, `ClienteFrecuente.acumularPuntos()`, `RegistroDeAuditoria.crear()` y `Venta.emitirComprobante()` aparecen como operaciones que reciben los mensajes del diagrama 6. `Apartado.estado: EstadoApartado` toma exactamente los valores `Pendiente`, `Liquidado` y `Expirado` del diagrama 7.
-
-**Restricción:** Los detalles de venta y apartado contienen el precio unitario de la venta (histórico de lo cobrado) y la cantidad reservada, respectivamente. En `CostoDeCompra` se conserva historial por fecha y registro propio.
-
 ## Diagrama 5: Objetos UML (ejemplo de apartado liquidado)
 
 ```mermaid
@@ -370,9 +360,6 @@ classDiagram
     ra1 --> emp1
 ```
 
-
-**Interpretación:** Es una instantánea de un apartado liquidado el 4 de noviembre de 2026, antes de su fecha límite. Mermaid lo representa mediante `classDiagram` porque no incorpora un tipo nativo de diagrama de objetos; cada nodo denota una instancia concreta del tipo indicado.
-
 ## Diagrama 6: Secuencia UML del caso de uso principal CU-01 (registrar venta)
 
 ```mermaid
@@ -384,6 +371,7 @@ sequenceDiagram
     participant ClienteFrecuente
     participant RegistroDeAuditoria
 
+    Note over Cajero,Web: Precondición - sesión iniciada y rol autorizado para cobrar
     Cajero->>Web: Escanear producto e indicar cantidad
     Web->>+Venta: agregarProducto(producto, cantidad)
     Venta->>+Producto: hayDisponibilidad(cantidad)
@@ -407,19 +395,16 @@ sequenceDiagram
         end
         Venta->>+RegistroDeAuditoria: crear(movimiento, actor)
         RegistroDeAuditoria-->>-Venta: registroInmutable
-        Venta-->>-Web: ventaConfirmada
-        Web->>+Venta: emitirComprobante()
-        Venta-->>-Web: comprobante
+        Venta-->>Web: ventaConfirmada
+        Web->>Venta: emitirComprobante()
+        Venta-->>Web: comprobante
         Web-->>Cajero: Mostrar comprobante en pantalla
     else Stock insuficiente o pago inválido
-        Venta-->>-Web: ventaRechazada
+        Venta-->>Web: ventaRechazada
         Web-->>Cajero: Mostrar motivo y permitir corregir
     end
+    deactivate Venta
 ```
-
-**Correspondencia obligatoria:** El mensaje `Venta → Producto: descontar(cantidad)` se corresponde exactamente con `Producto.+descontar(unidades: int): void` en el diagrama de clases; `Venta → RegistroDeAuditoria: crear(movimiento, actor)` se corresponde con `RegistroDeAuditoria.+crear(movimiento: String, actor: String)`. La aplicación web es el contenedor de interfaz del diagrama C4 y no una clase del dominio. El caso de uso prevé validar nuevamente el stock al confirmar el cobro para evitar ventas simultáneas con existencias insuficientes (FA-01.9).
-
-**Hueco detectado al elaborar la secuencia:** La clase `RegistroDeAuditoria` no exponía una operación para crear el asiento. Se añadió `crear(movimiento, actor)` y se ajustó a `0..1` la asociación con `Empleado`, pues RF-016 genera expiraciones automáticas sin una sesión de cajero.
 
 ## Diagrama 7: Estados UML del pedido Apartado
 
@@ -431,7 +416,3 @@ stateDiagram-v2
     Liquidado --> [*]
     Expirado --> [*]
 ```
-
-**Concordancia con clases:** `Apartado` contiene el atributo privado `estado: EstadoApartado`, cuyo enumerado incluye exactamente `Pendiente`, `Liquidado` y `Expirado`. Los eventos `liquidar` y `expirar` corresponden a sus operaciones `+liquidar(...)` y `+expirar()`. La fecha límite no cambia por la consulta propuesta en SC-001; por ello el diagrama de estados **no necesita modificarse** para ese cambio.
-
-**Nota:** La consulta de apartados próximos a vencer solicitada en SC-001 no es un estado nuevo: filtra apartados que siguen en `Pendiente` según `fechaLimite`. Su diseño propuesto, sin alterar el modelo vigente, se documenta en `AI-001-analisis-de-impacto-SC-001.md`.
