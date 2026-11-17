@@ -33,10 +33,10 @@ Esto podría ocasionar que algunos pedidos se cancelen sin que el personal haya 
 
 ## Tipo de mantenimiento
 
-- [ ] **Correctivo** · algo está mal y hay que repararlo.
-- [ ] **Adaptativo** · el entorno cambió y hay que ajustarse.
-- [x] **Perfectivo** · funciona, pero puede ser mejor.
-- [ ] **Preventivo** · todavía no falla, pero va a fallar.
+- [ ] **Correctivo:** algo está mal y hay que repararlo.
+- [ ] **Adaptativo:** el entorno cambió y hay que ajustarse.
+- [x] **Perfectivo:** funciona, pero puede ser mejor.
+- [ ] **Preventivo:** todavía no falla, pero va a fallar.
 
 **Justificación:** El sistema ya contempla la gestión y expiración de apartados, pero esta funcionalidad puede mejorarse al facilitar la identificación anticipada de los pedidos próximos a vencer.
 
@@ -53,7 +53,3 @@ Esto podría ocasionar que algunos pedidos se cancelen sin que el personal haya 
 **Media.**
 
 El cambio facilitaría el seguimiento de los pedidos y podría reducir cancelaciones, pero no impide que las funciones principales del sistema, como registrar ventas, gestionar inventario y administrar apartados, continúen operando.
-
----
-
-*La solicitud describe qué se quiere, nunca cómo hacerlo. El cómo se decide en el análisis de impacto, y lo decide quien conoce el diseño.*
