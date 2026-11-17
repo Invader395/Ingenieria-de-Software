@@ -2,38 +2,34 @@
 
 **Sistema:** Minimarket Control  
 **Autor:** Julián Guerrero Martínez  
-**Versión:** 2.8  
-**Fecha de la última actualización:** 30 de septiembre de 2026  
+**Versión:** 2.9 
+**Fecha de la última actualización:** 14 de noviembre de 2026  
 
 ---
 
 ## 1. Propósito y alcance
 
 **Propósito del documento:**  
-Este documento define de forma precisa, comprobable y detallada los requisitos funcionales y no funcionales del sistema *Minimarket Control*. Para fines evaluativos y de entrega de clase, el enfoque de esta especificación se centra en guiar el diseño y desarrollo del prototipo interactivo en Figma, sirviendo de base para la evaluación de la dupla evaluadora y la revisión con el cliente (dueño del minimarket).
+Esta especificación define requisitos funcionales y no funcionales verificables de *Minimarket Control*. Se utiliza para diseñar e implementar el software a la medida, validar sus reglas de negocio y mantener trazabilidad entre requisitos, casos de uso, arquitectura, pruebas y solicitudes de cambio. El prototipo de Figma es un apoyo visual, no una restricción del alcance funcional.
 
 **Alcance del sistema:**  
-Para efectos de la entrega de clase, el alcance del proyecto se limita exclusivamente al desarrollo de un prototipo en Figma que contempla los siguientes flujos y pantallas:
-- **Inicio de sesión y autenticación:** Flujo de acceso de usuarios, incluyendo la pantalla y alerta por credenciales inválidas.
-- **Gestión de inventario y alertas:**
-  - Alerta de stock bajo.
-  - Alerta de producto no encontrado durante la búsqueda o escaneo.
-- **Punto de venta y atención a clientes:**
-  - Opción de registro de cliente frecuente o realización de venta anónima.
-  - Opción para el canje de puntos acumulados (se incluye la opción en la interfaz, pero no se verá reflejada la aplicación del descuento/canje al proceder con la confirmación).
-  - Muestra del comprobante de venta finalizada en pantalla.
-  - Comportamiento del comprobante de venta finalizada en pantalla para casos donde ocurrió una modificación de productos por retiro o cancelación parcial de artículos (mantiene la visualización general sin reflejar aún la modificación dinámica detallada en el comprobante final).
+El sistema comprende:
+- **Inicio de sesión y control por rol:** Administrador y Cajero, con sesiones independientes por caja.
+- **Inventario:** Alta, baja lógica y edición de productos; consultas, ajustes, merma, alertas de stock bajo y reporte de reabastecimiento.
+- **Ventas:** Búsqueda o escaneo, validación de existencias, registro de venta, pago en efectivo o registro de pago con tarjeta, comprobante correcto y auditoría.
+- **Clientes frecuentes:** Alta, consulta de saldo, acumulación y canje de puntos aplicados al monto de la venta.
+- **Proveedores:** Registro, historial de costos de compra y comparación de cotizaciones, con acceso exclusivo del Administrador.
+- **Apartados:** Registro, reserva de existencias, liquidación y expiración automática al inicio del octavo día natural.
+- **Reportes y auditoría:** Ventas diarias por empleado, productos bajo stock mínimo y registro inmutable de movimientos.
+- **Arquitectura prevista:** Interfaz web TypeScript, API Node.js y PostgreSQL para uso dentro de una tienda y sus tres cajas.
 
 **Fuera del alcance:**  
-- Implementación de backend, base de datos funcional o código de producción.
-- Reflejo dinámico del canje de puntos al confirmar la transacción en el prototipo.
-- Actualización dinámica en el comprobante en pantalla de productos retirados o modificados durante la venta.
-- Módulos de compras, catálogo completo de proveedores e historial de precios de compra.
-- Creación, seguimiento y liquidación de pedidos apartados.
-- Generación y consulta de reportes consolidados por empleado o turno.
-- Procesamiento de pagos en línea mediante tarjetas de crédito, débito o pasarelas externas.
-- Generación y timbrado de facturación electrónica.
-- Servicios de logística, entrega a domicilio o aplicaciones móviles para clientes finalistas.
+- Facturación electrónica y timbrado fiscal.
+- Procesamiento bancario de pagos a través de pasarelas o integración con terminales (se registra la forma de pago, sin autorizarla externamente).
+- Reparto a domicilio, sistema logístico y aplicación móvil para consumidores.
+- Gestión de múltiples sucursales o plataforma multiempresa.
+
+**Solicitud de cambio pendiente:** SC-001 propone consultar apartados pendientes cuya fecha límite sea hoy o mañana (`RF-026`). El requisito y su caso de uso se describen aparte como **propuestos**; no sustituyen ni alteran los 25 requisitos de la línea base mientras el cambio no se apruebe.
 
 ---
 
@@ -79,7 +75,7 @@ Para efectos de la entrega de clase, el alcance del proyecto se limita exclusiva
 | **RF-022** | Liquidar pedido apartado | Imprescindible | Confirmado en entrevista |
 | **RF-023** | Consultar reporte de productos con stock bajo umbral mínimo | Imprescindible | Declarado en la Visión del Producto |
 | **RF-024** | Modificar stock de productos | Imprescindible | Confirmado en entrevista |
-| **RF-025** | Consultar puntos de cliente frecuente | Imprescindible | Confirmado en entrevista |
+| **RF-025** | Consultar puntos de cliente frecuente | Importante | Confirmado en entrevista |
 
 ---
 
@@ -154,10 +150,10 @@ Para efectos de la entrega de clase, el alcance del proyecto se limita exclusiva
 #### RF-007 · Registrar producto con proveedor
 | Campo | Contenido |
 | :--- | :--- |
-| **Descripción** | El sistema vincula un producto existente con un proveedor registrado guardando el costo de compra unitario. |
+| **Descripción** | El Administrador vincula un producto existente con un proveedor registrado guardando un costo de compra unitario y su fecha de registro, sin borrar cotizaciones anteriores de esa misma pareja. |
 | **Origen** | Confirmado en entrevista |
 | **Prioridad** | Imprescindible |
-| **Criterio de aceptación** | - El usuario debe ingresar el identificador de un proveedor registrado, el producto y el costo de adquisición.<br>- Al guardar la relación, el sistema añade el registro a la matriz histórica de costos del producto.<br>- El costo ingresado queda asociado a la fecha de registro para futuras comparativas.<br>- La información de costos de compra solo puede ser consultada por el Administrador. |
+| **Criterio de aceptación** | - El Administrador debe ingresar el identificador de un proveedor registrado, el producto y el costo de adquisición.<br>- Al guardar la relación, el sistema añade el registro a la matriz histórica de costos del producto.<br>- El costo ingresado queda asociado a la fecha de registro para futuras comparativas.<br>- Cada cotización nueva se conserva como un registro histórico distinto, aunque sea del mismo proveedor y producto.<br>- La información de costos de compra solo puede ser consultada por el Administrador. |
 | **Relacionado con** | RF-003, RF-014, RF-019, RNF-SEG-001 |
 
 ---
@@ -253,7 +249,7 @@ Para efectos de la entrega de clase, el alcance del proyecto se limita exclusiva
 #### RF-016 · Cancelar automáticamente apartados de mercancía expirados
 | Campo | Contenido |
 | :--- | :--- |
-| **Descripción** | El sistema cancela los apartados no liquidados tras 7 días naturales y reintegra las unidades reservadas al stock disponible. |
+| **Descripción** | El sistema cancela los apartados que siguen pendientes a las 00:00 horas del octavo día natural desde su creación y reintegra las unidades reservadas al stock disponible. |
 | **Origen** | Descubrimiento en entrevista (Límite 7 días) |
 | **Prioridad** | Importante |
 | **Criterio de aceptación** | - A las 00:00 horas del octavo día natural tras la creación de un apartado no pagado, el sistema identifica la expiración.<br>- El sistema cambia automáticamente el estado del pedido apartado a "Expirado".<br>- Las unidades que estaban reservadas se reintegran e incrementan el stock disponible para venta directa.<br>- Los apartados liquidados antes del vencimiento no se cancelan.<br>- La cancelación automática queda registrada en la bitácora de auditoría. |
@@ -311,7 +307,7 @@ Para efectos de la entrega de clase, el alcance del proyecto se limita exclusiva
 | **Descripción** | El sistema descuenta un monto determinado de puntos acumulados por un cliente para aplicarlo como descuento equivalente en dinero durante el cobro. La equivalencia entre puntos y pesos es definida por el Dueño. |
 | **Origen** | Declarado en la Visión del Producto |
 | **Prioridad** | Importante |
-| **Criterio de aceptación** | - Al seleccionar "Canjear puntos" e ingresar una cantidad válida ($\le$ saldo actual), el sistema valida la transacción.<br>- El sistema calcula el descuento monetario equivalente según la equivalencia definida por el Dueño.<br>- Al proceder al pago, el sistema resta la cantidad de puntos utilizados del saldo del cliente y reduce el total a pagar en el importe descontado.<br>- Si el valor equivalente de los puntos es igual o mayor al total de la compra, el total queda en $0 y el sistema resta únicamente los puntos necesarios para cubrirlo; los puntos restantes permanecen en el saldo. |
+| **Criterio de aceptación** | - Al seleccionar "Canjear puntos" e ingresar una cantidad válida ($\le$ saldo actual), el sistema valida la transacción.<br>- El sistema calcula el descuento monetario equivalente según la equivalencia definida por el Dueño.<br>- Al confirmar la venta, el sistema resta la cantidad de puntos utilizados del saldo del cliente y reduce el total a pagar en el importe descontado.<br>- Si el valor equivalente de los puntos es igual o mayor al total de la compra, el total queda en $0 y el sistema resta únicamente los puntos necesarios para cubrirlo; los puntos restantes permanecen en el saldo. |
 | **Relacionado con** | RF-008, RF-013, RF-018, RF-025, RNF-USA-001 |
 
 ---
@@ -360,6 +356,20 @@ Para efectos de la entrega de clase, el alcance del proyecto se limita exclusiva
 
 ---
 
+### 3.3 Requisito en evaluación: SC-001 (fuera de la línea base)
+
+#### RF-026 · Consultar apartados próximos a vencer (propuesto)
+| Campo | Contenido |
+| :--- | :--- |
+| **Descripción** | Permitir al Administrador y al Cajero consultar los apartados que continúan en estado `Pendiente` y cuya fecha límite sea hoy o mañana según la fecha local de la tienda. |
+| **Origen** | Solicitud de cambio SC-001, presentada por la dupla el 12 de noviembre de 2026 |
+| **Prioridad propuesta** | Media |
+| **Estado** | Propuesto; pendiente de decisión de cambio. No implementado. |
+| **Criterio de aceptación** | - La consulta muestra solo apartados pendientes con `fechaLimite` igual a hoy o mañana.<br>- Por apartado se muestran folio, nombre del cliente y fecha límite.<br>- No aparecen apartados `Liquidado` ni `Expirado` ni apartados con fechas posteriores a mañana.<br>- Consultar no modifica su estado, su vencimiento ni las existencias.<br>- La consulta se permite a Administrador y Cajero, sin exponer datos financieros restringidos. |
+| **Relacionado con** | RF-001, RF-011, RF-016, RF-022, RNF-SEG-001, SC-001 |
+
+---
+
 ## 4. Requisitos no funcionales
 
 ### 4.1 Resumen
@@ -404,8 +414,8 @@ Para efectos de la entrega de clase, el alcance del proyecto se limita exclusiva
 | Campo | Contenido |
 | :--- | :--- |
 | **Atributo de calidad** | Confiabilidad (Trazabilidad e Integridad de datos) |
-| **Descripción** | Todo movimiento relevante del sistema almacena automáticamente fecha, hora exacta y el identificador del empleado en turno, impidiendo la modificación o eliminación posterior del registro. |
-| **Métrica** | - 100% de las transacciones guardan marca de tiempo (precisión de 1 segundo) e ID de empleado.<br>- Se bloquean los comandos de alteración (UPDATE / DELETE) en la tabla de bitácora.<br>- Las modificaciones de productos, ajustes de stock y mermas quedan registradas en un tiempo máximo de 1 segundo tras ejecutarse la acción. |
+| **Descripción** | Todo movimiento relevante almacena automáticamente fecha, hora exacta y el actor responsable: ID del empleado cuando es una acción humana o identificador Sistema cuando es una ejecución automática (como RF-016). El registro no admite modificación ni eliminación posterior. |
+| **Métrica** | - 100% de las transacciones guardan marca de tiempo (precisión de 1 segundo) y actor identificable (empleado o Sistema, según corresponda).<br>- Se bloquean los comandos de alteración (UPDATE / DELETE) en la tabla de bitácora.<br>- Las modificaciones de productos, ajustes de stock y mermas quedan registradas en un tiempo máximo de 1 segundo tras ejecutarse la acción. |
 | **Origen** | Derivado del tipo de sistema (Sistemas de Información). |
 | **Prioridad** | Imprescindible |
 | **Por qué importa** | Permite identificar el origen de movimientos de inventario, descuadres de caja y discrepancias de mercancía sin depender de registros manuales. |
@@ -430,11 +440,17 @@ Para efectos de la entrega de clase, el alcance del proyecto se limita exclusiva
 11. **CU-11:** Consultar detalle de productos con stock bajo
 12. **CU-12:** Registrar merma de productos
 13. **CU-13:** Modificar stock de productos
-14. **CU-14:** Cancelar apartado de productos
+14. **CU-14:** Cancelar automáticamente apartados expirados
 15. **CU-15:** Descontar stock de producto
 16. **CU-16:** Mostrar comprobante en pantalla
 17. **CU-17:** Dar de alta productos
 18. **CU-18:** Registrar producto con proveedor
+19. **CU-19:** Iniciar sesión
+20. **CU-20:** Cerrar sesión
+21. **CU-21:** Consultar puntos de cliente frecuente
+22. **CU-22:** Consultar apartados próximos a vencer (**propuesto por SC-001**; no incorporado a la línea base)
+23. **CU-23:** Dar de baja productos
+24. **CU-24:** Modificar datos de productos
 
 ---
 
@@ -455,7 +471,7 @@ Para efectos de la entrega de clase, el alcance del proyecto se limita exclusiva
 4. El sistema actualiza el subtotal en pantalla.
 5. El cajero repite los pasos 1 al 4 para cada producto restante.
 6. El cajero presiona el botón "Finalizar Venta" (RNF-USA-001).
-7. El sistema solicita opcionalmente el número telefónico del cliente para acumular o canjear puntos (RF-020).
+7. El sistema solicita opcionalmente el número telefónico del cliente para acumular o canjear puntos (RF-013, RF-021 y RF-025).
 8. Si se ingresa un número de cliente registrado, el sistema muestra el saldo de puntos y se permite continuar opcionalmente con el caso de uso **CU-06 Canjear puntos de cliente frecuente**.
 9. El cajero selecciona el método de pago e ingresa el monto recibido.
 10. El sistema valida que el monto recibido cubra el total de la venta.
@@ -525,41 +541,63 @@ Para efectos de la entrega de clase, el alcance del proyecto se limita exclusiva
   3. La venta continúa de forma anónima y el flujo salta directamente al paso 9 del Escenario Principal.
 
 - **Postcondición:** El inventario de los productos vendidos se actualiza en tiempo real, se actualizan las alertas de stock si corresponde, se genera el registro inmutable en la bitácora y la pantalla queda limpia para la siguiente venta.
-- **Requisitos que realiza:** RF-008, RF-009, RF-010, RF-020, RNF-USA-001, RNF-CON-001.
+- **Requisitos que realiza:** RF-008, RF-009, RF-010, RF-013, RF-020, RF-021, RF-025, RNF-USA-001, RNF-CON-001.
+
+---
+
+### 5.3 Caso de uso propuesto por SC-001
+
+#### CU-22 Consultar apartados próximos a vencer (propuesto)
+
+- **Actor principal:** Administrador o Cajero autenticado.
+- **Objetivo:** Identificar apartados pendientes cuya fecha límite sea hoy o mañana sin alterar sus datos.
+- **Precondiciones:** Sesión activa con rol permitido y módulo de apartados disponible.
+- **Escenario principal:**
+  1. El usuario abre la sección de apartados próximos a vencer.
+  2. El sistema obtiene la fecha actual de la tienda y consulta apartados `Pendiente` con `fechaLimite` igual a hoy o mañana.
+  3. El sistema presenta folio, nombre del cliente y fecha límite de cada resultado.
+  4. El usuario consulta los datos para dar seguimiento; el sistema no realiza modificaciones.
+- **Alternativas:** Si no hay resultados, se muestra «No hay apartados próximos a vencer». Si la sesión no está autorizada, se deniega la consulta.
+- **Postcondición:** No cambian los apartados, inventario ni bitácora de movimientos.
+- **Requisito asociado:** RF-026 (propuesto, pendiente de decisión).
 
 ---
 
 ## 6. Trazabilidad
 
-| Requisito | Origen | Caso de uso | Elemento del prototipo | Estado |
+| Requisito | Origen | Caso de uso relacionado | Elemento del sistema/diseño | Estado |
 | :--- | :--- | :--- | :--- | :--- |
-| **RF-001** | Derivado de la gestión de turnos y seguridad por rol | CU-01, CU-02, CU-03, CU-05, CU-06, CU-07, CU-08, CU-10 | Pantalla Login / Autenticación | Vigente |
-| **RF-002** | Derivado del control de acceso por turnos | CU-01 Registrar venta en caja | Botón / Menú Cerrar Sesión | Vigente |
-| **RF-003** | Confirmado en entrevista | CU-10 Modificaciones de stock | Modal Alta de Producto | Vigente |
-| **RF-004** | Confirmado en entrevista | CU-10 Modificaciones de stock | Tabla Catálogo / Acciones | Vigente |
-| **RF-005** | Confirmado en entrevista | CU-10 Modificaciones de stock | Modal Editar Producto | Vigente |
-| **RF-006** | Confirmado en entrevista | CU-01, CU-08, CU-09, CU-10 | Buscador de Inventario / Alerta Stock | Vigente |
-| **RF-007** | Confirmado en entrevista | CU-06 Consultar comparativa | Matriz Proveedor-Producto | Vigente |
-| **RF-008** | Confirmado en entrevista | CU-01, CU-03 | Pantalla Punto de Venta / Cobro | Vigente |
-| **RF-009** | Confirmado en entrevista | CU-01 Registrar venta en caja | Contador de Inventario en BD | Vigente |
-| **RF-010** | Confirmado en entrevista | CU-01, CU-02 | Alerta Modal de Stock Insuficiente | Vigente |
-| **RF-011** | Confirmado en entrevista | CU-02 Registrar pedido apartado | Pantalla Módulo de Apartados | Vigente |
-| **RF-012** | Confirmado en entrevista | CU-02 Registrar pedido apartado | Indicador Stock Reservado | Vigente |
-| **RF-013** | Confirmado en entrevista | CU-04 Acumulación/Canje | Modal Cliente Frecuente en Caja | Vigente |
-| **RF-014** | Confirmado en entrevista | CU-06 Consultar comparativa | Pantalla Comparativa de Precios | Vigente |
-| **RF-015** | Confirmado en entrevista | CU-07 Consultar reportes ventas | Dashboard de Reportes / Ventas | Vigente |
-| **RF-016** | Descubrimiento en entrevista (Límite 7 días) | CU-11 Cancelaciones apartados | Tabla de Apartados Expirados | Vigente |
-| **RF-017** | Derivado del control de inventario y pérdidas | CU-09 Gestionar mermas | Formulario de Registro de Merma | Vigente |
-| **RF-018** | Confirmado en entrevista | CU-03 Alta cliente frecuente | Modal Alta Rápida de Cliente | Vigente |
-| **RF-019** | Confirmado en entrevista | CU-05 Alta de proveedores | Modal Registrar Proveedor | Vigente |
-| **RF-020** | Declarado en la Visión del Producto | CU-01, CU-08, CU-09, CU-10 | Badge / Indicador de Alerta de Stock Crítico | Vigente |
-| **RF-021** | Declarado en la Visión del Producto | CU-04 Acumulación/Canje | Opción Canje de Puntos en Caja | Vigente |
-| **RF-022** | Confirmado en entrevista | CU-03 Liquidar pedido apartado | Modal Cobro / Liquidar Apartado | Vigente |
-| **RF-023** | Declarado en la Visión del Producto | CU-08 Consultar stock bajo | Reporte de Reabastecimiento / Umbral | Vigente |
-| **RF-024** | Confirmado en entrevista | CU-10 Modificaciones de stock | Formulario / Modal Modificar Stock | Vigente |
-| **RNF-USA-001** | Entrevista 22 sep | CU-01, CU-03, CU-04 | Flujo de Cobro de 4 pasos | Vigente |
-| **RNF-SEG-001** | Entrevista 22 sep | CU-05, CU-06 | Control de Acceso y Login de Dueño | Vigente |
-| **RNF-CON-001** | Tipo de Sistema | Todos los casos de uso | Módulo de Bitácora / Auditoría | Vigente |
+| **RF-001** | Gestión de turnos y seguridad por rol | CU-19; precondición de CU-01 y CU-02 | Autenticación y control de sesiones | Vigente |
+| **RF-002** | Control de acceso por turnos | CU-20 | Cierre de sesión y revocación del token | Vigente |
+| **RF-003** | Entrevista | CU-17 | Inventario / alta de producto | Vigente |
+| **RF-004** | Entrevista | CU-23 | Inventario / baja lógica | Vigente |
+| **RF-005** | Entrevista | CU-24 | Inventario / edición de producto | Vigente |
+| **RF-006** | Entrevista | CU-01, CU-11, CU-13, CU-17 | Inventario / catálogo y existencias | Vigente |
+| **RF-007** | Entrevista | CU-18 | Proveedores / historial de costos por producto | Vigente |
+| **RF-008** | Entrevista | CU-01, CU-03 | POS / venta y comprobante | Vigente |
+| **RF-009** | Entrevista | CU-15, CU-01 | Inventario / descuento al confirmar | Vigente |
+| **RF-010** | Entrevista | CU-01, CU-02 | Inventario / validación de stock | Vigente |
+| **RF-011** | Entrevista | CU-02 | Apartados / registro y vigencia | Vigente |
+| **RF-012** | Entrevista | CU-02 | Apartados + Inventario / reserva | Vigente |
+| **RF-013** | Entrevista | CU-05, CU-01, CU-03 | Clientes frecuentes / acumulación | Vigente |
+| **RF-014** | Entrevista | CU-08 | Proveedores / comparativa de costos | Vigente |
+| **RF-015** | Entrevista | CU-09 | Reportes / ventas por empleado | Vigente |
+| **RF-016** | Entrevista | CU-14 | Apartados / expiración automática | Vigente |
+| **RF-017** | Control de pérdidas | CU-12 | Inventario / merma y auditoría | Vigente |
+| **RF-018** | Entrevista | CU-04 | Clientes frecuentes / alta | Vigente |
+| **RF-019** | Entrevista | CU-07 | Proveedores / alta restringida | Vigente |
+| **RF-020** | Visión del producto | CU-10, CU-01, CU-13 | Inventario / observador de stock bajo | Vigente |
+| **RF-021** | Visión del producto | CU-06, CU-01 | Clientes frecuentes / canje en venta | Vigente |
+| **RF-022** | Entrevista | CU-03 | Apartados / liquidación y venta | Vigente |
+| **RF-023** | Visión del producto | CU-11 | Inventario / reporte stock crítico | Vigente |
+| **RF-024** | Entrevista | CU-13 | Inventario / ajuste y auditoría | Vigente |
+| **RF-025** | Entrevista | CU-21 | Clientes frecuentes / consulta de saldo | Vigente |
+| **RF-026** | SC-001, dupla de revisión | CU-22 | Apartados / consulta de próximos vencimientos | **Propuesto, no aprobado** |
+| **RNF-USA-001** | Entrevista | CU-01, CU-03 | POS / hasta 4 pasos y recibo en menos de 1 s | Vigente |
+| **RNF-SEG-001** | Entrevista | CU-07, CU-08, CU-09; roles en CU-22 | Permisos por rol y protección de costos | Vigente |
+| **RNF-CON-001** | Sistema de información | CU-01, CU-03, CU-12, CU-13, CU-14 | Bitácora inmutable con empleado o actor Sistema | Vigente |
+
+**Observación de cobertura:** CU-23 y CU-24 identifican explícitamente las acciones de baja lógica y edición de producto para que la tabla no los confunda con CU-17 (alta de producto). Sus fichas completas pueden desarrollarse en iteraciones posteriores; el comportamiento y los criterios verificables ya están en RF-004 y RF-005.
 
 ---
 
@@ -573,8 +611,12 @@ Para efectos de la entrega de clase, el alcance del proyecto se limita exclusiva
 | 28/09/2026 | Casos de Uso | Reestructuración completa de los Casos de Uso CU-01 al CU-06 (v2.6) | Adaptación a la estructura paso a paso simplificada |
 | 29/09/2026 | Casos de Uso | Desglose atómico individualizado de Casos de Uso (CU-01 al CU-11) (v2.7) | Ajuste de estructura a solicitudes específicas de casos de uso separados |
 | 30/09/2026 | Sección 1, RF-013, RF-018, RF-022 | La liquidación de apartados acumula puntos si el cliente proporciona su teléfono; se permite liquidar sin acumular puntos (v2.8) | Alinear la acumulación de puntos en apartados con la regla de negocio de la Visión del Producto |
+| 16/11/2026 | Alcance, RF-007, RF-016, RNF-CON-001, CU y trazabilidad | Eliminación de restricciones exclusivas del prototipo; coherencia con arquitectura, historial de costos, auditoría automática y referencias de CU (v2.9) | Revisión de coherencia de los entregables SIS3407 |
+| 16/11/2026 | RF-026 y CU-22 | Documentación de una propuesta sin incorporarla a la línea base | Análisis de impacto de SC-001, pendiente de decisión |
 
 ---
 
-## 8. Prototipo funcional: Me pide pagar para que cualquiera lo pueda ver cualquier persona
+## 8. Prototipo de interfaz de referencia (Figma)
+
+El prototipo documenta una aproximación visual de algunos flujos. **No limita los requisitos ni la arquitectura del sistema**.
 https://www.figma.com/proto/1SCGFC2CSaXkwFPVwggXip/Sin-t%C3%ADtulo?node-id=3-7644&t=BAqyIyCiIDv8bBaG-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1
