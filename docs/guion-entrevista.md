@@ -71,7 +71,7 @@ Si un producto está en el estante pero no tiene código o precio visible, le pe
 - **Privacidad y confidencialidad:** Restricción absoluta de acceso a costos de compra y márgenes de ganancia para los cajeros; únicamente deben ver el precio de venta final.
 - **Límite de apartados:** Plazo máximo de 7 días naturales para guardar mercancía reservada antes de liberarla al estante.
 - **Datos obligatorios de apartados:** Nombre completo y número de teléfono del cliente como únicos requisitos obligatorios para registrar la reserva.
-- **Requisito y momentos para puntos:** Registro obligatorio del número de teléfono del cliente en el sistema tanto en ventas directas como en la liquidación de apartados para abonar puntos.
+- **Requisito y momentos para puntos:** Para acumular puntos debe identificarse al cliente mediante teléfono antes de finalizar una venta o al liquidar un apartado; las transacciones también pueden realizarse sin identificarlo y sin acumular puntos.
 - **Variación de costos:** Fluctuación frecuente en los precios de un mismo producto según el proveedor que lo surta en la semana.
 
 **Supuestos que resultaron falsos**
