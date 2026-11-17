@@ -37,41 +37,33 @@
 
 ## 3. Alcance
 
-### Dentro del alcance (Prototipo en Figma)
-- **Inicio de sesión y autenticación:** Pantalla de login e interfaz/alerta para credenciales inválidas.
-- **Gestión de inventario y alertas:**
-  - Alerta visual de stock bajo.
-  - Alerta visual de producto no encontrado durante la búsqueda o escaneo.
-- **Punto de venta y atención a clientes:**
-  - Opción de registro de cliente frecuente o realización de venta anónima.
-  - Opción visual para el canje de puntos acumulados (se muestra el elemento en interfaz, pero no reflejará dinámicamente la aplicación de descuentos/puntos al proceder con la confirmación).
-  - Muestra del comprobante de venta finalizada en pantalla.
-  - Comprobante de venta finalizada en pantalla para ventas donde existió modificación por retiro de productos (se mantiene una vista estática/general sin reflejar dinámicamente el desglose de productos retirados).
+### Dentro del alcance del sistema
+- **Autenticación y roles:** Inicio y cierre de sesión para Administrador y Cajero; una sesión por caja, con permisos según el rol.
+- **Punto de venta:** Registro de ventas con lector de códigos de barras o búsqueda, validación de existencias, cobro en efectivo o registro del pago por tarjeta y comprobante con desglose correcto de productos, cantidades, precios, descuentos y total.
+- **Inventario:** Alta, baja lógica y modificación de productos; movimientos de stock, mermas, reabastecimiento y alertas de existencias iguales o inferiores al mínimo.
+- **Proveedores:** Registro de proveedores, costos de compra históricos por producto y proveedor, y comparativas de precios, exclusivamente para el Administrador.
+- **Clientes frecuentes:** Alta y consulta por teléfono, acumulación, consulta y canje de puntos durante el cobro.
+- **Pedidos apartados:** Registro con nombre y teléfono del cliente, reserva de mercancía, liquidación y expiración automática después de siete días naturales, liberando existencias.
+- **Reportes y auditoría:** Ventas diarias por empleado, reporte de stock crítico y bitácora inmutable de operaciones relevantes.
+- **Implementación prevista:** Aplicación web en TypeScript, API Node.js y base de datos PostgreSQL instaladas para el uso de la tienda, con hasta tres cajas compartiendo inventario.
 
----
+**Cambio en evaluación (SC-001):** Se propone una consulta específica de apartados pendientes que vencen hoy o mañana. Se documenta como `RF-026` propuesto y no se considera aprobado ni implementado hasta resolver la solicitud.
 
 ### Explícitamente fuera del alcance
-- Implementación de código de producción, lógica de backend o base de datos funcional.
-- Reflejo dinámico del canje de puntos al confirmar la transacción en el prototipo.
-- Actualización dinámica en el comprobante en pantalla de productos retirados o modificados durante la venta.
-- Módulos de compras, catálogo completo de proveedores e historial de precios de compra.
-- Creación, seguimiento y liquidación de pedidos apartados.
-- Generación y consulta de reportes consolidados por empleado o turno.
-- Procesamiento de pagos en línea mediante tarjetas de crédito, débito o pasarelas externas.
-- Generación y timbrado de facturación electrónica automática.
-- Servicio de logística, entrega a domicilio o aplicaciones móviles para clientes.
+- Facturación electrónica y timbrado de CFDI.
+- Pasarelas externas para autorizar o procesar pagos bancarios; la venta registra el método de pago sin sustituir la terminal bancaria.
+- Entregas a domicilio, logística de reparto y aplicación móvil para consumidores.
+- Administración de múltiples sucursales o comercialización del producto como plataforma multiempresa.
 
----
-
-**Por qué queda fuera:** Para efectos de la entrega de clase, el alcance se delimita a un prototipo de alta fidelidad en Figma para validar la usabilidad y navegación en los flujos críticos de caja e inventario. El procesamiento dinámico de datos, facturación, pagos en línea y servicios adicionales quedan fuera por requerir infraestructura externa de servidores y desarrollo de producción ajeno a la meta de evaluación actual.
+**Delimitación:** El prototipo interactivo es una herramienta de validación de interfaz; no restringe el alcance funcional del sistema. El diseño contempla backend, persistencia y reglas de negocio verificables, aunque su implementación se complete por iteraciones.
 
 ---
 
 ## 4. Tipo de sistema y restricciones
 
-**Tipo de sistema:** Prototipo de Sistema de Información (Software a la medida)
+**Tipo de sistema:** Sistema de Información (software a la medida, de uso local en el minimarket)
 
-**Por qué es de ese tipo:** Porque proyecta la interfaz de un sistema para registrar, consultar y gestionar datos operativos de inventario, ventas y clientes frecuentes de un minimarket.
+**Por qué es de ese tipo:** Porque registra, consulta y procesa datos operativos de inventario, ventas, clientes frecuentes, proveedores y apartados de un minimarket.
 
 **Atributos de calidad que impone:**
 
@@ -84,8 +76,11 @@
 
 **Reglas de negocio que ya identifiqué:**
 1. El precio de compra de los productos no es fijo, varía según el proveedor que ofrezca la mejor tarifa esa semana.
-2. En el prototipo se contempla la opción de canje de puntos para clientes registrados, aunque la simulación no calcula dinámicamente el descuento final tras la confirmación.
-3. El comprobante en pantalla simula la finalización de la venta, incluso cuando se retiran productos durante la transacción, sin alterar dinámicamente la lista final en el prototipo.
+2. La acumulación de puntos requiere que el cliente proporcione su teléfono antes de finalizar la venta o al liquidar un apartado; la identificación es opcional si no desea puntos.
+3. El canje de puntos reduce efectivamente el total a cobrar según la equivalencia definida por el Administrador y el saldo del cliente.
+4. El comprobante refleja los productos y las cantidades confirmados, sin incluir artículos retirados antes del cobro.
+5. Los apartados vencen a las 00:00 del octavo día natural desde su creación y liberan el stock reservado si no fueron liquidados.
+6. Los costos de compra, márgenes y reportes de ventas por empleado son exclusivos del Administrador.
 
 ---
 
@@ -94,7 +89,7 @@
 **Modelo elegido:** Enfoque Ágil (Scrum)
 
 **Por qué le conviene a este proyecto:**  
-Le conviene porque permite priorizar el diseño de los flujos críticos de usuario (como inicio de sesión, cobro y alertas) en iteraciones cortas. Al prototipar en Figma primero, se puede evaluar la usabilidad con el dueño y la dupla evaluadora antes de proceder con fases avanzadas de desarrollo técnico.
+Le conviene porque permite construir y validar por iteraciones los flujos críticos de caja, inventario, apartados y proveedores. Cada incremento puede incluir interfaz, reglas de negocio, persistencia y pruebas; los prototipos sirven para revisar la usabilidad antes de desarrollar cada flujo, sin reemplazar su implementación.
 
 ### Alternativas descartadas
 
