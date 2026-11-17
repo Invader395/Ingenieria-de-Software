@@ -16,7 +16,7 @@ El cambio afecta principalmente al módulo **Pedidos apartados** de Minimarket C
 
 La aplicación web deberá mostrar el resultado a usuarios autenticados con rol **Administrador** o **Cajero**. El cambio puede implementarse dentro del monolito modular existente sin agregar servicios externos, tablas, columnas ni estados. No modifica la vigencia de siete días ni la expiración automática (RF-016).
 
-El nuevo requisito se propone como **RF-026**, porque `RF-025` ya corresponde a «Consultar puntos de cliente frecuente». Su caso de uso propuesto será **CU-22**. Ambos quedan pendientes de aprobación de SC-001.
+El nuevo requisito se propone como **RF-026**. Su caso de uso propuesto será **CU-22**. Ambos quedan pendientes de aprobación de SC-001.
 
 ## Impacto directo
 
