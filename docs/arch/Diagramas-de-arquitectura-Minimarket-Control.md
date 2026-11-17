@@ -1,6 +1,6 @@
 # Diagramas de arquitectura: Minimarket Control
 
-## Diagrama 1: Contexto
+## Diagrama 1: Contexto C4 (nivel 1)
 
 ```mermaid
 flowchart TD
@@ -16,7 +16,9 @@ flowchart TD
     style sis fill:#ff5d00,color:#fff
 ```
 
-## Diagrama 2: Contenedores
+**Frontera:** Administrador y Cajero son actores externos; el lector USB es un periférico externo, no un servicio web. No se requiere una pasarela de pagos ni otros sistemas externos en el alcance actual.
+
+## Diagrama 2: Contenedores C4 (nivel 2)
 
 ```mermaid
 flowchart TD
@@ -40,7 +42,9 @@ flowchart TD
     style api fill:#ff5d00,color:#fff
 ```
 
-## Diagrama 3: Componentes de la API (monolito modular)
+**Despliegue previsto:** Aplicación web TypeScript, API Node.js y PostgreSQL comparten la red de la tienda. Las tres cajas acceden al mismo inventario mediante la API; el hardware lector se conecta por USB al equipo de caja.
+
+## Diagrama 3: Componentes C4 de la API (nivel 3, monolito modular)
 
 ```mermaid
 flowchart TD
@@ -76,12 +80,19 @@ flowchart TD
     alert -->|Muestra stock crítico| web
     prov -->|Consulta productos| inv
 
-    api -->|Cada módulo lee y escribe solo sus tablas| db
+    aut -->|Lee usuarios y sesiones propias| db
+    pos -->|Lee y escribe ventas y clientes| db
+    inv -->|Lee y escribe productos y mermas| db
+    prov -->|Lee y escribe proveedores y costos| db
+    apart -->|Lee y escribe apartados| db
+    aud -->|Inserta registros inmutables| db
 
     style inv fill:#ff5d00,color:#fff
 ```
 
-## Diagrama 4
+Cada módulo accede únicamente a sus datos; la comunicación entre módulos se realiza por interfaces. El módulo **Pedidos apartados** es el punto de modificación propuesto por SC-001, pero la consulta nueva no forma parte del diseño vigente mientras siga en propuesta.
+
+## Diagrama 4: Clases UML (diseño vigente)
 
 ```mermaid
 classDiagram
@@ -112,6 +123,7 @@ classDiagram
     }
 
     class CostoDeCompra {
+        -idCostoDeCompra: int
         -idProveedor: int
         -idProducto: int
         -costoUnitario: decimal
@@ -157,7 +169,7 @@ classDiagram
         +aplicarCanje(descuento: decimal) void
         +validarPago() boolean
         +calcularCambio() decimal
-        +confirmar() void
+        +confirmar() boolean
         +emitirComprobante() String
     }
 
@@ -210,6 +222,8 @@ classDiagram
         -idRegistroDeAuditoria: int
         -fechaHora: DateTime
         -movimiento: String
+        -actor: String
+        +crear(movimiento: String, actor: String): RegistroDeAuditoria
     }
 
     Venta "1" *-- "1..*" DetalleDeVenta : contiene
@@ -229,7 +243,7 @@ classDiagram
     Merma "*" --> "1" Producto : descuenta de
     Merma "*" --> "1" Empleado : registrada por
 
-    RegistroDeAuditoria "*" --> "1" Empleado : hecho por
+    RegistroDeAuditoria "*" --> "0..1" Empleado : hecho por
 
     note for Venta "Total a pagar = suma de (cantidad × precioUnitario) de cada DetalleDeVenta − descuentoPuntos"
 
@@ -237,12 +251,16 @@ classDiagram
 
     note for DetalleDeApartado "idApartado e idProducto identifican la fila. Registra la cantidad de unidades reservadas."
 
-    note for CostoDeCompra "idProveedor e idProducto identifican la fila. Permite registrar el costo de un producto ofrecido por un proveedor."
+    note for CostoDeCompra "idCostoDeCompra identifica cada registro histórico. Los mismos proveedor y producto pueden tener costos registrados en distintas fechas."
 
-    note for RegistroDeAuditoria "Se genera automáticamente y no puede modificarse ni eliminarse."
+    note for RegistroDeAuditoria "Se crea una sola vez y no puede modificarse ni eliminarse. actor es Empleado con ID o Sistema para procesos automáticos."
 ```
 
-## Diagrama 5
+**Concordancia con secuencia y estados:** `Venta.confirmar()`, `Producto.hayDisponibilidad()`, `Producto.descontar()`, `ClienteFrecuente.acumularPuntos()`, `RegistroDeAuditoria.crear()` y `Venta.emitirComprobante()` aparecen como operaciones que reciben los mensajes del diagrama 6. `Apartado.estado: EstadoApartado` toma exactamente los valores `Pendiente`, `Liquidado` y `Expirado` del diagrama 7.
+
+**Restricción:** Los detalles de venta y apartado contienen el precio unitario de la venta (histórico de lo cobrado) y la cantidad reservada, respectivamente. En `CostoDeCompra` se conserva historial por fecha y registro propio.
+
+## Diagrama 5: Objetos UML (ejemplo de apartado liquidado)
 
 ```mermaid
 classDiagram
@@ -351,3 +369,69 @@ classDiagram
 
     ra1 --> emp1
 ```
+
+
+**Interpretación:** Es una instantánea de un apartado liquidado el 4 de noviembre de 2026, antes de su fecha límite. Mermaid lo representa mediante `classDiagram` porque no incorpora un tipo nativo de diagrama de objetos; cada nodo denota una instancia concreta del tipo indicado.
+
+## Diagrama 6: Secuencia UML del caso de uso principal CU-01 (registrar venta)
+
+```mermaid
+sequenceDiagram
+    actor Cajero
+    participant Web as Aplicación web
+    participant Venta
+    participant Producto
+    participant ClienteFrecuente
+    participant RegistroDeAuditoria
+
+    Cajero->>Web: Escanear producto e indicar cantidad
+    Web->>+Venta: agregarProducto(producto, cantidad)
+    Venta->>+Producto: hayDisponibilidad(cantidad)
+    Producto-->>-Venta: disponibilidad
+    Venta-->>-Web: DetalleDeVenta o aviso de stock
+
+    Cajero->>Web: Confirmar cobro
+    Web->>+Venta: validarPago()
+    Venta-->>-Web: pagoValido
+    Web->>+Venta: confirmar()
+    Note over Venta,Producto: Revalidación y descuento atómicos antes de confirmar
+    Venta->>+Producto: hayDisponibilidad(cantidad)
+    Producto-->>-Venta: disponibilidadActual
+
+    alt Existencias suficientes y pago válido
+        Venta->>+Producto: descontar(cantidad)
+        Producto-->>-Venta: existenciasActualizadas
+        opt Cliente frecuente identificado
+            Venta->>+ClienteFrecuente: acumularPuntos(importeCobrado)
+            ClienteFrecuente-->>-Venta: puntosActualizados
+        end
+        Venta->>+RegistroDeAuditoria: crear(movimiento, actor)
+        RegistroDeAuditoria-->>-Venta: registroInmutable
+        Venta-->>-Web: ventaConfirmada
+        Web->>+Venta: emitirComprobante()
+        Venta-->>-Web: comprobante
+        Web-->>Cajero: Mostrar comprobante en pantalla
+    else Stock insuficiente o pago inválido
+        Venta-->>-Web: ventaRechazada
+        Web-->>Cajero: Mostrar motivo y permitir corregir
+    end
+```
+
+**Correspondencia obligatoria:** El mensaje `Venta → Producto: descontar(cantidad)` se corresponde exactamente con `Producto.+descontar(unidades: int): void` en el diagrama de clases; `Venta → RegistroDeAuditoria: crear(movimiento, actor)` se corresponde con `RegistroDeAuditoria.+crear(movimiento: String, actor: String)`. La aplicación web es el contenedor de interfaz del diagrama C4 y no una clase del dominio. El caso de uso prevé validar nuevamente el stock al confirmar el cobro para evitar ventas simultáneas con existencias insuficientes (FA-01.9).
+
+**Hueco detectado al elaborar la secuencia:** La clase `RegistroDeAuditoria` no exponía una operación para crear el asiento. Se añadió `crear(movimiento, actor)` y se ajustó a `0..1` la asociación con `Empleado`, pues RF-016 genera expiraciones automáticas sin una sesión de cajero.
+
+## Diagrama 7: Estados UML del pedido Apartado
+
+```mermaid
+stateDiagram-v2
+    [*] --> Pendiente : registrar pedido / reservar mercancía
+    Pendiente --> Liquidado : liquidar [pago confirmado antes del vencimiento] / registrar venta
+    Pendiente --> Expirado : inicio del octavo día [sin liquidar] / expirar y liberar stock
+    Liquidado --> [*]
+    Expirado --> [*]
+```
+
+**Concordancia con clases:** `Apartado` contiene el atributo privado `estado: EstadoApartado`, cuyo enumerado incluye exactamente `Pendiente`, `Liquidado` y `Expirado`. Los eventos `liquidar` y `expirar` corresponden a sus operaciones `+liquidar(...)` y `+expirar()`. La fecha límite no cambia por la consulta propuesta en SC-001; por ello el diagrama de estados **no necesita modificarse** para ese cambio.
+
+**Nota:** La consulta de apartados próximos a vencer solicitada en SC-001 no es un estado nuevo: filtra apartados que siguen en `Pendiente` según `fechaLimite`. Su diseño propuesto, sin alterar el modelo vigente, se documenta en `AI-001-analisis-de-impacto-SC-001.md`.
