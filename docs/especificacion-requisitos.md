@@ -356,7 +356,7 @@ El sistema comprende:
 
 ---
 
-### 3.3 Requisito en evaluación: SC-001 (fuera de la línea base)
+### 3.3 Requisito en evaluación: SC-001
 
 #### RF-026 · Consultar apartados próximos a vencer (propuesto)
 | Campo | Contenido |
