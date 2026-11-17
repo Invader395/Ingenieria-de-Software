@@ -4,7 +4,7 @@
 Aceptada, 27 de octubre de 2026
 
 ## Contexto
-Minimarket Control es un sistema de información instalado en la tienda, hecho a la medida para un solo dueño. La entrega actual es un prototipo en Figma, sin backend ni base de datos funcional.
+Minimarket Control es un sistema de información diseñado para instalarse en la tienda, hecho a la medida para un solo dueño. Se proyecta una aplicación web en TypeScript, una API Node.js y una base de datos PostgreSQL local; el prototipo de interfaz sirve para validar los flujos y no limita la arquitectura prevista.
 
 Lo construye y mantiene una sola persona. La tienda tiene tres cajas y en cada una solo puede haber un empleado a la vez, por lo que el sistema debe soportar hasta tres sesiones abiertas de forma simultánea, una por caja. Todas las cajas trabajan contra el mismo inventario: la especificación contempla que el stock cambie en otra caja antes de cobrar (FA-01.9) y exige validar existencias en tiempo real (RF-010). Como cada venta registra automáticamente al empleado, la fecha y la hora a partir de su sesión activa (RF-001, RF-008 y RNF-CON-001), cada caja mantiene su propia sesión. El servidor es de la propia tienda, no de un proveedor.
 
@@ -13,6 +13,8 @@ El sistema se organiza en cuatro módulos de negocio, además de tres componente
 - Inventario y merma de productos: Producto y Merma.
 - Proveedores y costos de compra: Proveedor, con acceso solo para el administrador.
 - Pedidos apartados: Apartado.
+
+La solicitud SC-001 propone agregar la consulta de apartados próximos a vencer dentro de este último módulo. Su análisis no cambia esta decisión arquitectónica y permanece pendiente de aprobación.
 
 Las fronteras entre módulos están claras porque las reglas del negocio ya están definidas en la entrevista y la especificación. Adicionalmente, ningún requisito pide escalabilidad ni aislamiento entre negocios: RNF-SEG-001 separa roles dentro de una misma tienda, no distintas sucursales.
 
@@ -32,4 +34,4 @@ No podemos escalar módulos por separado. Con una tienda y tres cajas no hace fa
 
 Si algún día hay que separar un módulo, el primero será Pedidos apartados, porque ya tiene límites propios y su tarea en segundo plano es lo que se aísla con menos fricción. Los puntos de cliente frecuente se quedan en Ventas, cliente frecuente y puntos: consultar el saldo durante el cobro como llamada de red empeoraría justo el tiempo de la pantalla de caja. La señal para separarlo es que el recibo tarde más de 1 segundo en mostrarse tras confirmar la venta (RNF-USA-001) de forma sostenida, mientras corre la revisión de apartados expirados. Como los límites ya están puestos, el corte sería por donde ya cortamos.
 
-El riesgo real es que, por atajo, un módulo lea las tablas de otro y se pierda el límite. Es especialmente delicado con los costos de compra, que solo el administrador puede ver.
+El riesgo real es que, por atajo, un módulo lea las tablas de otro y se pierda el límite. Es especialmente delicado con los costos de compra, que solo el administrador puede ver. También es necesario que las expiraciones ejecutadas automáticamente se registren en auditoría con actor Sistema, porque no dependen de una sesión de empleado.
